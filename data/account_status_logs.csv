@@ -1,0 +1,6 @@
+﻿status_change_id,target_user_id,admin_id,old_status,new_status,reason,changed_at
+90,3,2,ACTIVE,LOCKED,Vi phạm quy định cộng đồng,2026-10-11 09:30:00
+91,11,2,ACTIVE,LOCKED,Tạm khóa để kiểm tra truy cập,2026-10-11 07:30:00
+92,11,4,LOCKED,ACTIVE,Hoàn tất xác minh,2026-10-11 08:30:00
+93,8,2,ACTIVE,LOCKED,Vi phạm quy định cộng đồng,2026-10-11 12:00:00
+94,14,4,ACTIVE,LOCKED,Khóa tạm thời theo yêu cầu quản trị,2026-10-11 16:00:00

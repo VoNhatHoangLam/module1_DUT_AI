@@ -1,0 +1,182 @@
+﻿answer_id,attempt_id,question_id,selected_answer,correct_answer_snapshot,is_correct,points_earned,question_text_snapshot,selected_option_text_snapshot,correct_option_text_snapshot,answered_at
+80,70,200,A,A,1,1.00,Apple nghĩa là gì?,Quả táo,Quả táo,2026-10-11 09:01:00
+81,70,201,D,C,0,0.00,Banana nghĩa là gì?,Quả táo,Quả chuối,2026-10-11 09:04:00
+82,71,202,B,B,1,1.00,2 + 2 = ?,4,4,2026-10-11 09:11:00
+83,72,200,B,A,0,0.00,Apple nghĩa là gì?,Quả chuối,Quả táo,2026-10-11 11:01:00
+84,72,201,C,C,1,1.00,Banana nghĩa là gì?,Quả chuối,Quả chuối,2026-10-11 11:02:00
+85,72,203,C,C,1,1.00,Cat nghĩa là gì?: chọn đáp án đúng?,Con mèo,Con mèo,2026-10-11 11:03:00
+86,73,221,A,A,1,1.00,Kiểu dữ liệu số nguyên: chọn đáp án đúng?,int,int,2026-10-11 11:09:00
+87,73,222,B,B,1,1.00,Kiểu dữ liệu danh sách: chọn đáp án đúng?,list,list,2026-10-11 11:10:00
+88,73,223,C,C,1,1.00,Từ khóa định nghĩa hàm: chọn đáp án đúng?,def,def,2026-10-11 11:11:00
+89,73,224,A,D,0,0.00,Hàm in ra màn hình: chọn đáp án đúng?,int,print,2026-10-11 11:12:00
+90,73,225,A,A,1,1.00,Hàm lấy độ dài: chọn đáp án đúng?,len,len,2026-10-11 11:13:00
+91,73,226,B,B,1,1.00,Kiểu dữ liệu ánh xạ: chọn đáp án đúng?,dict,dict,2026-10-11 11:14:00
+92,73,227,C,C,1,1.00,Giá trị logic đúng: chọn đáp án đúng?,True,True,2026-10-11 11:15:00
+93,74,234,A,A,1,1.00,Good morning: chọn đáp án đúng?,Chào buổi sáng,Chào buổi sáng,2026-10-11 11:17:00
+94,74,235,B,B,1,1.00,Thank you: chọn đáp án đúng?,Cảm ơn,Cảm ơn,2026-10-11 11:18:00
+95,74,236,D,C,0,0.00,Excuse me: chọn đáp án đúng?,Hẹn gặp lại,Xin lỗi/cho tôi hỏi,2026-10-11 11:19:00
+96,74,237,D,D,1,1.00,See you later: chọn đáp án đúng?,Hẹn gặp lại,Hẹn gặp lại,2026-10-11 11:20:00
+97,74,238,A,A,1,1.00,How are you?: chọn đáp án đúng?,Bạn khỏe không?,Bạn khỏe không?,2026-10-11 11:21:00
+98,74,239,B,B,1,1.00,Nice to meet you: chọn đáp án đúng?,Rất vui được gặp bạn,Rất vui được gặp bạn,2026-10-11 11:22:00
+99,75,247,A,A,1,1.00,Đơn vị lực: chọn đáp án đúng?,Newton,Newton,2026-10-11 11:25:00
+100,75,248,C,B,0,0.00,Đơn vị năng lượng: chọn đáp án đúng?,Watt,Joule,2026-10-11 11:26:00
+101,75,249,C,C,1,1.00,Đơn vị công suất: chọn đáp án đúng?,Watt,Watt,2026-10-11 11:27:00
+102,75,250,D,D,1,1.00,Đơn vị tần số: chọn đáp án đúng?,Hertz,Hertz,2026-10-11 11:28:00
+103,75,251,A,A,1,1.00,Vận tốc bằng: chọn đáp án đúng?,Quãng đường / Thời gian,Quãng đường / Thời gian,2026-10-11 11:29:00
+104,75,252,C,B,0,0.00,Đơn vị cường độ dòng điện: chọn đáp án đúng?,Joule,Ampere,2026-10-11 11:30:00
+105,76,271,B,A,0,0.00,Bộ phận lõi hệ điều hành: chọn đáp án đúng?,Process,Kernel,2026-10-11 11:33:00
+106,76,272,B,B,1,1.00,Tiến trình đang chạy: chọn đáp án đúng?,Process,Process,2026-10-11 11:34:00
+107,76,273,C,C,1,1.00,Luồng thực thi: chọn đáp án đúng?,Thread,Thread,2026-10-11 11:35:00
+108,76,274,D,D,1,1.00,Bộ nhớ ảo: chọn đáp án đúng?,Virtual memory,Virtual memory,2026-10-11 11:36:00
+109,76,275,B,A,0,0.00,Lập lịch CPU: chọn đáp án đúng?,Kernel,Scheduling,2026-10-11 11:37:00
+110,76,276,B,B,1,1.00,Tắc nghẽn tài nguyên: chọn đáp án đúng?,Deadlock,Deadlock,2026-10-11 11:38:00
+111,77,283,A,A,1,1.00,Khóa chính: chọn đáp án đúng?,Primary Key,Primary Key,2026-10-11 11:41:00
+112,77,284,B,B,1,1.00,Khóa ngoại: chọn đáp án đúng?,Foreign Key,Foreign Key,2026-10-11 11:42:00
+113,77,285,C,C,1,1.00,Quan hệ một-nhiều: chọn đáp án đúng?,One-to-many,One-to-many,2026-10-11 11:43:00
+114,77,286,A,D,0,0.00,Chuẩn hóa dữ liệu: chọn đáp án đúng?,Primary Key,Normalization,2026-10-11 11:44:00
+115,77,287,A,A,1,1.00,Sơ đồ thực thể liên kết: chọn đáp án đúng?,ERD,ERD,2026-10-11 11:45:00
+116,77,288,B,B,1,1.00,Ràng buộc duy nhất: chọn đáp án đúng?,UNIQUE,UNIQUE,2026-10-11 11:46:00
+117,78,200,A,A,1,1.00,Apple nghĩa là gì?,Quả táo,Quả táo,2026-10-11 11:49:00
+118,78,201,C,C,1,1.00,Banana nghĩa là gì?,Quả chuối,Quả chuối,2026-10-11 11:50:00
+119,78,203,D,C,0,0.00,Cat nghĩa là gì?: chọn đáp án đúng?,Con cá,Con mèo,2026-10-11 11:51:00
+120,79,221,A,A,1,1.00,Kiểu dữ liệu số nguyên: chọn đáp án đúng?,int,int,2026-10-11 11:57:00
+121,79,222,C,B,0,0.00,Kiểu dữ liệu danh sách: chọn đáp án đúng?,def,list,2026-10-11 11:58:00
+122,79,223,C,C,1,1.00,Từ khóa định nghĩa hàm: chọn đáp án đúng?,def,def,2026-10-11 11:59:00
+123,79,224,D,D,1,1.00,Hàm in ra màn hình: chọn đáp án đúng?,print,print,2026-10-11 12:00:00
+124,79,225,A,A,1,1.00,Hàm lấy độ dài: chọn đáp án đúng?,len,len,2026-10-11 12:01:00
+125,79,226,C,B,0,0.00,Kiểu dữ liệu ánh xạ: chọn đáp án đúng?,list,dict,2026-10-11 12:02:00
+126,79,227,C,C,1,1.00,Giá trị logic đúng: chọn đáp án đúng?,True,True,2026-10-11 12:03:00
+127,80,240,B,A,0,0.00,Lấy dữ liệu từ bảng: chọn đáp án đúng?,INSERT,SELECT,2026-10-11 12:05:00
+128,80,241,B,B,1,1.00,Thêm dữ liệu mới: chọn đáp án đúng?,INSERT,INSERT,2026-10-11 12:06:00
+129,80,242,C,C,1,1.00,Cập nhật bản ghi: chọn đáp án đúng?,UPDATE,UPDATE,2026-10-11 12:07:00
+130,80,243,D,D,1,1.00,Xóa bản ghi: chọn đáp án đúng?,DELETE,DELETE,2026-10-11 12:08:00
+131,80,244,B,A,0,0.00,Lọc dữ liệu: chọn đáp án đúng?,SELECT,WHERE,2026-10-11 12:09:00
+132,80,245,B,B,1,1.00,Sắp xếp kết quả: chọn đáp án đúng?,ORDER BY,ORDER BY,2026-10-11 12:10:00
+133,80,246,C,C,1,1.00,Nhóm các bản ghi: chọn đáp án đúng?,GROUP BY,GROUP BY,2026-10-11 12:11:00
+134,81,259,A,A,1,1.00,Tác giả Truyện Kiều: chọn đáp án đúng?,Nguyễn Du,Nguyễn Du,2026-10-11 12:13:00
+135,81,260,B,B,1,1.00,Tác giả Lão Hạc: chọn đáp án đúng?,Nam Cao,Nam Cao,2026-10-11 12:14:00
+136,81,261,C,C,1,1.00,Tác giả Tắt đèn: chọn đáp án đúng?,Ngô Tất Tố,Ngô Tất Tố,2026-10-11 12:15:00
+137,81,262,A,D,0,0.00,Tác giả Vợ nhặt: chọn đáp án đúng?,Nguyễn Du,Kim Lân,2026-10-11 12:16:00
+138,81,263,A,A,1,1.00,Tác giả Tây Tiến: chọn đáp án đúng?,Quang Dũng,Quang Dũng,2026-10-11 12:17:00
+139,81,264,B,B,1,1.00,Tác giả Đồng chí: chọn đáp án đúng?,Chính Hữu,Chính Hữu,2026-10-11 12:18:00
+140,82,277,A,A,1,1.00,Xác thực hai yếu tố: chọn đáp án đúng?,2FA,2FA,2026-10-11 12:21:00
+141,82,278,B,B,1,1.00,Mã hóa đối xứng: chọn đáp án đúng?,Symmetric encryption,Symmetric encryption,2026-10-11 12:22:00
+142,82,279,D,C,0,0.00,Mã hóa bất đối xứng: chọn đáp án đúng?,Phishing,Asymmetric encryption,2026-10-11 12:23:00
+143,82,280,D,D,1,1.00,Tấn công giả mạo để lấy thông tin: chọn đáp án đúng?,Phishing,Phishing,2026-10-11 12:24:00
+144,82,281,A,A,1,1.00,Mã băm: chọn đáp án đúng?,Hash,Hash,2026-10-11 12:25:00
+145,82,282,B,B,1,1.00,Quyền truy cập tối thiểu: chọn đáp án đúng?,Least privilege,Least privilege,2026-10-11 12:26:00
+146,83,283,A,A,1,1.00,Khóa chính: chọn đáp án đúng?,Primary Key,Primary Key,2026-10-11 12:29:00
+147,83,284,C,B,0,0.00,Khóa ngoại: chọn đáp án đúng?,One-to-many,Foreign Key,2026-10-11 12:30:00
+148,83,285,C,C,1,1.00,Quan hệ một-nhiều: chọn đáp án đúng?,One-to-many,One-to-many,2026-10-11 12:31:00
+149,83,286,D,D,1,1.00,Chuẩn hóa dữ liệu: chọn đáp án đúng?,Normalization,Normalization,2026-10-11 12:32:00
+150,83,287,A,A,1,1.00,Sơ đồ thực thể liên kết: chọn đáp án đúng?,ERD,ERD,2026-10-11 12:33:00
+151,83,288,C,B,0,0.00,Ràng buộc duy nhất: chọn đáp án đúng?,Foreign Key,UNIQUE,2026-10-11 12:34:00
+152,84,240,B,A,0,0.00,Lấy dữ liệu từ bảng: chọn đáp án đúng?,INSERT,SELECT,2026-10-11 12:37:00
+153,84,241,B,B,1,1.00,Thêm dữ liệu mới: chọn đáp án đúng?,INSERT,INSERT,2026-10-11 12:38:00
+154,84,242,C,C,1,1.00,Cập nhật bản ghi: chọn đáp án đúng?,UPDATE,UPDATE,2026-10-11 12:39:00
+155,84,243,D,D,1,1.00,Xóa bản ghi: chọn đáp án đúng?,DELETE,DELETE,2026-10-11 12:40:00
+156,84,244,B,A,0,0.00,Lọc dữ liệu: chọn đáp án đúng?,SELECT,WHERE,2026-10-11 12:41:00
+157,84,245,B,B,1,1.00,Sắp xếp kết quả: chọn đáp án đúng?,ORDER BY,ORDER BY,2026-10-11 12:42:00
+158,84,246,C,C,1,1.00,Nhóm các bản ghi: chọn đáp án đúng?,GROUP BY,GROUP BY,2026-10-11 12:43:00
+159,85,234,A,A,1,1.00,Good morning: chọn đáp án đúng?,Chào buổi sáng,Chào buổi sáng,2026-10-11 12:45:00
+160,85,235,B,B,1,1.00,Thank you: chọn đáp án đúng?,Cảm ơn,Cảm ơn,2026-10-11 12:46:00
+161,85,236,C,C,1,1.00,Excuse me: chọn đáp án đúng?,Xin lỗi/cho tôi hỏi,Xin lỗi/cho tôi hỏi,2026-10-11 12:47:00
+162,85,237,A,D,0,0.00,See you later: chọn đáp án đúng?,Chào buổi sáng,Hẹn gặp lại,2026-10-11 12:48:00
+163,85,238,A,A,1,1.00,How are you?: chọn đáp án đúng?,Bạn khỏe không?,Bạn khỏe không?,2026-10-11 12:49:00
+164,85,239,B,B,1,1.00,Nice to meet you: chọn đáp án đúng?,Rất vui được gặp bạn,Rất vui được gặp bạn,2026-10-11 12:50:00
+165,86,277,A,A,1,1.00,Xác thực hai yếu tố: chọn đáp án đúng?,2FA,2FA,2026-10-11 12:53:00
+166,86,278,B,B,1,1.00,Mã hóa đối xứng: chọn đáp án đúng?,Symmetric encryption,Symmetric encryption,2026-10-11 12:54:00
+167,86,279,D,C,0,0.00,Mã hóa bất đối xứng: chọn đáp án đúng?,Phishing,Asymmetric encryption,2026-10-11 12:55:00
+168,86,280,D,D,1,1.00,Tấn công giả mạo để lấy thông tin: chọn đáp án đúng?,Phishing,Phishing,2026-10-11 12:56:00
+169,86,281,A,A,1,1.00,Mã băm: chọn đáp án đúng?,Hash,Hash,2026-10-11 12:57:00
+170,86,282,B,B,1,1.00,Quyền truy cập tối thiểu: chọn đáp án đúng?,Least privilege,Least privilege,2026-10-11 12:58:00
+171,87,215,A,A,1,1.00,Thủ đô Việt Nam: chọn đáp án đúng?,Hà Nội,Hà Nội,2026-10-11 15:31:00
+172,87,216,B,B,1,1.00,Đỉnh núi cao nhất Việt Nam: chọn đáp án đúng?,Fansipan,Fansipan,2026-10-11 15:32:00
+173,87,217,C,C,1,1.00,Đồng bằng lớn nhất Việt Nam: chọn đáp án đúng?,Đồng bằng sông Cửu Long,Đồng bằng sông Cửu Long,2026-10-11 15:33:00
+174,87,218,A,D,0,0.00,Vịnh nổi tiếng ở Quảng Ninh: chọn đáp án đúng?,Hà Nội,Vịnh Hạ Long,2026-10-11 15:34:00
+175,87,219,A,A,1,1.00,Sông chảy qua Hà Nội: chọn đáp án đúng?,Sông Hồng,Sông Hồng,2026-10-11 15:35:00
+176,87,220,B,B,1,1.00,Thành phố biển ở Khánh Hòa: chọn đáp án đúng?,Nha Trang,Nha Trang,2026-10-11 15:36:00
+177,88,259,A,A,1,1.00,Tác giả Truyện Kiều: chọn đáp án đúng?,Nguyễn Du,Nguyễn Du,2026-10-11 15:39:00
+178,88,260,B,B,1,1.00,Tác giả Lão Hạc: chọn đáp án đúng?,Nam Cao,Nam Cao,2026-10-11 15:40:00
+179,88,261,D,C,0,0.00,Tác giả Tắt đèn: chọn đáp án đúng?,Kim Lân,Ngô Tất Tố,2026-10-11 15:41:00
+180,88,262,D,D,1,1.00,Tác giả Vợ nhặt: chọn đáp án đúng?,Kim Lân,Kim Lân,2026-10-11 15:42:00
+181,88,263,A,A,1,1.00,Tác giả Tây Tiến: chọn đáp án đúng?,Quang Dũng,Quang Dũng,2026-10-11 15:43:00
+182,88,264,B,B,1,1.00,Tác giả Đồng chí: chọn đáp án đúng?,Chính Hữu,Chính Hữu,2026-10-11 15:44:00
+183,89,271,A,A,1,1.00,Bộ phận lõi hệ điều hành: chọn đáp án đúng?,Kernel,Kernel,2026-10-11 15:47:00
+184,89,272,C,B,0,0.00,Tiến trình đang chạy: chọn đáp án đúng?,Thread,Process,2026-10-11 15:48:00
+185,89,273,C,C,1,1.00,Luồng thực thi: chọn đáp án đúng?,Thread,Thread,2026-10-11 15:49:00
+186,89,274,D,D,1,1.00,Bộ nhớ ảo: chọn đáp án đúng?,Virtual memory,Virtual memory,2026-10-11 15:50:00
+187,89,275,A,A,1,1.00,Lập lịch CPU: chọn đáp án đúng?,Scheduling,Scheduling,2026-10-11 15:51:00
+188,89,276,C,B,0,0.00,Tắc nghẽn tài nguyên: chọn đáp án đúng?,Process,Deadlock,2026-10-11 15:52:00
+189,90,283,B,A,0,0.00,Khóa chính: chọn đáp án đúng?,Foreign Key,Primary Key,2026-10-11 15:55:00
+190,90,284,B,B,1,1.00,Khóa ngoại: chọn đáp án đúng?,Foreign Key,Foreign Key,2026-10-11 15:56:00
+191,90,285,C,C,1,1.00,Quan hệ một-nhiều: chọn đáp án đúng?,One-to-many,One-to-many,2026-10-11 15:57:00
+192,90,286,D,D,1,1.00,Chuẩn hóa dữ liệu: chọn đáp án đúng?,Normalization,Normalization,2026-10-11 15:58:00
+193,90,287,B,A,0,0.00,Sơ đồ thực thể liên kết: chọn đáp án đúng?,Primary Key,ERD,2026-10-11 15:59:00
+194,90,288,B,B,1,1.00,Ràng buộc duy nhất: chọn đáp án đúng?,UNIQUE,UNIQUE,2026-10-11 16:00:00
+195,91,200,A,A,1,1.00,Apple nghĩa là gì?,Quả táo,Quả táo,2026-10-11 16:03:00
+196,91,201,C,C,1,1.00,Banana nghĩa là gì?,Quả chuối,Quả chuối,2026-10-11 16:04:00
+197,91,203,C,C,1,1.00,Cat nghĩa là gì?: chọn đáp án đúng?,Con mèo,Con mèo,2026-10-11 16:05:00
+198,92,221,A,A,1,1.00,Kiểu dữ liệu số nguyên: chọn đáp án đúng?,int,int,2026-10-11 16:11:00
+199,92,222,B,B,1,1.00,Kiểu dữ liệu danh sách: chọn đáp án đúng?,list,list,2026-10-11 16:12:00
+200,92,223,D,C,0,0.00,Từ khóa định nghĩa hàm: chọn đáp án đúng?,print,def,2026-10-11 16:13:00
+201,92,224,D,D,1,1.00,Hàm in ra màn hình: chọn đáp án đúng?,print,print,2026-10-11 16:14:00
+202,92,225,A,A,1,1.00,Hàm lấy độ dài: chọn đáp án đúng?,len,len,2026-10-11 16:15:00
+203,92,226,B,B,1,1.00,Kiểu dữ liệu ánh xạ: chọn đáp án đúng?,dict,dict,2026-10-11 16:16:00
+204,92,227,D,C,0,0.00,Giá trị logic đúng: chọn đáp án đúng?,def,True,2026-10-11 16:17:00
+205,93,240,A,A,1,1.00,Lấy dữ liệu từ bảng: chọn đáp án đúng?,SELECT,SELECT,2026-10-11 16:19:00
+206,93,241,C,B,0,0.00,Thêm dữ liệu mới: chọn đáp án đúng?,UPDATE,INSERT,2026-10-11 16:20:00
+207,93,242,C,C,1,1.00,Cập nhật bản ghi: chọn đáp án đúng?,UPDATE,UPDATE,2026-10-11 16:21:00
+208,93,243,D,D,1,1.00,Xóa bản ghi: chọn đáp án đúng?,DELETE,DELETE,2026-10-11 16:22:00
+209,93,244,A,A,1,1.00,Lọc dữ liệu: chọn đáp án đúng?,WHERE,WHERE,2026-10-11 16:23:00
+210,93,245,C,B,0,0.00,Sắp xếp kết quả: chọn đáp án đúng?,INSERT,ORDER BY,2026-10-11 16:24:00
+211,93,246,C,C,1,1.00,Nhóm các bản ghi: chọn đáp án đúng?,GROUP BY,GROUP BY,2026-10-11 16:25:00
+212,94,259,B,A,0,0.00,Tác giả Truyện Kiều: chọn đáp án đúng?,Nam Cao,Nguyễn Du,2026-10-11 16:27:00
+213,94,260,B,B,1,1.00,Tác giả Lão Hạc: chọn đáp án đúng?,Nam Cao,Nam Cao,2026-10-11 16:28:00
+214,94,261,C,C,1,1.00,Tác giả Tắt đèn: chọn đáp án đúng?,Ngô Tất Tố,Ngô Tất Tố,2026-10-11 16:29:00
+215,94,262,D,D,1,1.00,Tác giả Vợ nhặt: chọn đáp án đúng?,Kim Lân,Kim Lân,2026-10-11 16:30:00
+216,94,263,B,A,0,0.00,Tác giả Tây Tiến: chọn đáp án đúng?,Nguyễn Du,Quang Dũng,2026-10-11 16:31:00
+217,94,264,B,B,1,1.00,Tác giả Đồng chí: chọn đáp án đúng?,Chính Hữu,Chính Hữu,2026-10-11 16:32:00
+218,95,277,A,A,1,1.00,Xác thực hai yếu tố: chọn đáp án đúng?,2FA,2FA,2026-10-11 16:35:00
+219,95,278,B,B,1,1.00,Mã hóa đối xứng: chọn đáp án đúng?,Symmetric encryption,Symmetric encryption,2026-10-11 16:36:00
+220,95,279,C,C,1,1.00,Mã hóa bất đối xứng: chọn đáp án đúng?,Asymmetric encryption,Asymmetric encryption,2026-10-11 16:37:00
+221,95,280,A,D,0,0.00,Tấn công giả mạo để lấy thông tin: chọn đáp án đúng?,2FA,Phishing,2026-10-11 16:38:00
+222,95,281,A,A,1,1.00,Mã băm: chọn đáp án đúng?,Hash,Hash,2026-10-11 16:39:00
+223,95,282,B,B,1,1.00,Quyền truy cập tối thiểu: chọn đáp án đúng?,Least privilege,Least privilege,2026-10-11 16:40:00
+224,96,271,A,A,1,1.00,Bộ phận lõi hệ điều hành: chọn đáp án đúng?,Kernel,Kernel,2026-10-11 16:43:00
+225,96,272,B,B,1,1.00,Tiến trình đang chạy: chọn đáp án đúng?,Process,Process,2026-10-11 16:44:00
+226,96,273,D,C,0,0.00,Luồng thực thi: chọn đáp án đúng?,Virtual memory,Thread,2026-10-11 16:45:00
+227,96,274,D,D,1,1.00,Bộ nhớ ảo: chọn đáp án đúng?,Virtual memory,Virtual memory,2026-10-11 16:46:00
+228,96,275,A,A,1,1.00,Lập lịch CPU: chọn đáp án đúng?,Scheduling,Scheduling,2026-10-11 16:47:00
+229,96,276,B,B,1,1.00,Tắc nghẽn tài nguyên: chọn đáp án đúng?,Deadlock,Deadlock,2026-10-11 16:48:00
+230,97,215,A,A,1,1.00,Thủ đô Việt Nam: chọn đáp án đúng?,Hà Nội,Hà Nội,2026-10-11 16:51:00
+231,97,216,C,B,0,0.00,Đỉnh núi cao nhất Việt Nam: chọn đáp án đúng?,Đồng bằng sông Cửu Long,Fansipan,2026-10-11 16:52:00
+232,97,217,C,C,1,1.00,Đồng bằng lớn nhất Việt Nam: chọn đáp án đúng?,Đồng bằng sông Cửu Long,Đồng bằng sông Cửu Long,2026-10-11 16:53:00
+233,97,218,D,D,1,1.00,Vịnh nổi tiếng ở Quảng Ninh: chọn đáp án đúng?,Vịnh Hạ Long,Vịnh Hạ Long,2026-10-11 16:54:00
+234,97,219,A,A,1,1.00,Sông chảy qua Hà Nội: chọn đáp án đúng?,Sông Hồng,Sông Hồng,2026-10-11 16:55:00
+235,97,220,C,B,0,0.00,Thành phố biển ở Khánh Hòa: chọn đáp án đúng?,Fansipan,Nha Trang,2026-10-11 16:56:00
+236,98,234,B,A,0,0.00,Good morning: chọn đáp án đúng?,Cảm ơn,Chào buổi sáng,2026-10-11 16:59:00
+237,98,235,B,B,1,1.00,Thank you: chọn đáp án đúng?,Cảm ơn,Cảm ơn,2026-10-11 17:00:00
+238,98,236,C,C,1,1.00,Excuse me: chọn đáp án đúng?,Xin lỗi/cho tôi hỏi,Xin lỗi/cho tôi hỏi,2026-10-11 17:01:00
+239,98,237,D,D,1,1.00,See you later: chọn đáp án đúng?,Hẹn gặp lại,Hẹn gặp lại,2026-10-11 17:02:00
+240,98,238,B,A,0,0.00,How are you?: chọn đáp án đúng?,Chào buổi sáng,Bạn khỏe không?,2026-10-11 17:03:00
+241,98,239,B,B,1,1.00,Nice to meet you: chọn đáp án đúng?,Rất vui được gặp bạn,Rất vui được gặp bạn,2026-10-11 17:04:00
+242,99,277,A,A,1,1.00,Xác thực hai yếu tố: chọn đáp án đúng?,2FA,2FA,2026-10-11 17:07:00
+243,99,278,B,B,1,1.00,Mã hóa đối xứng: chọn đáp án đúng?,Symmetric encryption,Symmetric encryption,2026-10-11 17:08:00
+244,99,279,C,C,1,1.00,Mã hóa bất đối xứng: chọn đáp án đúng?,Asymmetric encryption,Asymmetric encryption,2026-10-11 17:09:00
+245,99,280,A,D,0,0.00,Tấn công giả mạo để lấy thông tin: chọn đáp án đúng?,2FA,Phishing,2026-10-11 17:10:00
+246,99,281,A,A,1,1.00,Mã băm: chọn đáp án đúng?,Hash,Hash,2026-10-11 17:11:00
+247,99,282,B,B,1,1.00,Quyền truy cập tối thiểu: chọn đáp án đúng?,Least privilege,Least privilege,2026-10-11 17:12:00
+248,100,271,A,A,1,1.00,Bộ phận lõi hệ điều hành: chọn đáp án đúng?,Kernel,Kernel,2026-10-11 17:15:00
+249,100,272,B,B,1,1.00,Tiến trình đang chạy: chọn đáp án đúng?,Process,Process,2026-10-11 17:16:00
+250,100,273,D,C,0,0.00,Luồng thực thi: chọn đáp án đúng?,Virtual memory,Thread,2026-10-11 17:17:00
+251,100,274,D,D,1,1.00,Bộ nhớ ảo: chọn đáp án đúng?,Virtual memory,Virtual memory,2026-10-11 17:18:00
+252,100,275,A,A,1,1.00,Lập lịch CPU: chọn đáp án đúng?,Scheduling,Scheduling,2026-10-11 17:19:00
+253,100,276,B,B,1,1.00,Tắc nghẽn tài nguyên: chọn đáp án đúng?,Deadlock,Deadlock,2026-10-11 17:20:00
+254,101,221,A,A,1,1.00,Kiểu dữ liệu số nguyên: chọn đáp án đúng?,int,int,2026-10-11 17:23:00
+255,101,222,C,B,0,0.00,Kiểu dữ liệu danh sách: chọn đáp án đúng?,def,list,2026-10-11 17:24:00
+256,101,223,C,C,1,1.00,Từ khóa định nghĩa hàm: chọn đáp án đúng?,def,def,2026-10-11 17:25:00
+257,101,224,D,D,1,1.00,Hàm in ra màn hình: chọn đáp án đúng?,print,print,2026-10-11 17:26:00
+258,101,225,A,A,1,1.00,Hàm lấy độ dài: chọn đáp án đúng?,len,len,2026-10-11 17:27:00
+259,101,226,C,B,0,0.00,Kiểu dữ liệu ánh xạ: chọn đáp án đúng?,list,dict,2026-10-11 17:28:00
+260,101,227,C,C,1,1.00,Giá trị logic đúng: chọn đáp án đúng?,True,True,2026-10-11 17:29:00

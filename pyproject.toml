@@ -1,0 +1,10 @@
+[project]
+name = "flashcard"
+version = "0.1.0"
+description = "Ứng dụng học tập bằng flashcard"
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.uv]
+package = false
+cache-dir = ".uv-cache"
