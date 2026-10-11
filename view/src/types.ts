@@ -56,6 +56,8 @@ export interface QuizAttempt {
 export interface UserProfile {
   id: string;
   name: string;
+  username?: string;
+  password?: string;
   email: string;
   role: 'guest' | 'user' | 'admin';
   avatar: string;
@@ -91,4 +93,6 @@ export type TabType =
   | 'admin_users'
   | 'admin_moderation'
   | 'admin'
-  | 'code_viewer';
+  | 'code_viewer'
+  | 'login'
+  | 'register';

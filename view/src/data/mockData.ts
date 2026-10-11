@@ -4,6 +4,8 @@ export const INITIAL_USERS: UserProfile[] = [
   {
     id: 'u1',
     name: 'Nguyễn Hoàng Nam',
+    username: 'namnguyen',
+    password: 'password123',
     email: 'user@flashlearn.vn',
     role: 'user',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&h=200&q=80',
@@ -14,6 +16,8 @@ export const INITIAL_USERS: UserProfile[] = [
   {
     id: 'u2',
     name: 'Trần Thị Mai Anh',
+    username: 'maianh',
+    password: 'password123',
     email: 'maianh@flashlearn.vn',
     role: 'user',
     avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&h=200&q=80',
@@ -24,6 +28,8 @@ export const INITIAL_USERS: UserProfile[] = [
   {
     id: 'u3',
     name: 'Quản Trị Viên (Admin)',
+    username: 'admin',
+    password: 'admin123',
     email: 'admin@flashlearn.vn',
     role: 'admin',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&h=200&q=80',
@@ -34,6 +40,8 @@ export const INITIAL_USERS: UserProfile[] = [
   {
     id: 'u4',
     name: 'Lê Viết Dũng',
+    username: 'vietdung',
+    password: 'password123',
     email: 'dung.spammer@temp.vn',
     role: 'user',
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&h=200&q=80',

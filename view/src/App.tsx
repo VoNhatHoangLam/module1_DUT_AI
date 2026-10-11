@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Menu } from 'lucide-react';
+import { Menu, LogIn, UserPlus } from 'lucide-react';
 
 // Data types & initial data
 import {
@@ -35,6 +35,8 @@ import { ProfileView } from './components/views/ProfileView';
 import { AdminUsersView } from './components/views/AdminUsersView';
 import { AdminModerationView } from './components/views/AdminModerationView';
 import { CodeViewerView } from './components/views/CodeViewerView';
+import { LoginView } from './components/views/LoginView';
+import { RegisterView } from './components/views/RegisterView';
 
 // Modals
 import { CreateSetModal } from './components/modals/CreateSetModal';
@@ -403,6 +405,17 @@ export default function App() {
     setHistory((prev) => [attempt, ...prev]);
   };
 
+  const handleLoginSuccess = (user: UserProfile) => {
+    setCurrentUser(user);
+    navigateTo('dashboard');
+  };
+
+  const handleRegisterSuccess = (newUser: UserProfile) => {
+    setUsers((prev) => [newUser, ...prev]);
+    setCurrentUser(newUser);
+    navigateTo('dashboard');
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex font-sans">
       {/* Toast Notification */}
@@ -598,6 +611,26 @@ export default function App() {
           {/* VIEW: GRADIO CODE VIEWER */}
           {currentTab === 'code_viewer' && (
             <CodeViewerView />
+          )}
+
+          {/* VIEW: ĐĂNG NHẬP (LOGIN) */}
+          {currentTab === 'login' && (
+            <LoginView
+              users={users}
+              onLoginSuccess={handleLoginSuccess}
+              navigateTo={navigateTo}
+              notify={notify}
+            />
+          )}
+
+          {/* VIEW: ĐĂNG KÝ (REGISTER) */}
+          {currentTab === 'register' && (
+            <RegisterView
+              users={users}
+              onRegisterSuccess={handleRegisterSuccess}
+              navigateTo={navigateTo}
+              notify={notify}
+            />
           )}
         </main>
       </div>

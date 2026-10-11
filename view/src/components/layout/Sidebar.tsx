@@ -10,6 +10,8 @@ import {
   Users,
   ChevronLeft,
   X,
+  LogIn,
+  UserPlus,
 } from 'lucide-react';
 import { UserProfile, TabType } from '../../types';
 
@@ -157,6 +159,39 @@ export const Sidebar: React.FC<SidebarProps> = ({
             >
               <User className={`w-5 h-5 ${currentTab === 'profile' ? 'text-blue-600' : 'text-slate-400'}`} />
               <span>Profile</span>
+            </button>
+
+            {/* Auth section */}
+            <div className="pt-2 pb-1">
+              <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3 py-1">
+                Tài khoản
+              </div>
+            </div>
+
+            {/* Đăng nhập */}
+            <button
+              onClick={() => navigateTo('login')}
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-sm transition-all text-left ${
+                currentTab === 'login'
+                  ? 'bg-blue-50 text-blue-700 font-bold shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+              }`}
+            >
+              <LogIn className={`w-5 h-5 ${currentTab === 'login' ? 'text-blue-600' : 'text-slate-400'}`} />
+              <span>Đăng nhập</span>
+            </button>
+
+            {/* Đăng ký */}
+            <button
+              onClick={() => navigateTo('register')}
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-sm transition-all text-left ${
+                currentTab === 'register'
+                  ? 'bg-emerald-50 text-emerald-700 font-bold shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+              }`}
+            >
+              <UserPlus className={`w-5 h-5 ${currentTab === 'register' ? 'text-emerald-600' : 'text-slate-400'}`} />
+              <span>Đăng ký</span>
             </button>
 
             {/* Admin Tabs */}
