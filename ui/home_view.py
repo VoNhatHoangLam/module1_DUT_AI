@@ -1,1 +1,0 @@
-"""Giao diện trang chủ."""
