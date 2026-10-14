@@ -1,27 +1,13 @@
-import csv
-import os
-# Đường dẫn tới file csv của bạn
-FILE_PATH = 'sample_data/flashcards.csv'
-# 1. Hàm đọc toàn bộ thẻ flashcard
-def get_all_flashcards():
-    flashcards = []
-    # Mở file để đọc ('r')
-    with open(FILE_PATH, mode='r', encoding='utf-8') as file:
-        reader = csv.DictReader(file) # Đọc và tự động map với tiêu đề cột
-        for row in reader:
-            flashcards.append(row)
-    return flashcards
-# 2. Hàm thêm một thẻ flashcard mới (tương tự chức năng tạo thẻ)
-def add_flashcard(card_id, deck_id, front_text, back_text):
-    # Mở file ở chế độ ghi tiếp vào cuối dòng ('a' - append)
-    with open(FILE_PATH, mode='a', newline='', encoding='utf-8') as file:
-        writer = csv.writer(file)
-        # Ghi một dòng mới vào file csv
-        writer.writerow([card_id, deck_id, front_text, back_text, "not_remembered"])
-    print(f"Đã thêm thành công thẻ: {card_id}")
-# --- CHẠY THỬ ---
-if __name__ == "__main__":
-    # In ra toàn bộ thẻ đang có
-    print("Dữ liệu hiện tại:", get_all_flashcards())
-    # Thêm thử 1 thẻ
-    # add_flashcard("card_03", "deck_101", "Hello", "Xin chào")
+term,definition
+Algorithm,Một tập hợp hữu hạn các hướng dẫn từng bước rõ ràng để giải quyết một bài toán cụ thể hoặc thực hiện một phép tính.
+Machine Learning,Một nhánh của trí tuệ nhân tạo tập trung vào việc xây dựng các hệ thống có khả năng học hỏi và cải thiện từ dữ liệu mà không cần lập trình tường minh.
+Neural Network,Mô hình tính toán phỏng theo cấu trúc mạng lưới nơ-ron sinh học của não bộ bao gồm các lớp nơ-ron liên kết với nhau.
+Overfitting,Hiện tượng mô hình học máy ghi nhớ quá kỹ dữ liệu huấn luyện dẫn đến suy giảm khả năng dự đoán chính xác trên dữ liệu mới.
+API (Application Programming Interface),Giao diện lập trình ứng dụng cho phép các phần mềm và hệ thống khác nhau giao tiếp và trao đổi dữ liệu với nhau.
+Database Index,Cấu trúc dữ liệu giúp tăng tốc độ tìm kiếm và truy xuất các hàng dữ liệu trong bảng cơ sở dữ liệu.
+Polymorphism (Đa hình),Khái niệm trong lập trình hướng đối tượng cho phép các đối tượng khác nhau phản hồi cùng một thông điệp theo các cách khác nhau.
+Cache Memory,Bộ nhớ đệm tốc độ cao lưu trữ dữ liệu tạm thời để giảm thời gian truy cập vào bộ nhớ chính hoặc máy chủ.
+Asynchronous Programming,Mô hình lập trình cho phép một tác vụ chạy song song ở chế độ nền mà không làm chặn tiến trình thực thi chính.
+Git Rebase,Lệnh Git chuyển nhánh gốc của một nhánh hiện tại sang một commit khác để giữ cho lịch sử commit thẳng và gọn gàng.
+SOLID Principles,Năm nguyên tắc thiết kế phần mềm hướng đối tượng giúp mã nguồn dễ hiểu bảo trì và mở rộng hơn.
+Docker Container,Đơn vị phần mềm chuẩn đóng gói mã nguồn và tất cả các phụ thuộc để ứng dụng chạy nhanh chóng và đáng tin cậy giữa các môi trường.
