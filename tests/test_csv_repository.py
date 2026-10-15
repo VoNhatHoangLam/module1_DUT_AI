@@ -2,7 +2,6 @@
 
 import tempfile
 import unittest
-from datetime import datetime
 from pathlib import Path
 
 from models import Card
@@ -19,8 +18,8 @@ class CsvRepositoryTestCase(unittest.TestCase):
         self.temporary_directory = tempfile.TemporaryDirectory()
         self.file_path = Path(self.temporary_directory.name) / "cards.csv"
         self.file_path.write_text(
-            "card_id,deck_id,front_text,back_text,position,is_deleted,created_at,updated_at\n"
-            "100,10,Apple,Quả táo,1,0,2026-10-10 10:05:00,2026-10-10 10:05:00\n",
+            "card_id,deck_id,front_text,back_text,position\n"
+            "100,10,Apple,Quả táo,1\n",
             encoding="utf-8",
         )
         self.repository = CsvRepository(self.file_path, Card, "card_id")
@@ -33,9 +32,10 @@ class CsvRepositoryTestCase(unittest.TestCase):
 
         self.assertEqual(len(cards), 1)
         self.assertEqual(cards[0].card_id, 100)
+        self.assertEqual(cards[0].deck_id, 10)
+        self.assertEqual(cards[0].front_text, "Apple")
         self.assertEqual(cards[0].back_text, "Quả táo")
-        self.assertFalse(cards[0].is_deleted)
-        self.assertEqual(cards[0].created_at, datetime(2026, 10, 10, 10, 5))
+        self.assertEqual(cards[0].position, 1)
 
     def test_add_generates_next_id_and_persists_record(self) -> None:
         card = Card(
@@ -83,7 +83,7 @@ class RealDataSmokeTestCase(unittest.TestCase):
     def test_all_project_csv_files_match_their_models(self) -> None:
         repositories = create_repositories()
 
-        self.assertEqual(len(repositories), 10)
+        self.assertEqual(len(repositories), 6)
         for repository in repositories.values():
             repository.get_all()
 

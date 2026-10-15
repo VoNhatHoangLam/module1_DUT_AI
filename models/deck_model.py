@@ -10,11 +10,10 @@ class Deck:
     """Đại diện cho một bản ghi trong bảng decks."""
 
     deck_id: Optional[int] = None
-    owner_id: int
     title: str
     description: Optional[str] = None
-    visibility: str = "PRIVATE"
-    moderation_status: str = "DRAFT"
+    total_cards: int = 0
+    is_studied: bool = False
     is_deleted: bool = False
     created_at: datetime = field(
         default_factory=lambda: datetime.now().replace(microsecond=0)

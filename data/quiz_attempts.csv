@@ -1,2 +1,2 @@
-﻿attempt_id,quiz_id,quiz_title_snapshot,started_at,submitted_at,total_questions,correct_count,score_percent
-70,20,Quiz từ vựng tiếng Anh,2026-10-11 09:00:00,2026-10-11 09:05:00,2,1,50.00
+attempt_id,quiz_id,quiz_title_snapshot,attempt_status,started_at,submitted_at,total_questions,correct_count,score_percent
+70,20,Quiz từ vựng tiếng Anh,STARTED,2026-10-11 09:00:00,2026-10-11 09:05:00,2,1,50.00

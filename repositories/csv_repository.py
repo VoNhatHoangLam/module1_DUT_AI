@@ -15,16 +15,12 @@ from typing import Any, Generic, Optional, TypeVar, Union, get_args, get_origin,
 
 from config import DATA_DIR
 from models import (
-    AccountStatusLog,
     Card,
     Deck,
     Question,
     Quiz,
     QuizAnswer,
     QuizAttempt,
-    StudyReview,
-    StudySession,
-    User,
 )
 
 
@@ -273,27 +269,19 @@ class CsvRepository(Generic[T]):
 
 
 _DEFAULT_REPOSITORY_CONFIG: dict[str, tuple[type[Any], str, str]] = {
-    "users": (User, "users.csv", "user_id"),
     "decks": (Deck, "decks.csv", "deck_id"),
     "cards": (Card, "cards.csv", "card_id"),
     "quizzes": (Quiz, "quizzes.csv", "quiz_id"),
     "questions": (Question, "questions.csv", "question_id"),
-    "study_sessions": (StudySession, "study_sessions.csv", "study_session_id"),
-    "study_reviews": (StudyReview, "study_reviews.csv", "study_review_id"),
     "quiz_attempts": (QuizAttempt, "quiz_attempts.csv", "attempt_id"),
     "quiz_answers": (QuizAnswer, "quiz_answers.csv", "answer_id"),
-    "account_status_logs": (
-        AccountStatusLog,
-        "account_status_logs.csv",
-        "status_change_id",
-    ),
 }
 
 
 def create_repositories(
     data_directory: str | Path = DATA_DIR,
 ) -> dict[str, CsvRepository[Any]]:
-    """Tạo repository cho đúng 10 bảng dữ liệu của ứng dụng."""
+    """Tạo repository cho đúng 6 bảng dữ liệu của ứng dụng."""
 
     directory = Path(data_directory)
     return {

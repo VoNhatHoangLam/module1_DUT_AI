@@ -1,7 +1,6 @@
 """Mô hình dữ liệu của bảng cards."""
 
-from dataclasses import dataclass, field
-from datetime import datetime
+from dataclasses import dataclass
 from typing import Optional
 
 
@@ -14,10 +13,3 @@ class Card:
     front_text: str
     back_text: str
     position: int
-    is_deleted: bool = False
-    created_at: datetime = field(
-        default_factory=lambda: datetime.now().replace(microsecond=0)
-    )
-    updated_at: datetime = field(
-        default_factory=lambda: datetime.now().replace(microsecond=0)
-    )
