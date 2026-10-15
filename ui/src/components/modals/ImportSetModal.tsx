@@ -128,9 +128,9 @@ export const ImportSetModal: React.FC<ImportSetModalProps> = ({
         <div className="space-y-4">
           <div className="p-4 rounded-2xl border-2 border-dashed border-slate-200 text-center space-y-2 bg-slate-50">
             <Upload className="w-8 h-8 text-blue-500 mx-auto" />
-            <div className="text-sm font-bold text-slate-800">Tải lên tệp CSV/JSON Flashcards</div>
+            <div className="text-sm font-bold text-slate-800">Tải lên tệp CSV Flashcards</div>
             <p className="text-xs text-slate-500">
-              Định dạng CSV mẫu: <code>term,definition</code> hoặc tệp JSON <code>[{`{"term": "...", "definition": "..."}`}]</code>
+              Định dạng CSV mẫu: <code className="bg-slate-200/70 px-1.5 py-0.5 rounded text-slate-700 font-mono">front_text,back_text</code>
             </p>
             <input
               type="file"

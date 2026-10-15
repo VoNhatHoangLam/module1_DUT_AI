@@ -3,8 +3,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Award,
-  Globe,
-  Upload,
   Plus,
   Search,
   Trash2,
@@ -20,7 +18,6 @@ interface MyQuizzesViewProps {
   onOpenImportQuizModal: () => void;
   onDeleteQuizConfirm: (id: string) => void;
   handleStartQuiz: (quiz: QuizSet) => void;
-  onBackToProfile: () => void;
   navigateTo?: (tab: TabType) => void;
 }
 
@@ -31,11 +28,9 @@ export const MyQuizzesView: React.FC<MyQuizzesViewProps> = ({
   onOpenImportQuizModal,
   onDeleteQuizConfirm,
   handleStartQuiz,
-  onBackToProfile,
   navigateTo,
 }) => {
   const [search, setSearch] = useState('');
-  const [category, setCategory] = useState('All');
   const [page, setPage] = useState(1);
   const PAGE_SIZE = 4;
 
@@ -45,10 +40,9 @@ export const MyQuizzesView: React.FC<MyQuizzesViewProps> = ({
         (q.title || '').toLowerCase().includes(search.toLowerCase()) ||
         (q.description || '').toLowerCase().includes(search.toLowerCase()) ||
         (q.category || '').toLowerCase().includes(search.toLowerCase());
-      const matchCat = category === 'All' || q.category === category;
-      return matchSearch && matchCat;
+      return matchSearch;
     });
-  }, [myPersonalQuizzes, search, category]);
+  }, [myPersonalQuizzes, search]);
 
   const totalPages = Math.max(1, Math.ceil(filteredQuizzes.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
@@ -60,59 +54,16 @@ export const MyQuizzesView: React.FC<MyQuizzesViewProps> = ({
 
   return (
     <div className="space-y-6">
-      {/* Sub-tabs: Cộng đồng & Của tôi */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
-        <div className="flex items-center gap-2">
-          {navigateTo && (
-            <button
-              onClick={() => navigateTo('quiz_list')}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:text-blue-600 hover:bg-slate-100 transition-all cursor-pointer"
-            >
-              <Globe className="w-4 h-4" />
-              <span>Cộng đồng</span>
-            </button>
-          )}
-          <button
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold bg-blue-600 text-white shadow-xs cursor-default"
-          >
-            <Award className="w-4 h-4" />
-            <span>Của tôi</span>
-          </button>
-        </div>
-
-        <button
-          onClick={onBackToProfile}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-colors shadow-xs cursor-pointer"
-        >
-          <ChevronLeft className="w-4 h-4 text-blue-600" /> Quay lại Profile
-        </button>
-      </div>
-
       {/* Header with Title and Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2.5">
-            <h1 className="text-2xl font-extrabold text-slate-900 flex items-center gap-2">
-              <Award className="w-6 h-6 text-indigo-600" />
-              Quiz của tôi
-            </h1>
-            <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-indigo-100 text-indigo-800">
-              {filteredQuizzes.length} đề
-            </span>
-          </div>
-          <p className="text-sm text-slate-500 mt-1">
-            Toàn bộ các đề thi Quiz do chính bạn ({currentUser.name}) biên soạn • Tìm kiếm và phân trang
-          </p>
+          <h1 className="text-2xl font-extrabold text-slate-900 flex items-center gap-2">
+            <Award className="w-6 h-6 text-indigo-600" />
+            Quiz của tôi
+          </h1>
         </div>
 
         <div className="flex items-center gap-2.5">
-          <button
-            onClick={onOpenImportQuizModal}
-            className="px-4 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all flex items-center gap-2 shadow-xs cursor-pointer"
-          >
-            <Upload className="w-4 h-4 text-slate-500" />
-            Nhập từ file
-          </button>
           <button
             onClick={onOpenCreateQuizModal}
             className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs transition-all flex items-center gap-2 shadow-sm cursor-pointer"
@@ -123,9 +74,9 @@ export const MyQuizzesView: React.FC<MyQuizzesViewProps> = ({
         </div>
       </div>
 
-      {/* Filter & Search Bar */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-col sm:flex-row gap-3 items-center justify-between">
-        <div className="relative w-full sm:w-96">
+      {/* Search Bar */}
+      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+        <div className="relative w-full">
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
@@ -137,23 +88,6 @@ export const MyQuizzesView: React.FC<MyQuizzesViewProps> = ({
             }}
             className="w-full pl-10 pr-4 py-2 text-sm bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white"
           />
-        </div>
-
-        <div className="flex items-center gap-2 w-full sm:w-auto">
-          <label className="text-xs font-semibold text-slate-500 whitespace-nowrap">Chủ đề:</label>
-          <select
-            value={category}
-            onChange={(e) => {
-              setCategory(e.target.value);
-              setPage(1);
-            }}
-            className="text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >
-            <option value="All">Tất cả chủ đề</option>
-            <option value="Công nghệ thông tin">Công nghệ thông tin</option>
-            <option value="Ngoại ngữ">Ngoại ngữ</option>
-            <option value="Thiết kế">Thiết kế</option>
-          </select>
         </div>
       </div>
 
@@ -167,40 +101,6 @@ export const MyQuizzesView: React.FC<MyQuizzesViewProps> = ({
                 className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">
-                      {quiz.category}
-                    </span>
-                    <div className="flex items-center gap-1.5">
-                      <span
-                        className={`text-[11px] font-semibold px-2 py-0.5 rounded-md ${
-                          quiz.privacy === 'private'
-                            ? 'bg-slate-100 text-slate-700 border border-slate-200'
-                            : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                        }`}
-                      >
-                        {quiz.privacy === 'private' ? '🔒 Riêng tư' : '🌐 Công khai'}
-                      </span>
-                      {quiz.privacy !== 'private' && (
-                        <span
-                          className={`text-[11px] font-semibold px-2 py-0.5 rounded-md ${
-                            quiz.status === 'approved'
-                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                              : quiz.status === 'pending'
-                              ? 'bg-amber-50 text-amber-700 border border-amber-200'
-                              : 'bg-rose-50 text-rose-700 border border-rose-200'
-                          }`}
-                        >
-                          {quiz.status === 'approved'
-                            ? 'Đã duyệt'
-                            : quiz.status === 'pending'
-                            ? 'Chờ duyệt'
-                            : 'Bị từ chối'}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
                   <h3 className="font-bold text-lg text-slate-900 line-clamp-1">{quiz.title}</h3>
                   <p className="text-sm text-slate-500 mt-1.5 line-clamp-2">{quiz.description}</p>
                 </div>
@@ -287,11 +187,10 @@ export const MyQuizzesView: React.FC<MyQuizzesViewProps> = ({
           <button
             onClick={() => {
               setSearch('');
-              setCategory('All');
             }}
             className="px-4 py-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold cursor-pointer"
           >
-            Xóa bộ lọc tìm kiếm
+            Xóa tìm kiếm
           </button>
         </div>
       )}

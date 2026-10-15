@@ -10,6 +10,7 @@ interface QuizQuestionImport {
   optionD: string;
   correctAnswer: 'A' | 'B' | 'C' | 'D';
   explanation: string;
+  points?: number;
 }
 
 interface ImportQuizModalProps {
@@ -247,9 +248,8 @@ export const ImportQuizModal: React.FC<ImportQuizModalProps> = ({
 
           <div className="p-4 rounded-2xl border-2 border-dashed border-slate-200 text-center space-y-2 bg-slate-50">
             <Upload className="w-8 h-8 text-indigo-500 mx-auto" />
-            <div className="text-sm font-bold text-slate-800">Tải lên tệp CSV/JSON câu hỏi trắc nghiệm</div>
             <p className="text-xs text-slate-500">
-              Cấu trúc cột: question, option_a, option_b, option_c, option_d, correct_answer, explanation
+              Định dạng CSV mẫu: <code className="bg-slate-200/70 px-1.5 py-0.5 rounded text-slate-700 font-mono">question_text,option_a,option_b,option_c,option_d,correct_answer,points</code>
             </p>
             <input
               type="file"

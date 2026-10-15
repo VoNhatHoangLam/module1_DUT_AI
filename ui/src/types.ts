@@ -26,7 +26,10 @@ export interface QuizQuestion {
   optionD: string;
   correctAnswer: 'A' | 'B' | 'C' | 'D';
   explanation: string;
+  points?: number;
 }
+
+export type QuizQuestionInput = Omit<QuizQuestion, 'id'>;
 
 export interface QuizSet {
   id: string;
@@ -67,15 +70,8 @@ export interface UserProfile {
 }
 
 export type TabType =
-  | 'community'
-  | 'quiz_list'
-  | 'history'
   | 'sets'
   | 'my_quizzes'
+  | 'history'
   | 'study'
-  | 'quiz_mode'
-  | 'profile'
-  | 'admin_users'
-  | 'admin'
-  | 'login'
-  | 'register';
+  | 'quiz_mode';

@@ -14,9 +14,6 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ history }) => {
           <Clock className="w-6 h-6 text-emerald-600" />
           Lịch sử làm bài thi
         </h1>
-        <p className="text-sm text-slate-500">
-          Xem lại kết quả, điểm số và chi tiết các bài kiểm tra đã hoàn thành
-        </p>
       </div>
 
       <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">

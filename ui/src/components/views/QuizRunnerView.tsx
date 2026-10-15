@@ -50,13 +50,18 @@ export const QuizRunnerView: React.FC<QuizRunnerViewProps> = ({
 
   const handleSubmitQuiz = () => {
     let correct = 0;
+    let earnedPoints = 0;
+    let totalPoints = 0;
     activeQuiz.questions.forEach((q) => {
+      const pts = typeof q.points === 'number' && q.points > 0 ? q.points : 1;
+      totalPoints += pts;
       if (userAnswers[q.id] === q.correctAnswer) {
         correct++;
+        earnedPoints += pts;
       }
     });
 
-    const scorePct = Math.round((correct / activeQuiz.questions.length) * 100);
+    const scorePct = totalPoints > 0 ? Math.round((earnedPoints / totalPoints) * 100) : 0;
     const newAttempt: QuizAttempt = {
       id: `h_${Date.now()}`,
       quizTitle: activeQuiz.title,
@@ -73,7 +78,7 @@ export const QuizRunnerView: React.FC<QuizRunnerViewProps> = ({
     setIsSubmitted(true);
     setShowSubmitConfirm(false);
     confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
-    notify(`Hoàn thành bài thi! Điểm số của bạn: ${scorePct}%`, 'success');
+    notify(`Hoàn thành bài thi! Điểm số của bạn: ${scorePct}% (${earnedPoints}/${totalPoints} điểm)`, 'success');
   };
 
   const handleRestart = () => {
@@ -95,13 +100,21 @@ export const QuizRunnerView: React.FC<QuizRunnerViewProps> = ({
             </div>
           </div>
 
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-sm font-bold">
-            <Clock className="w-4 h-4 text-amber-600" />
-            {Math.floor(timeLeft / 60)
-              .toString()
-              .padStart(2, '0')}
-            :
-            {(timeLeft % 60).toString().padStart(2, '0')}
+          <div className="flex items-center gap-2.5">
+            <button
+              onClick={() => setShowSubmitConfirm(true)}
+              className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1 shadow-xs"
+            >
+              <Check className="w-3.5 h-3.5" /> Nộp bài
+            </button>
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-sm font-bold">
+              <Clock className="w-4 h-4 text-amber-600" />
+              {Math.floor(timeLeft / 60)
+                .toString()
+                .padStart(2, '0')}
+              :
+              {(timeLeft % 60).toString().padStart(2, '0')}
+            </div>
           </div>
         </div>
       )}
@@ -188,15 +201,20 @@ export const QuizRunnerView: React.FC<QuizRunnerViewProps> = ({
                     <h4 className="font-bold text-slate-900 text-base">
                       Câu {idx + 1}: {q.question}
                     </h4>
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shrink-0 ${
-                        isCorrect
-                          ? 'bg-emerald-100 text-emerald-800'
-                          : 'bg-rose-100 text-rose-800'
-                      }`}
-                    >
-                      {isCorrect ? 'Chính xác' : 'Chưa đúng'}
-                    </span>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full">
+                        {isCorrect ? `+${q.points ?? 1}` : '0'}/{q.points ?? 1} điểm
+                      </span>
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
+                          isCorrect
+                            ? 'bg-emerald-100 text-emerald-800'
+                            : 'bg-rose-100 text-rose-800'
+                        }`}
+                      >
+                        {isCorrect ? 'Chính xác' : 'Chưa đúng'}
+                      </span>
+                    </div>
                   </div>
 
                   <div className="space-y-2 mt-4 text-sm">
@@ -253,9 +271,14 @@ export const QuizRunnerView: React.FC<QuizRunnerViewProps> = ({
         /* ACTIVE QUESTION FORM */
         <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
           <div className="space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
-              Câu hỏi {questionIndex + 1}
-            </span>
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
+                Câu hỏi {questionIndex + 1}
+              </span>
+              <span className="text-xs font-bold px-2 py-0.5 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200">
+                {activeQuiz.questions[questionIndex].points ?? 1} điểm
+              </span>
+            </div>
             <h3 className="text-lg sm:text-xl font-bold text-slate-900 leading-snug">
               {activeQuiz.questions[questionIndex].question}
             </h3>
@@ -313,26 +336,22 @@ export const QuizRunnerView: React.FC<QuizRunnerViewProps> = ({
               <ChevronLeft className="w-4 h-4" /> Câu trước
             </button>
 
-            {/* Nút nộp bài ở giữa thanh */}
-            <button
-              onClick={() => setShowSubmitConfirm(true)}
-              className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-emerald-600/20 cursor-pointer"
-            >
-              <Check className="w-4 h-4" /> Nộp bài
-            </button>
-
-            <div className="flex items-center gap-2 shrink-0 min-w-24 justify-end">
-              <button
-                disabled={questionIndex >= activeQuiz.questions.length - 1}
-                onClick={() => setQuestionIndex((prev) => prev + 1)}
-                className={`px-4 py-2.5 rounded-xl text-xs flex items-center justify-center gap-1 transition-colors min-w-24 ${
-                  questionIndex < activeQuiz.questions.length - 1
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-xs cursor-pointer'
-                    : 'border border-slate-200 text-slate-400 opacity-40 cursor-not-allowed font-semibold'
-                }`}
-              >
-                Câu tiếp <ChevronRight className="w-4 h-4" />
-              </button>
+            <div className="flex items-center gap-2 shrink-0 justify-end">
+              {questionIndex < activeQuiz.questions.length - 1 ? (
+                <button
+                  onClick={() => setQuestionIndex((prev) => prev + 1)}
+                  className="px-4 py-2.5 rounded-xl text-xs flex items-center justify-center gap-1 transition-colors min-w-24 bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-xs cursor-pointer"
+                >
+                  Câu tiếp <ChevronRight className="w-4 h-4" />
+                </button>
+              ) : (
+                <button
+                  onClick={() => setShowSubmitConfirm(true)}
+                  className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-emerald-600/20 cursor-pointer"
+                >
+                  <Check className="w-4 h-4" /> Nộp bài
+                </button>
+              )}
             </div>
           </div>
         </div>

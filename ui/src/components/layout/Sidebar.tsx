@@ -1,20 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Layers,
   Award,
   Clock,
-  Shield,
-  Globe,
-  User,
-  Users,
   ChevronLeft,
-  ChevronDown,
-  BookmarkCheck,
-  X,
-  LogIn,
-  UserPlus,
 } from 'lucide-react';
-import { UserProfile, TabType } from '../../types';
+import { TabType } from '../../types';
 
 interface SidebarProps {
   currentTab: TabType;
@@ -23,10 +14,6 @@ interface SidebarProps {
   setIsOpen: (open: boolean) => void;
   isMobileOpen: boolean;
   setIsMobileOpen: (open: boolean) => void;
-  currentUser: UserProfile;
-  setCurrentUser: (user: UserProfile) => void;
-  users: UserProfile[];
-  notify: (msg: string, type?: 'success' | 'error' | 'info') => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -36,18 +23,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
   setIsOpen,
   isMobileOpen,
   setIsMobileOpen,
-  currentUser,
-  setCurrentUser,
-  users,
-  notify,
 }) => {
-  const isFlashcardActive = currentTab === 'community' || currentTab === 'sets';
-  // Mặc định mở nếu đang ở tab thuộc Flashcard
-  const [flashcardExpanded, setFlashcardExpanded] = useState(true);
-
-  const isQuizActive = currentTab === 'quiz_list' || currentTab === 'my_quizzes';
-  // Mặc định mở nếu đang ở tab thuộc Quiz
-  const [quizExpanded, setQuizExpanded] = useState(true);
+  const isFlashcardActive = currentTab === 'sets' || currentTab === 'study';
+  const isQuizActive = currentTab === 'my_quizzes' || currentTab === 'quiz_mode';
+  const isHistoryActive = currentTab === 'history';
 
   return (
     <>
@@ -70,7 +49,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <div className="p-5 border-b border-slate-100 flex items-center justify-between">
             <div
               className="flex items-center gap-3 cursor-pointer"
-              onClick={() => navigateTo('community')}
+              onClick={() => navigateTo('sets')}
             >
               <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-700 to-blue-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
                 <Layers className="w-6 h-6" />
@@ -100,264 +79,59 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </div>
 
           {/* Vertical Menu Items */}
-          <nav className="p-3 space-y-1">
+          <nav className="p-3 space-y-1.5">
             <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3 py-1.5">
               Menu điều hướng
             </div>
 
-            {/* 1. Flashcard (có 2 tab con: Cộng đồng & Của tôi) */}
+            {/* 1. Flashcard */}
             <button
-              onClick={() => {
-                if (isFlashcardActive) {
-                  // Đang ở trong nhóm Flashcard thì bấm để đóng/mở thu gọn
-                  setFlashcardExpanded(!flashcardExpanded);
-                } else {
-                  // Đang ở nhóm khác thì mở ra và vào tab mặc định (Cộng đồng)
-                  setFlashcardExpanded(true);
-                  navigateTo('community');
-                }
-              }}
-              className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-semibold text-sm transition-all text-left cursor-pointer ${
+              onClick={() => navigateTo('sets')}
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-sm transition-all text-left cursor-pointer ${
                 isFlashcardActive
-                  ? 'bg-blue-50 text-blue-700 font-bold shadow-xs'
+                  ? 'bg-blue-600 text-white font-bold shadow-xs'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
-              <div className="flex items-center gap-3">
-                <Globe className={`w-5 h-5 ${isFlashcardActive ? 'text-blue-600' : 'text-slate-400'}`} />
-                <span>Flashcard</span>
-              </div>
-              <ChevronDown
-                className={`w-4 h-4 transition-transform duration-200 ${
-                  flashcardExpanded ? 'rotate-180 text-blue-600' : 'text-slate-400'
-                }`}
-              />
+              <Layers className={`w-5 h-5 ${isFlashcardActive ? 'text-white' : 'text-slate-400'}`} />
+              <span>Flashcard</span>
             </button>
 
-            {/* Sub-tabs under Flashcard */}
-            {flashcardExpanded && (
-              <div className="ml-4 pl-3.5 border-l-2 border-blue-200 space-y-1 py-1">
-                <button
-                  onClick={() => navigateTo('community')}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-left cursor-pointer ${
-                    currentTab === 'community'
-                      ? 'bg-blue-600 text-white font-bold shadow-xs'
-                      : 'text-slate-600 hover:text-blue-700 hover:bg-blue-50'
-                  }`}
-                >
-                  <Globe className={`w-3.5 h-3.5 ${currentTab === 'community' ? 'text-white' : 'text-slate-400'}`} />
-                  <span>Cộng đồng</span>
-                </button>
-                <button
-                  onClick={() => navigateTo('sets')}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-left cursor-pointer ${
-                    currentTab === 'sets'
-                      ? 'bg-blue-600 text-white font-bold shadow-xs'
-                      : 'text-slate-600 hover:text-blue-700 hover:bg-blue-50'
-                  }`}
-                >
-                  <BookmarkCheck className={`w-3.5 h-3.5 ${currentTab === 'sets' ? 'text-white' : 'text-slate-400'}`} />
-                  <span>Của tôi</span>
-                </button>
-              </div>
-            )}
-
-            {/* 3. Quiz (có 2 tab con: Cộng đồng & Của tôi) */}
+            {/* 2. Quiz */}
             <button
-              onClick={() => {
-                if (isQuizActive) {
-                  // Đang ở trong nhóm Quiz thì bấm để đóng/mở thu gọn
-                  setQuizExpanded(!quizExpanded);
-                } else {
-                  // Đang ở nhóm khác thì mở ra và vào tab mặc định (Cộng đồng)
-                  setQuizExpanded(true);
-                  navigateTo('quiz_list');
-                }
-              }}
-              className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-semibold text-sm transition-all text-left cursor-pointer ${
+              onClick={() => navigateTo('my_quizzes')}
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-sm transition-all text-left cursor-pointer ${
                 isQuizActive
-                  ? 'bg-blue-50 text-blue-700 font-bold shadow-xs'
+                  ? 'bg-blue-600 text-white font-bold shadow-xs'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
-              <div className="flex items-center gap-3">
-                <Award className={`w-5 h-5 ${isQuizActive ? 'text-blue-600' : 'text-slate-400'}`} />
-                <span>Quiz</span>
-              </div>
-              <ChevronDown
-                className={`w-4 h-4 transition-transform duration-200 ${
-                  quizExpanded ? 'rotate-180 text-blue-600' : 'text-slate-400'
-                }`}
-              />
+              <Award className={`w-5 h-5 ${isQuizActive ? 'text-white' : 'text-slate-400'}`} />
+              <span>Quiz</span>
             </button>
 
-            {/* Sub-tabs under Quiz */}
-            {quizExpanded && (
-              <div className="ml-4 pl-3.5 border-l-2 border-indigo-200 space-y-1 py-1">
-                <button
-                  onClick={() => navigateTo('quiz_list')}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-left cursor-pointer ${
-                    currentTab === 'quiz_list'
-                      ? 'bg-blue-600 text-white font-bold shadow-xs'
-                      : 'text-slate-600 hover:text-blue-700 hover:bg-blue-50'
-                  }`}
-                >
-                  <Globe className={`w-3.5 h-3.5 ${currentTab === 'quiz_list' ? 'text-white' : 'text-slate-400'}`} />
-                  <span>Cộng đồng</span>
-                </button>
-                <button
-                  onClick={() => navigateTo('my_quizzes')}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-left cursor-pointer ${
-                    currentTab === 'my_quizzes'
-                      ? 'bg-blue-600 text-white font-bold shadow-xs'
-                      : 'text-slate-600 hover:text-blue-700 hover:bg-blue-50'
-                  }`}
-                >
-                  <Award className={`w-3.5 h-3.5 ${currentTab === 'my_quizzes' ? 'text-white' : 'text-slate-400'}`} />
-                  <span>Của tôi</span>
-                </button>
-              </div>
-            )}
-
-            {/* 4. Lịch sử thi */}
+            {/* 3. Lịch sử thi */}
             <button
               onClick={() => navigateTo('history')}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-sm transition-all text-left ${
-                currentTab === 'history'
-                  ? 'bg-blue-50 text-blue-700 font-bold shadow-xs'
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-sm transition-all text-left cursor-pointer ${
+                isHistoryActive
+                  ? 'bg-blue-600 text-white font-bold shadow-xs'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
-              <Clock className={`w-5 h-5 ${currentTab === 'history' ? 'text-blue-600' : 'text-slate-400'}`} />
+              <Clock className={`w-5 h-5 ${isHistoryActive ? 'text-white' : 'text-slate-400'}`} />
               <span>Lịch sử thi</span>
             </button>
-
-            {/* 5. Profile */}
-            <button
-              onClick={() => navigateTo('profile')}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-sm transition-all text-left ${
-                currentTab === 'profile'
-                  ? 'bg-blue-50 text-blue-700 font-bold shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              <User className={`w-5 h-5 ${currentTab === 'profile' ? 'text-blue-600' : 'text-slate-400'}`} />
-              <span>Profile</span>
-            </button>
-
-            {/* Auth section */}
-            <div className="pt-2 pb-1">
-              <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3 py-1">
-                Tài khoản
-              </div>
-            </div>
-
-            {/* Đăng nhập */}
-            <button
-              onClick={() => navigateTo('login')}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-sm transition-all text-left ${
-                currentTab === 'login'
-                  ? 'bg-blue-50 text-blue-700 font-bold shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              <LogIn className={`w-5 h-5 ${currentTab === 'login' ? 'text-blue-600' : 'text-slate-400'}`} />
-              <span>Đăng nhập</span>
-            </button>
-
-            {/* Đăng ký */}
-            <button
-              onClick={() => navigateTo('register')}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-sm transition-all text-left ${
-                currentTab === 'register'
-                  ? 'bg-emerald-50 text-emerald-700 font-bold shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              <UserPlus className={`w-5 h-5 ${currentTab === 'register' ? 'text-emerald-600' : 'text-slate-400'}`} />
-              <span>Đăng ký</span>
-            </button>
-
-            {/* Admin Tabs */}
-            {currentUser.role === 'admin' && (
-              <>
-                <div className="pt-2 pb-1">
-                  <div className="text-[10px] font-extrabold text-indigo-500 uppercase tracking-wider px-3 py-1 bg-indigo-50/60 rounded-lg flex items-center gap-1.5">
-                    <Shield className="w-3 h-3" /> Dành cho Admin
-                  </div>
-                </div>
-
-                {/* 6. Quản lý tài khoản */}
-                <button
-                  onClick={() => navigateTo('admin_users')}
-                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-sm transition-all text-left ${
-                    currentTab === 'admin_users'
-                      ? 'bg-indigo-50 text-indigo-700 font-bold shadow-xs'
-                      : 'text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50/70'
-                  }`}
-                >
-                  <Users className={`w-5 h-5 ${currentTab === 'admin_users' ? 'text-indigo-600' : 'text-indigo-500'}`} />
-                  <span>Quản lý tài khoản</span>
-                </button>
-              </>
-            )}
           </nav>
         </div>
 
-        {/* Bottom: Role Switcher & User Profile Info */}
-        <div className="p-4 border-t border-slate-100 space-y-3 bg-slate-50/60">
-          {/* Quick Role Switcher */}
-          <div>
-            <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">
-              Chuyển vai trò demo
-            </div>
-            <div className="grid grid-cols-2 gap-1.5 bg-slate-200/70 p-1 rounded-xl">
-              <button
-                onClick={() => {
-                  const u = users.find((x) => x.role === 'user') || users[0];
-                  setCurrentUser(u);
-                  notify(`Đã chuyển sang Học viên: ${u.name}`, 'info');
-                }}
-                className={`py-1 text-xs font-bold rounded-lg transition-all ${
-                  currentUser.role === 'user' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                Học viên
-              </button>
-              <button
-                onClick={() => {
-                  const adminUser = users.find((x) => x.role === 'admin') || users[2];
-                  setCurrentUser(adminUser);
-                  notify('Đã chuyển sang Quản trị viên (Admin)', 'info');
-                }}
-                className={`py-1 text-xs font-bold rounded-lg transition-all ${
-                  currentUser.role === 'admin' ? 'bg-rose-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                Admin
-              </button>
-            </div>
+        {/* Bottom footer */}
+        <div className="p-4 border-t border-slate-100 bg-slate-50/60 text-center">
+          <div className="text-xs font-bold text-slate-600">
+            FlashLearn • Nền tảng học tập
           </div>
-
-          {/* Current User Card */}
-          <div
-            onClick={() => navigateTo('profile')}
-            className={`flex items-center gap-3 p-2 rounded-xl border transition-all cursor-pointer shadow-xs ${
-              currentTab === 'profile'
-                ? 'bg-blue-50/80 border-blue-400 ring-2 ring-blue-500/20'
-                : 'bg-white border-slate-200 hover:border-blue-400'
-            }`}
-            title="Xem hồ sơ cá nhân"
-          >
-            <img
-              src={currentUser.avatar}
-              alt={currentUser.name}
-              className="w-9 h-9 rounded-full object-cover ring-2 ring-blue-500/30 shrink-0"
-            />
-            <div className="min-w-0 flex-1">
-              <div className="text-xs font-bold text-slate-800 truncate">{currentUser.name}</div>
-              <div className="text-[11px] text-slate-500 truncate">{currentUser.email}</div>
-            </div>
+          <div className="text-[11px] text-slate-400 mt-0.5">
+            Flashcard & Trắc nghiệm
           </div>
         </div>
       </aside>
