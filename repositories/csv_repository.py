@@ -1,7 +1,8 @@
-"""Tầng lưu trữ dữ liệu sử dụng các file CSV."""
+"""Tầng lưu trữ dữ liệu sử dụng các file CSV kết hợp Chỉ mục Cây AVL O(log N)."""
 
 from __future__ import annotations
 
+import copy
 import csv
 import os
 import tempfile
@@ -11,7 +12,17 @@ from decimal import Decimal
 from pathlib import Path
 from threading import RLock
 from types import UnionType
-from typing import Any, Generic, Optional, TypeVar, Union, get_args, get_origin, get_type_hints
+from typing import (
+    Any,
+    Generic,
+    Iterable,
+    Optional,
+    TypeVar,
+    Union,
+    get_args,
+    get_origin,
+    get_type_hints,
+)
 
 from config import DATA_DIR
 from models import (
@@ -22,6 +33,7 @@ from models import (
     QuizAnswer,
     QuizAttempt,
 )
+from utils import AVLTree, MultiAVLTree
 
 
 T = TypeVar("T")
@@ -48,9 +60,24 @@ class CsvDataError(CsvRepositoryError):
 
 
 class CsvRepository(Generic[T]):
-    """Thực hiện các thao tác lưu trữ chung cho một dataclass và một file CSV."""
+    """Thực hiện các thao tác lưu trữ cho một dataclass và file CSV.
 
-    def __init__(self, file_path: str | Path, model_class: type[T], id_field: str):
+    Sử dụng Cây AVL tự cân bằng (AVLTree) làm chỉ mục chính (Primary Index)
+    và MultiAVLTree làm chỉ mục phụ (Secondary Index) để đảm bảo:
+    - `get_by_id`: O(log N)
+    - `exists`: O(log N)
+    - `find_by`: O(log N) cho các trường có chỉ mục phụ
+    - `get_all`: Lấy từ bộ nhớ RAM (In-order traversal), loại bỏ I/O đọc đĩa lặp lại.
+    - `add` / `update`: O(log N) trong bộ nhớ kèm ghi đồng bộ an toàn (Write-Through).
+    """
+
+    def __init__(
+        self,
+        file_path: str | Path,
+        model_class: type[T],
+        id_field: str,
+        indexed_fields: Optional[Iterable[str]] = None,
+    ) -> None:
         if not is_dataclass(model_class):
             raise TypeError("model_class phải là một dataclass")
 
@@ -64,92 +91,189 @@ class CsvRepository(Generic[T]):
         if id_field not in self._field_names:
             raise ValueError(f"Model không có trường khóa chính {id_field!r}")
 
-    def get_all(self) -> list[T]:
-        """Đọc toàn bộ bản ghi và chuyển từng dòng thành model."""
+        # Cấu hình các trường chỉ mục phụ
+        self._indexed_fields = tuple(indexed_fields or ())
+        for field_name in self._indexed_fields:
+            if field_name not in self._field_names:
+                raise ValueError(f"Model không có trường chỉ mục phụ {field_name!r}")
 
+        # Chỉ mục chính: Cây AVL mapping id -> record (O(log N))
+        self._primary_index: AVLTree[int, T] = AVLTree()
+
+        # Các chỉ mục phụ: Cây MultiAVLTree mapping field_value -> list[record] (O(log N))
+        self._secondary_indices: dict[str, MultiAVLTree[Any, T]] = {
+            name: MultiAVLTree() for name in self._indexed_fields
+        }
+
+        # Dấu vết thời gian sửa file trên đĩa để tự động làm mới cache nếu file bị sửa ngoài
+        self._last_mtime: Optional[float] = None
+        self._is_loaded: bool = False
+
+    def get_all(self) -> list[T]:
+        """Đọc toàn bộ bản ghi và chuyển từng dòng thành model.
+
+        Dữ liệu được duyệt từ cây AVL trong bộ nhớ RAM theo thứ tự tăng dần của khóa chính.
+        """
         with self._lock:
-            self._ensure_file_exists()
-            with self.file_path.open("r", encoding="utf-8-sig", newline="") as file:
-                reader = csv.DictReader(file)
-                self._validate_header(reader.fieldnames)
-                return [
-                    self._row_to_model(row, line_number)
-                    for line_number, row in enumerate(reader, start=2)
-                    if any(value not in (None, "") for value in row.values())
-                ]
+            self._ensure_cache_loaded()
+            return [copy.copy(record) for record in self._primary_index.inorder()]
 
     def get_by_id(self, record_id: int) -> Optional[T]:
-        """Tìm một bản ghi theo khóa chính; trả về None nếu không tồn tại."""
+        """Tìm một bản ghi theo khóa chính với độ phức tạp O(log N).
 
-        return next(
-            (
-                record
-                for record in self.get_all()
-                if getattr(record, self.id_field) == record_id
-            ),
-            None,
-        )
+        Trả về None nếu không tồn tại.
+        """
+        with self._lock:
+            self._ensure_cache_loaded()
+            record = self._primary_index.search(record_id)
+            return copy.copy(record) if record is not None else None
 
     def find_by(self, **criteria: Any) -> list[T]:
-        """Tìm các bản ghi có tất cả trường khớp với điều kiện truyền vào."""
+        """Tìm các bản ghi có tất cả trường khớp với điều kiện truyền vào.
 
+        Nếu trong criteria có trường được đánh chỉ mục phụ, tìm kiếm đạt O(log N).
+        """
         unknown_fields = set(criteria) - set(self._field_names)
         if unknown_fields:
             names = ", ".join(sorted(unknown_fields))
             raise ValueError(f"Model không có trường: {names}")
 
-        return [
-            record
-            for record in self.get_all()
-            if all(getattr(record, name) == value for name, value in criteria.items())
-        ]
+        with self._lock:
+            self._ensure_cache_loaded()
+
+            # Kiểm tra xem có trường chỉ mục phụ nào trong criteria không
+            indexed_match = next(
+                (field for field in criteria if field in self._secondary_indices),
+                None,
+            )
+
+            if indexed_match is not None:
+                # Tìm kiếm O(log N) bằng cây MultiAVLTree
+                candidates = self._secondary_indices[indexed_match].search(criteria[indexed_match])
+                remaining_criteria = {
+                    k: v for k, v in criteria.items() if k != indexed_match
+                }
+                if not remaining_criteria:
+                    return [copy.copy(record) for record in candidates]
+                return [
+                    copy.copy(record)
+                    for record in candidates
+                    if all(getattr(record, name) == value for name, value in remaining_criteria.items())
+                ]
+
+            # Nếu không có chỉ mục phụ, duyệt trên tập in-memory RAM
+            return [
+                copy.copy(record)
+                for record in self._primary_index.inorder()
+                if all(getattr(record, name) == value for name, value in criteria.items())
+            ]
 
     def exists(self, record_id: int) -> bool:
-        """Kiểm tra một khóa chính có tồn tại hay không."""
-
-        return self.get_by_id(record_id) is not None
+        """Kiểm tra một khóa chính có tồn tại hay không với độ phức tạp O(log N)."""
+        with self._lock:
+            self._ensure_cache_loaded()
+            return self._primary_index.contains(record_id)
 
     def add(self, record: T) -> T:
-        """Thêm bản ghi, tự cấp khóa chính nếu model chưa có ID."""
+        """Thêm bản ghi, tự cấp khóa chính nếu model chưa có ID.
 
+        Cập nhật vào Cây AVL với O(log N) và ghi đồng bộ an toàn xuống file CSV.
+        """
         self._validate_record_type(record)
         with self._lock:
-            records = self.get_all()
+            self._ensure_cache_loaded()
             current_id = getattr(record, self.id_field)
 
             if current_id is None:
-                current_id = self._next_id(records)
+                current_id = self._next_id()
                 setattr(record, self.id_field, current_id)
-            elif any(
-                getattr(existing, self.id_field) == current_id for existing in records
-            ):
+            elif self._primary_index.contains(current_id):
                 raise DuplicateKeyError(
                     f"{self.id_field}={current_id} đã tồn tại trong {self.file_path.name}"
                 )
 
-            records.append(record)
-            self._write_all(records)
+            # Thêm vào chỉ mục chính (O(log N))
+            stored_record = copy.copy(record)
+            self._primary_index.insert(current_id, stored_record)
+
+            # Thêm vào các chỉ mục phụ (O(log N))
+            for field_name in self._indexed_fields:
+                val = getattr(stored_record, field_name)
+                self._secondary_indices[field_name].insert(val, stored_record)
+
+            # Ghi đĩa đồng bộ (Write-Through)
+            self._write_all(self._primary_index.inorder())
+            self._last_mtime = self.file_path.stat().st_mtime
             return record
 
     def update(self, record: T) -> T:
-        """Ghi đè bản ghi có cùng khóa chính bằng dữ liệu mới."""
+        """Ghi đè bản ghi có cùng khóa chính bằng dữ liệu mới.
 
+        Tìm kiếm và cập nhật Cây AVL với O(log N), sau đó ghi đồng bộ xuống file CSV.
+        """
         self._validate_record_type(record)
         with self._lock:
-            records = self.get_all()
+            self._ensure_cache_loaded()
             record_id = getattr(record, self.id_field)
             if record_id is None:
                 raise ValueError("Không thể cập nhật model chưa có khóa chính")
 
-            for index, existing in enumerate(records):
-                if getattr(existing, self.id_field) == record_id:
-                    records[index] = record
-                    self._write_all(records)
-                    return record
+            existing = self._primary_index.search(record_id)
+            if existing is None:
+                raise RecordNotFoundError(
+                    f"Không tìm thấy {self.id_field}={record_id} trong {self.file_path.name}"
+                )
 
-            raise RecordNotFoundError(
-                f"Không tìm thấy {self.id_field}={record_id} trong {self.file_path.name}"
-            )
+            # Cập nhật các chỉ mục phụ (O(log N))
+            stored_record = copy.copy(record)
+            for field_name in self._indexed_fields:
+                old_val = getattr(existing, field_name)
+                new_val = getattr(stored_record, field_name)
+                self._secondary_indices[field_name].update_record(
+                    old_key=old_val,
+                    new_key=new_val,
+                    value=stored_record,
+                    identifier_func=lambda r: getattr(r, self.id_field),
+                )
+
+            # Cập nhật chỉ mục chính (O(log N))
+            self._primary_index.update(record_id, stored_record)
+
+            # Ghi đĩa đồng bộ (Write-Through)
+            self._write_all(self._primary_index.inorder())
+            self._last_mtime = self.file_path.stat().st_mtime
+            return record
+
+    def _ensure_cache_loaded(self) -> None:
+        """Nạp dữ liệu từ CSV vào cây AVL hoặc làm mới nếu file trên đĩa bị thay đổi."""
+        self._ensure_file_exists()
+        current_mtime = self.file_path.stat().st_mtime
+        if self._is_loaded and self._last_mtime == current_mtime:
+            return
+
+        with self.file_path.open("r", encoding="utf-8-sig", newline="") as file:
+            reader = csv.DictReader(file)
+            self._validate_header(reader.fieldnames)
+            records = [
+                self._row_to_model(row, line_number)
+                for line_number, row in enumerate(reader, start=2)
+                if any(value not in (None, "") for value in row.values())
+            ]
+
+        self._primary_index.clear()
+        for sec_tree in self._secondary_indices.values():
+            sec_tree.clear()
+
+        for record in records:
+            rec_id = getattr(record, self.id_field)
+            if rec_id is not None:
+                self._primary_index.insert(rec_id, record)
+            for field_name in self._indexed_fields:
+                sec_val = getattr(record, field_name)
+                self._secondary_indices[field_name].insert(sec_val, record)
+
+        self._last_mtime = self.file_path.stat().st_mtime
+        self._is_loaded = True
 
     def _ensure_file_exists(self) -> None:
         if not self.file_path.is_file():
@@ -235,9 +359,10 @@ class CsvRepository(Generic[T]):
             return format(value, "f")
         return str(value)
 
-    def _next_id(self, records: list[T]) -> int:
-        ids = [getattr(record, self.id_field) for record in records]
-        return max((record_id for record_id in ids if record_id is not None), default=0) + 1
+    def _next_id(self) -> int:
+        """Tìm ID kế tiếp lớn nhất từ Cây AVL với O(log N)."""
+        max_id = self._primary_index.max_key()
+        return (max_id if max_id is not None else 0) + 1
 
     def _write_all(self, records: list[T]) -> None:
         self.file_path.parent.mkdir(parents=True, exist_ok=True)
@@ -268,23 +393,28 @@ class CsvRepository(Generic[T]):
             temporary_path.unlink(missing_ok=True)
 
 
-_DEFAULT_REPOSITORY_CONFIG: dict[str, tuple[type[Any], str, str]] = {
-    "decks": (Deck, "decks.csv", "deck_id"),
-    "cards": (Card, "cards.csv", "card_id"),
-    "quizzes": (Quiz, "quizzes.csv", "quiz_id"),
-    "questions": (Question, "questions.csv", "question_id"),
-    "quiz_attempts": (QuizAttempt, "quiz_attempts.csv", "attempt_id"),
-    "quiz_answers": (QuizAnswer, "quiz_answers.csv", "answer_id"),
+_DEFAULT_REPOSITORY_CONFIG: dict[str, tuple[type[Any], str, str, tuple[str, ...]]] = {
+    "decks": (Deck, "decks.csv", "deck_id", ()),
+    "cards": (Card, "cards.csv", "card_id", ("deck_id",)),
+    "quizzes": (Quiz, "quizzes.csv", "quiz_id", ("source_deck_id",)),
+    "questions": (Question, "questions.csv", "question_id", ("quiz_id",)),
+    "quiz_attempts": (QuizAttempt, "quiz_attempts.csv", "attempt_id", ("quiz_id",)),
+    "quiz_answers": (QuizAnswer, "quiz_answers.csv", "answer_id", ("attempt_id",)),
 }
 
 
 def create_repositories(
     data_directory: str | Path = DATA_DIR,
 ) -> dict[str, CsvRepository[Any]]:
-    """Tạo repository cho đúng 6 bảng dữ liệu của ứng dụng."""
+    """Tạo repository cho đúng 6 bảng dữ liệu của ứng dụng kèm chỉ mục AVL."""
 
     directory = Path(data_directory)
     return {
-        name: CsvRepository(directory / filename, model_class, id_field)
-        for name, (model_class, filename, id_field) in _DEFAULT_REPOSITORY_CONFIG.items()
+        name: CsvRepository(
+            directory / filename,
+            model_class,
+            id_field,
+            indexed_fields=indices,
+        )
+        for name, (model_class, filename, id_field, indices) in _DEFAULT_REPOSITORY_CONFIG.items()
     }
