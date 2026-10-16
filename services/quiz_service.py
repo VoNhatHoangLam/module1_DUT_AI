@@ -381,3 +381,77 @@ class QuizService:
 
         # 5. Xóa bài quiz trong quizzes.csv
         return self.quiz_repository.delete(quiz_id)
+
+    def get_quizzes(
+        self,
+        keyword: Optional[str] = None,
+        page: int = 1,
+        page_size: int = 10,
+    ) -> dict[str, Any]:
+        """Lấy danh sách bài kiểm tra hoặc tìm kiếm theo tên có phân trang (tối đa 10 quiz).
+
+        Chỉ cần tiêu đề bài kiểm tra có chứa chuỗi tìm kiếm (substring / partial match),
+        không phân biệt chữ hoa hay chữ thường. Mặc định tự động lọc bỏ các bài quiz
+        đã bị đánh dấu xóa (is_deleted = True).
+
+        Args:
+            keyword: Từ khóa tìm kiếm chuỗi con trong tiêu đề bài quiz.
+            page: Số trang cần lấy (bắt đầu từ 1, mặc định 1).
+            page_size: Số lượng quiz tối đa trên mỗi trang (mặc định 10, trần tối đa 10).
+
+        Returns:
+            dict[str, Any]:
+                - items: Danh sách tối đa 10 quiz (chỉ gồm quiz_id, title, description,
+                         time_limit_minutes, total_questions, source_deck_id).
+                - total_pages: Tổng số trang (ceil(total_count / page_size)).
+                - page: Trang hiện tại.
+                - page_size: Kích thước trang thực tế (tối đa 10).
+
+        Raises:
+            TypeError: Khi page hoặc page_size không phải số nguyên.
+        """
+        if isinstance(page, bool) or not isinstance(page, int):
+            raise TypeError("page phải là số nguyên")
+        if isinstance(page_size, bool) or not isinstance(page_size, int):
+            raise TypeError("page_size phải là số nguyên")
+
+        actual_page = max(1, page)
+        actual_page_size = max(1, min(page_size, 10))
+
+        # 1. Lọc danh sách quiz hợp lệ từ cây AVL in-memory
+        quizzes = self.quiz_repository.find_by(is_deleted=False)
+
+        if keyword is not None:
+            clean_kw = keyword.strip().lower()
+            if clean_kw:
+                quizzes = [q for q in quizzes if clean_kw in q.title.lower()]
+
+        # Tính tổng số trang bằng tổng số bài quiz hợp lệ
+        total_count = len(quizzes)
+        total_pages = (total_count + actual_page_size - 1) // actual_page_size if total_count > 0 else 0
+
+        # 2. Cắt dữ liệu trang hiện tại (tối đa 10 quiz)
+        start_idx = (actual_page - 1) * actual_page_size
+        end_idx = start_idx + actual_page_size
+        paged_quizzes = quizzes[start_idx:end_idx]
+
+        # 3. Làm giàu dữ liệu: Chỉ tính total_questions cho tối đa 10 quiz của trang này
+        # Loại bỏ is_deleted, created_at, updated_at theo yêu cầu
+        items: list[dict[str, Any]] = []
+        for q in paged_quizzes:
+            questions = self.question_repository.find_by(quiz_id=q.quiz_id, is_deleted=False)
+            items.append({
+                "quiz_id": q.quiz_id,
+                "title": q.title,
+                "description": q.description,
+                "time_limit_minutes": q.time_limit_minutes,
+                "total_questions": len(questions),
+                "source_deck_id": q.source_deck_id,
+            })
+
+        return {
+            "items": items,
+            "total_pages": total_pages,
+            "page": actual_page,
+            "page_size": actual_page_size,
+        }

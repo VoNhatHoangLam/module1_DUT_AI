@@ -178,6 +178,59 @@ class CsvRepository(Generic[T]):
             self._ensure_cache_loaded()
             return self._primary_index.contains(record_id)
 
+    def count(self, **criteria: Any) -> int:
+        """Đếm số lượng bản ghi khớp với điều kiện lọc.
+
+        Nếu không truyền criteria: Trả về tổng số bản ghi trong cây AVL với O(1).
+        Nếu truyền criteria: Đếm trực tiếp các nút thỏa mãn trên Cây AVL in-memory
+        mà không cần tạo danh sách bản ghi mới trong bộ nhớ RAM.
+
+        Args:
+            **criteria: Các điều kiện lọc bản ghi (ví dụ: is_deleted=False).
+
+        Returns:
+            int: Số lượng bản ghi thỏa mãn.
+        """
+        unknown_fields = set(criteria) - set(self._field_names)
+        if unknown_fields:
+            names = ", ".join(sorted(unknown_fields))
+            raise ValueError(f"Model không có trường: {names}")
+
+        with self._lock:
+            self._ensure_cache_loaded()
+            if not criteria:
+                return len(self._primary_index)
+
+            # Kiểm tra xem có trường chỉ mục phụ nào trong criteria không
+            indexed_match = next(
+                (
+                    field
+                    for field in criteria
+                    if field in self._secondary_indices and criteria[field] is not None
+                ),
+                None,
+            )
+
+            if indexed_match is not None:
+                candidates = self._secondary_indices[indexed_match].search(criteria[indexed_match])
+                remaining_criteria = {
+                    k: v for k, v in criteria.items() if k != indexed_match
+                }
+                if not remaining_criteria:
+                    return len(candidates)
+                return sum(
+                    1
+                    for record in candidates
+                    if all(getattr(record, name) == value for name, value in remaining_criteria.items())
+                )
+
+            # Nếu không có chỉ mục phụ, đếm trực tiếp trên cây AVL in-memory
+            return sum(
+                1
+                for record in self._primary_index.inorder()
+                if all(getattr(record, name) == value for name, value in criteria.items())
+            )
+
     def add(self, record: T) -> T:
         """Thêm bản ghi, tự cấp khóa chính nếu model chưa có ID.
 
