@@ -194,6 +194,30 @@ class MultiAVLTreeTestCase(unittest.TestCase):
         self.assertEqual(mtree.search("fruit"), [1])
         self.assertEqual(mtree.search("vegetable"), [3, 4])
 
+    def test_prefix_search_avl_and_multi_avl(self) -> None:
+        tree = AVLTree[str, int]()
+        tree.insert("apple", 1)
+        tree.insert("application", 2)
+        tree.insert("appetite", 3)
+        tree.insert("banana", 4)
+        tree.insert("cat", 5)
+
+        matches = tree.prefix_search("app")
+        matched_keys = [k for k, v in matches]
+        self.assertEqual(matched_keys, ["appetite", "apple", "application"])
+
+        no_match = tree.prefix_search("dog")
+        self.assertEqual(no_match, [])
+
+        mtree = MultiAVLTree[str, str]()
+        mtree.insert("react", "lib1")
+        mtree.insert("react-dom", "lib2")
+        mtree.insert("redux", "lib3")
+        mtree.insert("vue", "lib4")
+
+        m_matches = mtree.prefix_search("re")
+        self.assertEqual(m_matches, ["lib1", "lib2", "lib3"])
+
 
 if __name__ == "__main__":
     unittest.main()
