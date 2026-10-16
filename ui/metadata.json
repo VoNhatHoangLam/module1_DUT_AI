@@ -1,0 +1,8 @@
+{
+  "name": "Remix FlashLearn - Nền tảng Flashcard \u0026 Ôn thi trắc nghiệm",
+  "description": "Ứng dụng học tập flashcard và trắc nghiệm phong cách Quizlet với chế độ ôn tập lật thẻ, làm bài kiểm tra và quản trị viên.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,1 +1,0 @@
-"""Giao diện quản trị."""

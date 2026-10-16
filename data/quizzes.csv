@@ -1,16 +1,2 @@
-﻿quiz_id,owner_id,source_deck_id,title,description,time_limit_minutes,visibility,moderation_status,is_deleted,created_at,updated_at
-20,1,10,Quiz từ vựng tiếng Anh,Trắc nghiệm 2 câu,15,PUBLIC,APPROVED,0,2026-10-10 11:00:00,2026-10-10 11:00:00
-21,1,,Quiz toán đơn giản,Nhập từ file CSV,10,PRIVATE,DRAFT,0,2026-10-10 11:30:00,2026-10-10 11:30:00
-22,1,11,Trắc nghiệm: Công thức Toán,Bài kiểm tra 4 lựa chọn tự tạo từ Flashcard,20,PRIVATE,DRAFT,0,2026-10-10 12:00:00,2026-10-10 12:00:00
-23,6,12,Trắc nghiệm: Địa lý Việt Nam,Bài kiểm tra 4 lựa chọn tự tạo từ Flashcard,20,PUBLIC,APPROVED,0,2026-10-10 12:00:00,2026-10-10 12:00:00
-24,7,13,Trắc nghiệm: Python căn bản,Bài kiểm tra 4 lựa chọn tự tạo từ Flashcard,20,PUBLIC,APPROVED,0,2026-10-10 12:00:00,2026-10-10 12:00:00
-25,9,14,Trắc nghiệm: Lịch sử Việt Nam,Bài kiểm tra 4 lựa chọn tự tạo từ Flashcard,20,PUBLIC,PENDING,0,2026-10-10 12:00:00,2026-10-10 12:00:00
-26,19,15,Trắc nghiệm: Tiếng Anh giao tiếp,Bài kiểm tra 4 lựa chọn tự tạo từ Flashcard,20,PUBLIC,APPROVED,0,2026-10-10 12:00:00,2026-10-10 12:00:00
-27,10,16,Trắc nghiệm: SQL cơ bản,Bài kiểm tra 4 lựa chọn tự tạo từ Flashcard,20,PUBLIC,APPROVED,0,2026-10-10 12:00:00,2026-10-10 12:00:00
-28,11,17,Trắc nghiệm: Vật lý phổ thông,Bài kiểm tra 4 lựa chọn tự tạo từ Flashcard,20,PUBLIC,APPROVED,0,2026-10-10 12:00:00,2026-10-10 12:00:00
-29,12,18,Trắc nghiệm: Hóa học nhập môn,Bài kiểm tra 4 lựa chọn tự tạo từ Flashcard,20,PRIVATE,DRAFT,0,2026-10-10 12:00:00,2026-10-10 12:00:00
-30,13,19,Trắc nghiệm: Văn học Việt Nam,Bài kiểm tra 4 lựa chọn tự tạo từ Flashcard,20,PUBLIC,APPROVED,0,2026-10-10 12:00:00,2026-10-10 12:00:00
-31,14,20,Trắc nghiệm: Mạng máy tính,Bài kiểm tra 4 lựa chọn tự tạo từ Flashcard,20,PUBLIC,REJECTED,0,2026-10-10 12:00:00,2026-10-10 12:00:00
-32,15,21,Trắc nghiệm: Hệ điều hành,Bài kiểm tra 4 lựa chọn tự tạo từ Flashcard,20,PUBLIC,APPROVED,0,2026-10-10 12:00:00,2026-10-10 12:00:00
-33,16,22,Trắc nghiệm: An toàn thông tin,Bài kiểm tra 4 lựa chọn tự tạo từ Flashcard,20,PUBLIC,APPROVED,0,2026-10-10 12:00:00,2026-10-10 12:00:00
-34,17,23,Trắc nghiệm: Thiết kế Database,Bài kiểm tra 4 lựa chọn tự tạo từ Flashcard,20,PUBLIC,APPROVED,0,2026-10-10 12:00:00,2026-10-10 12:00:00
+﻿quiz_id,source_deck_id,title,description,time_limit_minutes,is_deleted,created_at,updated_at
+20,10,Quiz từ vựng tiếng Anh,Trắc nghiệm 2 câu,15,0,2026-10-10 11:00:00,2026-10-10 11:00:00

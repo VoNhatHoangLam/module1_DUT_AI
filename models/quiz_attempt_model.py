@@ -12,7 +12,6 @@ class QuizAttempt:
 
     attempt_id: Optional[int] = None
     quiz_id: int
-    user_id: int
     quiz_title_snapshot: str
     attempt_status: str = "STARTED"
     started_at: datetime = field(

@@ -1,16 +1,2 @@
-﻿deck_id,owner_id,title,description,visibility,moderation_status,is_deleted,created_at,updated_at
-10,1,Từ vựng tiếng Anh cơ bản,Các từ vựng thông dụng,PUBLIC,APPROVED,0,2026-10-10 10:00:00,2026-10-10 10:00:00
-11,1,Công thức Toán,Ôn công thức cơ bản,PRIVATE,DRAFT,0,2026-10-10 10:30:00,2026-10-10 10:30:00
-12,6,Địa lý Việt Nam,Các địa danh và kiến thức địa lý cơ bản,PUBLIC,APPROVED,0,2026-10-10 10:00:00,2026-10-10 10:00:00
-13,7,Python căn bản,Kiến thức nhập môn ngôn ngữ Python,PUBLIC,APPROVED,0,2026-10-10 10:00:00,2026-10-10 10:00:00
-14,9,Lịch sử Việt Nam,Những mốc lịch sử quen thuộc,PUBLIC,PENDING,0,2026-10-10 10:00:00,2026-10-10 10:00:00
-15,19,Tiếng Anh giao tiếp,Cụm từ giao tiếp hằng ngày,PUBLIC,APPROVED,0,2026-10-10 10:00:00,2026-10-10 10:00:00
-16,10,SQL cơ bản,Tổng hợp câu lệnh SQL,PUBLIC,APPROVED,0,2026-10-10 10:00:00,2026-10-10 10:00:00
-17,11,Vật lý phổ thông,Các khái niệm vật lý cơ bản,PUBLIC,APPROVED,0,2026-10-10 10:00:00,2026-10-10 10:00:00
-18,12,Hóa học nhập môn,Ký hiệu và công thức thông dụng,PRIVATE,DRAFT,0,2026-10-10 10:00:00,2026-10-10 10:00:00
-19,13,Văn học Việt Nam,Tác giả và tác phẩm văn học,PUBLIC,APPROVED,0,2026-10-10 10:00:00,2026-10-10 10:00:00
-20,14,Mạng máy tính,Các thuật ngữ mạng máy tính,PUBLIC,REJECTED,0,2026-10-10 10:00:00,2026-10-10 10:00:00
-21,15,Hệ điều hành,Khái niệm hệ điều hành cơ bản,PUBLIC,APPROVED,0,2026-10-10 10:00:00,2026-10-10 10:00:00
-22,16,An toàn thông tin,Thuật ngữ bảo mật căn bản,PUBLIC,APPROVED,0,2026-10-10 10:00:00,2026-10-10 10:00:00
-23,17,Thiết kế Database,Các khái niệm thiết kế cơ sở dữ liệu,PUBLIC,APPROVED,0,2026-10-10 10:00:00,2026-10-10 10:00:00
-24,18,Thuật toán cơ bản,Cấu trúc dữ liệu và giải thuật,PRIVATE,DRAFT,0,2026-10-10 10:00:00,2026-10-10 10:00:00
+deck_id,title,description,total_cards,is_studied,is_deleted,created_at,updated_at
+1,Từ vựng tiếng Anh cơ bản,Bộ từ vựng demo bài test,10,0,0,2026-10-14 22:52:35,2026-10-14 22:52:35
