@@ -126,21 +126,18 @@ class DeckService:
             saved_deck.title,
             saved_deck.description,
             saved_deck.updated_at,
-            len(saved_cards),
-            saved_cards,
+            len(saved_cards)
         )
 
     def delete_deck(
         self,
         deck_id: int,
-        user_id: Optional[str] = None,
         hard_delete: bool = False,
     ) -> bool:
         """Xóa bộ thẻ theo đúng cơ chế Soft Delete của hệ thống và quyền hạn.
 
         Args:
             deck_id: Khóa chính định danh bộ thẻ cần xóa.
-            user_id: ID của người dùng thực hiện xóa (kiểm tra quyền nếu áp dụng).
             hard_delete: Mặc định False (thực hiện Soft Delete cập nhật is_deleted=True).
 
         Returns:
