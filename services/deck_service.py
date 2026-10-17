@@ -173,7 +173,8 @@ class DeckService:
         deck = self.deck_repository.get_by_id(deck_id)
         if deck is None or deck.is_deleted:
             return None
-        cards = self.get_cards_by_deck_id(deck_id)
+        cards = self.card_repository.find_by(deck_id=deck_id)
+        cards.sort(key=lambda c: c.position)
         return (deck, cards)
 
     def get_decks(
@@ -248,11 +249,3 @@ class DeckService:
             "page_size": actual_page_size,
         }
 
-    def get_cards_by_deck_id(self, deck_id: int) -> list[Card]:
-        """Lấy tất cả các thẻ của một bộ thẻ với độ phức tạp O(log N).
-
-        Tận dụng chỉ mục phụ `deck_id` của CsvRepository[Card].
-        """
-        cards = self.card_repository.find_by(deck_id=deck_id)
-        cards.sort(key=lambda c: c.position)
-        return cards
