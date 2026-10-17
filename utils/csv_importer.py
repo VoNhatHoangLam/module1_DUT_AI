@@ -143,11 +143,3 @@ class CsvImporter:
             )
 
         return cards
-
-
-def import_cards_from_csv(
-    source: str | Path | TextIO,
-    encoding: str = "utf-8-sig",
-) -> list[dict[str, Any]]:
-    """Hàm tiện ích tương thích ngược, sử dụng lớp CsvImporter để import thẻ."""
-    return CsvImporter(encoding=encoding).import_cards(source)
