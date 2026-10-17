@@ -133,32 +133,30 @@ class DeckService:
     def delete_deck(
         self,
         deck_id: int,
-        hard_delete: bool = False,
     ) -> bool:
-        """Xóa bộ thẻ theo đúng cơ chế Soft Delete của hệ thống và quyền hạn.
+        """Xóa vĩnh viễn bộ thẻ khỏi decks.csv và xóa liên hoàn (Cascade Delete) các thẻ con trong cards.csv.
+
+        Kiểm tra sự tồn tại của bộ thẻ bằng phương thức exists() ở tầng repository với O(log N).
+        Nếu không tìm thấy, trả về False.
+        Nếu tìm thấy, xóa toàn bộ các thẻ liên kết trong cards.csv, sau đó xóa bộ thẻ khỏi decks.csv và trả về True.
 
         Args:
             deck_id: Khóa chính định danh bộ thẻ cần xóa.
-            hard_delete: Mặc định False (thực hiện Soft Delete cập nhật is_deleted=True).
 
         Returns:
-            True nếu xóa thành công.
-
-        Raises:
-            RecordNotFoundError: Nếu không tìm thấy deck_id hoặc bộ thẻ đã bị xóa trước đó.
+            True nếu xóa thành công, False nếu không tìm thấy bộ thẻ với ID tương ứng.
         """
-        existing = self.deck_repository.get_by_id(deck_id)
-        if existing is None or existing.is_deleted:
-            raise RecordNotFoundError(f"Không tìm thấy bộ thẻ với ID={deck_id}")
+        if not self.deck_repository.exists(deck_id):
+            return False
 
-        # Cập nhật trạng thái xóa mềm
-        existing.is_deleted = True
-        existing.updated_at = datetime.now().replace(microsecond=0)
+        # Xóa liên hoàn các thẻ con thuộc deck_id trong cards.csv (Cascade Delete)
+        associated_cards = self.card_repository.find_by(deck_id=deck_id)
+        for card in associated_cards:
+            if card.card_id is not None:
+                self.card_repository.delete(card.card_id)
 
-        # Lưu cập nhật vào CsvRepository (O(log N) trên cả chỉ mục chính và chỉ mục phụ)
-        self.deck_repository.update(existing)
-
-        return True
+        # Xóa vĩnh viễn bộ thẻ khỏi decks.csv
+        return self.deck_repository.delete(deck_id)
 
     def get_deck_by_id(self, deck_id: int) -> Optional[Deck]:
         """Tìm kiếm bộ thẻ theo khóa chính ID với độ phức tạp O(log N).

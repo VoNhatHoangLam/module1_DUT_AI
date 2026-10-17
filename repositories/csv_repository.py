@@ -266,6 +266,46 @@ class CsvRepository(Generic[T]):
             self._last_mtime = self.file_path.stat().st_mtime
             return record
 
+    def delete(self, record_id: int) -> bool:
+        """Xóa vĩnh viễn bản ghi theo khóa chính (Hard Delete).
+
+        Xóa khỏi Cây AVL chính O(log N), xóa khỏi các cây chỉ mục phụ O(log N),
+        sau đó ghi đồng bộ lại file CSV xuống đĩa.
+
+        Args:
+            record_id: Khóa chính của bản ghi cần xóa.
+
+        Returns:
+            True nếu xóa thành công.
+
+        Raises:
+            RecordNotFoundError: Nếu không tìm thấy record_id trong repository.
+        """
+        with self._lock:
+            self._ensure_cache_loaded()
+            existing = self._primary_index.search(record_id)
+            if existing is None:
+                raise RecordNotFoundError(
+                    f"Không tìm thấy {self.id_field}={record_id} trong {self.file_path.name}"
+                )
+
+            # Xóa khỏi các chỉ mục phụ (O(log N))
+            for field_name in self._indexed_fields:
+                val = getattr(existing, field_name)
+                self._secondary_indices[field_name].remove(
+                    val,
+                    existing,
+                    identifier_func=lambda r: getattr(r, self.id_field),
+                )
+
+            # Xóa khỏi chỉ mục chính (O(log N))
+            self._primary_index.delete(record_id)
+
+            # Ghi đĩa đồng bộ (Write-Through)
+            self._write_all(self._primary_index.inorder())
+            self._last_mtime = self.file_path.stat().st_mtime
+            return True
+
     def _ensure_cache_loaded(self) -> None:
         """Nạp dữ liệu từ CSV vào cây AVL hoặc làm mới nếu file trên đĩa bị thay đổi."""
         self._ensure_file_exists()
