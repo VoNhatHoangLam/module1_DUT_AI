@@ -168,6 +168,28 @@ class CsvRepository(Generic[T]):
                 if all(getattr(record, name) == value for name, value in criteria.items())
             ]
 
+    def find_by_prefix(self, field: str, prefix: str) -> list[T]:
+        """Tìm các bản ghi có giá trị của trường bắt đầu bằng prefix với độ phức tạp O(log N + K).
+
+        Nếu trường có trong chỉ mục phụ MultiAVLTree, tìm kiếm đạt O(log N + K).
+        Nếu không có chỉ mục phụ, duyệt qua toàn bộ các bản ghi trong bộ nhớ RAM.
+        """
+        if field not in self._field_names:
+            raise ValueError(f"Model {self.model_class.__name__} không có trường: {field}")
+
+        prefix_str = str(prefix)
+        with self._lock:
+            self._ensure_cache_loaded()
+            if field in self._secondary_indices:
+                candidates = self._secondary_indices[field].prefix_search(prefix_str)
+                return [copy.copy(record) for record in candidates]
+
+            return [
+                copy.copy(record)
+                for record in self._primary_index.inorder()
+                if str(getattr(record, field, "")).startswith(prefix_str)
+            ]
+
     def exists(self, record_id: int) -> bool:
         """Kiểm tra một khóa chính có tồn tại hay không với độ phức tạp O(log N)."""
         with self._lock:

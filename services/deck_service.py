@@ -8,13 +8,13 @@ from typing import Any, Optional
 from config import DATA_DIR
 from models import Card, Deck
 from repositories import CsvRepository, RecordNotFoundError
-from utils import CsvImporter, MultiAVLTree
+from utils import CsvImporter
 
 
 class DeckService:
     """Lớp nghiệp vụ quản lý bộ thẻ.
 
-    Tích hợp Cấu trúc Dữ liệu Cây AVL (AVLTree & MultiAVLTree) để:
+    Tương tác với tầng lưu trữ CsvRepository tích hợp Cây AVL (AVLTree & MultiAVLTree) để:
     - Tìm kiếm bộ thẻ theo ID với độ phức tạp O(log N).
     - Tìm kiếm bộ thẻ theo Tiêu đề (Title) với độ phức tạp O(log N).
     - Tìm kiếm bộ thẻ theo Tiền tố (Prefix) với độ phức tạp O(log N + K).
@@ -29,22 +29,12 @@ class DeckService:
         csv_importer: Optional[CsvImporter] = None,
     ) -> None:
         self.deck_repository = deck_repository or CsvRepository(
-            DATA_DIR / "decks.csv", Deck, "deck_id"
+            DATA_DIR / "decks.csv", Deck, "deck_id", indexed_fields=("title",)
         )
         self.card_repository = card_repository or CsvRepository(
             DATA_DIR / "cards.csv", Card, "card_id", indexed_fields=("deck_id",)
         )
         self.csv_importer = csv_importer or CsvImporter()
-        # Chỉ mục phụ tiêu đề (Title Index) sử dụng MultiAVLTree để tìm kiếm O(log N)
-        self._title_index: MultiAVLTree[str, Deck] = MultiAVLTree()
-        self._rebuild_title_index()
-
-    def _rebuild_title_index(self) -> None:
-        """Đồng bộ chỉ mục tiêu đề từ repository vào cây MultiAVLTree."""
-        self._title_index.clear()
-        for deck in self.deck_repository.get_all():
-            if not deck.is_deleted:
-                self._title_index.insert(deck.title, deck)
 
     def import_cards_from_csv(
         self,
@@ -67,49 +57,59 @@ class DeckService:
     def create_deck(
         self,
         title: str,
+        cards: list[dict[str, Any]],
         description: Optional[str] = None,
-        cards: Optional[list[dict[str, Any]]] = None,
-    ) -> tuple[int, str, Optional[str], datetime, int, list[Card]]:
+    ) -> tuple[int, str, Optional[str], int]:
         """Thêm 1 bản ghi bộ thẻ mới vào file data/decks.csv và các thẻ vào data/cards.csv.
 
         Khởi tạo đối tượng Deck và gọi phương thức add() của CsvRepository
         để tự động cấp phát khóa chính (deck_id) và lưu dữ liệu an toàn xuống file CSV.
-        Nếu danh sách cards được cung cấp, từng thẻ sẽ được thêm vào cards.csv.
+        Mỗi thẻ trong danh sách cards được lưu vào cards.csv kèm deck_id tương ứng.
 
         Args:
             title: Tiêu đề của bộ thẻ (bắt buộc, không được để trống).
-            description: Mô tả chi tiết của bộ thẻ (tuỳ chọn).
             cards: Danh sách các dict chứa thông tin thẻ (front_text, back_text, position).
+                   Bắt buộc truyền danh sách, không được là None.
+            description: Mô tả chi tiết của bộ thẻ (tuỳ chọn).
 
         Returns:
-            tuple gồm (deck_id, title, description, updated_at, số_thẻ_trong_deck, danh_sách_thẻ).
+            tuple gồm (deck_id, title, description, card_count).
 
         Raises:
-            ValueError: Nếu tiêu đề bộ thẻ bị rỗng hoặc chỉ toàn khoảng trắng.
+            ValueError: Khi title để trống hoặc cards là None.
+            TypeError: Khi cards không phải là list hoặc có phần tử không phải dict.
         """
+        # Xác thực tham số cards bắt buộc
+        if cards is None:
+            raise ValueError("Tham số cards là bắt buộc, không được là None")
+        if not isinstance(cards, list):
+            raise TypeError("Tham số cards phải là một danh sách (list)")
+
+        # Xác thực tiêu đề title bắt buộc
         if not isinstance(title, str) or not title.strip():
             raise ValueError("Tiêu đề bộ thẻ không được để trống")
 
-        card_items = cards or []
+        clean_title = title.strip()
+        clean_description = (
+            description.strip() if isinstance(description, str) and description.strip() else None
+        )
 
         # Tạo thực thể Deck mới (không truyền deck_id để add() tự sinh ID mới)
         new_deck = Deck(
-            title=title.strip(),
-            description=description.strip() if isinstance(description, str) and description.strip() else description,
-            total_cards=len(card_items),
+            title=clean_title,
+            description=clean_description,
+            total_cards=len(cards),
             is_studied=False,
             is_deleted=False,
         )
 
-        # Lưu vào decks.csv (O(log N) trên cây AVL và ghi atomic xuống đĩa)
+        # Lưu vào decks.csv (O(log N) trên cây AVL và ghi atomic xuống đĩa, tự động cập nhật chỉ mục phụ)
         saved_deck = self.deck_repository.add(new_deck)
 
-        # Cập nhật chỉ mục tiêu đề
-        self._title_index.insert(saved_deck.title, saved_deck)
-
-        # Thêm từng thẻ vào data/cards.csv nếu có
-        saved_cards: list[Card] = []
-        for idx, card_data in enumerate(card_items, start=1):
+        # Thêm từng thẻ vào data/cards.csv (O(log N) trên cả primary và secondary AVL tree)
+        for idx, card_data in enumerate(cards, start=1):
+            if not isinstance(card_data, dict):
+                raise TypeError("Mỗi phần tử trong cards phải là một dictionary")
             front_text = str(card_data.get("front_text", card_data.get("term", ""))).strip()
             back_text = str(card_data.get("back_text", card_data.get("definition", ""))).strip()
             position = int(card_data.get("position", idx))
@@ -119,14 +119,15 @@ class DeckService:
                 back_text=back_text,
                 position=position,
             )
-            saved_cards.append(self.card_repository.add(card))
+            self.card_repository.add(card)
+
+        card_count = len(cards)
 
         return (
             saved_deck.deck_id,
             saved_deck.title,
             saved_deck.description,
-            saved_deck.updated_at,
-            len(saved_cards)
+            card_count,
         )
 
     def delete_deck(
@@ -154,15 +155,8 @@ class DeckService:
         existing.is_deleted = True
         existing.updated_at = datetime.now().replace(microsecond=0)
 
-        # Lưu cập nhật vào CsvRepository (O(log N))
+        # Lưu cập nhật vào CsvRepository (O(log N) trên cả chỉ mục chính và chỉ mục phụ)
         self.deck_repository.update(existing)
-
-        # Xóa khỏi chỉ mục tiêu đề
-        self._title_index.remove(
-            existing.title,
-            existing,
-            identifier_func=lambda d: d.deck_id,
-        )
 
         return True
 
@@ -195,7 +189,7 @@ class DeckService:
     def search_deck_by_title(self, title: str) -> list[Deck]:
         """Tìm kiếm bộ thẻ chính xác theo tiêu đề với độ phức tạp O(log N).
 
-        Sử dụng Cây MultiAVLTree (Title Index) trong RAM.
+        Sử dụng Cây MultiAVLTree (Title Index) quản lý trong CsvRepository.
 
         Args:
             title: Tiêu đề bộ thẻ cần tìm.
@@ -203,13 +197,13 @@ class DeckService:
         Returns:
             Danh sách các bộ thẻ có tiêu đề khớp hoàn toàn (chưa bị xóa).
         """
-        matched = self._title_index.search(title.strip())
+        matched = self.deck_repository.find_by(title=title.strip())
         return [d for d in matched if not d.is_deleted]
 
     def search_decks_by_title_prefix(self, prefix: str) -> list[Deck]:
         """Tìm kiếm các bộ thẻ có tiêu đề bắt đầu bằng prefix với độ phức tạp O(log N + K).
 
-        Định vị nhánh cây AVL trong O(log N) và thu thập K kết quả khớp tiền tố trong O(K).
+        Định vị nhánh cây AVL trong O(log N) và thu thập K kết quả khớp tiền tố trong O(K) thông qua CsvRepository.
 
         Args:
             prefix: Tiền tố tiêu đề cần tìm kiếm.
@@ -217,7 +211,7 @@ class DeckService:
         Returns:
             Danh sách các bộ thẻ có tiêu đề bắt đầu bằng tiền tố (chưa bị xóa).
         """
-        matched = self._title_index.prefix_search(prefix.strip())
+        matched = self.deck_repository.find_by_prefix("title", prefix.strip())
         return [d for d in matched if not d.is_deleted]
 
     def search_decks(self, query: str | int) -> list[Deck]:
