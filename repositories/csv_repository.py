@@ -196,6 +196,133 @@ class CsvRepository(Generic[T]):
             self._ensure_cache_loaded()
             return self._primary_index.contains(record_id)
 
+    def count(
+        self,
+        keyword: Optional[str] = None,
+        search_field: Optional[str] = None,
+        **criteria: Any,
+    ) -> int:
+        """Đếm số lượng bản ghi thỏa mãn điều kiện lọc và/hoặc từ khóa tìm kiếm.
+
+        - Nếu không có điều kiện nào: trả về tổng số bản ghi với độ phức tạp O(1) từ cây AVL.
+        - Nếu có điều kiện tìm kiếm chuỗi con keyword hoặc criteria: duyệt qua các bản ghi trong RAM
+          với O(N) mà không sao chép đối tượng (zero-copy), tối ưu bộ nhớ và CPU.
+
+        Args:
+            keyword: Chuỗi từ khóa cần tìm kiếm con (substring, không phân biệt hoa thường).
+            search_field: Tên trường cần tìm kiếm chuỗi con (bắt buộc nếu keyword được truyền).
+            **criteria: Các cặp field=value để so khớp chính xác (ví dụ is_deleted=False).
+
+        Returns:
+            Số lượng bản ghi thỏa mãn tất cả các điều kiện.
+
+        Raises:
+            ValueError: Nếu search_field hoặc các trường trong criteria không tồn tại trong model.
+        """
+        unknown_fields = set(criteria) - set(self._field_names)
+        if unknown_fields:
+            names = ", ".join(sorted(unknown_fields))
+            raise ValueError(f"Model không có trường: {names}")
+
+        if search_field is not None and search_field not in self._field_names:
+            raise ValueError(f"Model {self.model_class.__name__} không có trường: {search_field}")
+
+        clean_kw = (
+            keyword.strip().lower()
+            if isinstance(keyword, str) and keyword.strip()
+            else None
+        )
+
+        with self._lock:
+            self._ensure_cache_loaded()
+
+            # 1. Trường hợp không có điều kiện lọc nào: O(1)
+            if not criteria and clean_kw is None:
+                return len(self._primary_index)
+
+            # 2. Trường hợp chỉ có 1 điều kiện exact match và trường đó có chỉ mục phụ MultiAVLTree: O(log N)
+            if len(criteria) == 1 and clean_kw is None:
+                field, val = next(iter(criteria.items()))
+                if field in self._secondary_indices:
+                    indexed_items = self._secondary_indices[field].search(val)
+                    return len(indexed_items) if indexed_items is not None else 0
+
+            # 3. Duyệt trên các bản ghi trong RAM (zero-copy)
+            count_val = 0
+            for record in self._primary_index.inorder():
+                if criteria and not all(getattr(record, k) == v for k, v in criteria.items()):
+                    continue
+                if clean_kw is not None and search_field is not None:
+                    field_val = str(getattr(record, search_field, "")).lower()
+                    if clean_kw not in field_val:
+                        continue
+                count_val += 1
+
+            return count_val
+
+    def find_by_keyword(
+        self,
+        keyword: Optional[str] = None,
+        search_field: Optional[str] = None,
+        **criteria: Any,
+    ) -> list[T]:
+        """Tìm các bản ghi thỏa mãn điều kiện criteria và/hoặc từ khóa tìm kiếm chuỗi con.
+
+        - Nếu không có điều kiện nào: trả về toàn bộ bản ghi theo thứ tự khóa chính tăng dần.
+        - Nếu có điều kiện keyword hoặc criteria: lọc các bản ghi thỏa mãn tất cả điều kiện.
+
+        Args:
+            keyword: Chuỗi từ khóa cần tìm kiếm con (substring, không phân biệt hoa thường).
+            search_field: Tên trường cần tìm kiếm chuỗi con (bắt buộc nếu keyword được truyền).
+            **criteria: Các cặp field=value để so khớp chính xác (ví dụ is_deleted=False).
+
+        Returns:
+            Danh sách các bản ghi thỏa mãn điều kiện tìm kiếm.
+
+        Raises:
+            ValueError: Nếu search_field hoặc các trường trong criteria không tồn tại trong model.
+        """
+        unknown_fields = set(criteria) - set(self._field_names)
+        if unknown_fields:
+            names = ", ".join(sorted(unknown_fields))
+            raise ValueError(f"Model không có trường: {names}")
+
+        if search_field is not None and search_field not in self._field_names:
+            raise ValueError(f"Model {self.model_class.__name__} không có trường: {search_field}")
+
+        clean_kw = (
+            keyword.strip().lower()
+            if isinstance(keyword, str) and keyword.strip()
+            else None
+        )
+
+        with self._lock:
+            self._ensure_cache_loaded()
+
+            # 1. Trường hợp không có điều kiện nào: trả về toàn bộ bản ghi
+            if not criteria and clean_kw is None:
+                return [copy.copy(record) for record in self._primary_index.inorder()]
+
+            # 2. Trường hợp chỉ có 1 điều kiện exact match và trường đó có chỉ mục phụ MultiAVLTree: O(log N)
+            if len(criteria) == 1 and clean_kw is None:
+                field, val = next(iter(criteria.items()))
+                if field in self._secondary_indices:
+                    indexed_items = self._secondary_indices[field].search(val)
+                    return [copy.copy(record) for record in indexed_items]
+
+            # 3. Duyệt trên các bản ghi trong RAM
+            results: list[T] = []
+            for record in self._primary_index.inorder():
+                if criteria and not all(getattr(record, k) == v for k, v in criteria.items()):
+                    continue
+                if clean_kw is not None and search_field is not None:
+                    field_val = str(getattr(record, search_field, "")).lower()
+                    if clean_kw not in field_val:
+                        continue
+                results.append(copy.copy(record))
+
+            return results
+
     def add(self, record: T) -> T:
         """Thêm bản ghi, tự cấp khóa chính nếu model chưa có ID.
 

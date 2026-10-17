@@ -158,92 +158,95 @@ class DeckService:
         # Xóa vĩnh viễn bộ thẻ khỏi decks.csv
         return self.deck_repository.delete(deck_id)
 
-    def get_deck_by_id(self, deck_id: int) -> Optional[Deck]:
-        """Tìm kiếm bộ thẻ theo khóa chính ID với độ phức tạp O(log N).
+    def get_deck_by_id(self, deck_id: int) -> Optional[tuple[Deck, list[Card]]]:
+        """Tìm kiếm bộ thẻ theo khóa chính ID kèm danh sách các thẻ con với độ phức tạp O(log N).
 
-        Sử dụng trực tiếp chỉ mục chính cây AVL (AVLTree) trong CsvRepository.
+        Sử dụng chỉ mục chính cây AVL (AVLTree) trong CsvRepository để tìm Deck,
+        và chỉ mục phụ MultiAVLTree trên trường deck_id để lấy danh sách thẻ.
 
         Args:
             deck_id: ID của bộ thẻ cần tìm.
 
         Returns:
-            Đối tượng Deck nếu tìm thấy và chưa bị xóa, ngược lại trả về None.
+            Tuple (Deck, list[Card]) nếu tìm thấy và chưa bị xóa, ngược lại trả về None.
         """
         deck = self.deck_repository.get_by_id(deck_id)
         if deck is None or deck.is_deleted:
             return None
-        return deck
+        cards = self.get_cards_by_deck_id(deck_id)
+        return (deck, cards)
 
-    def get_all_decks(self) -> list[Deck]:
-        """Lấy toàn bộ danh sách bộ thẻ hiện có trong hệ thống (chưa bị xóa).
+    def get_decks(
+        self,
+        keyword: Optional[str] = None,
+        page: int = 1,
+        page_size: int = 10,
+    ) -> dict[str, Any]:
+        """Lấy danh sách bộ thẻ hoặc tìm kiếm theo chuỗi tiêu đề có phân trang (tối đa 10 deck/trang).
 
-        Duyệt In-order trên Cây AVL trong bộ nhớ RAM với độ phức tạp O(N).
-
-        Returns:
-            Danh sách các đối tượng Deck hợp lệ (is_deleted=False).
-        """
-        return [d for d in self.deck_repository.get_all() if not d.is_deleted]
-
-    def search_deck_by_title(self, title: str) -> list[Deck]:
-        """Tìm kiếm bộ thẻ chính xác theo tiêu đề với độ phức tạp O(log N).
-
-        Sử dụng Cây MultiAVLTree (Title Index) quản lý trong CsvRepository.
+        Chỉ tìm kiếm theo chuỗi con (substring, case-insensitive) trong tiêu đề bộ thẻ,
+        không tìm kiếm theo ID. Không trả về danh sách thẻ (cards) của bộ thẻ.
 
         Args:
-            title: Tiêu đề bộ thẻ cần tìm.
+            keyword: Từ khóa tìm kiếm chuỗi con trong tiêu đề bộ thẻ (tùy chọn).
+            page: Số trang cần lấy (bắt đầu từ 1, mặc định 1).
+            page_size: Số lượng bộ thẻ tối đa trên mỗi trang (mặc định 10, trần tối đa 10).
 
         Returns:
-            Danh sách các bộ thẻ có tiêu đề khớp hoàn toàn (chưa bị xóa).
+            dict[str, Any]:
+                - items: Danh sách tối đa 10 đối tượng Deck của trang hiện tại (không kèm thẻ con).
+                - total_pages: Tổng số trang (ceil(total_count / page_size)).
+                - page: Trang hiện tại.
+                - page_size: Kích thước trang thực tế (tối đa 10).
+
+        Raises:
+            TypeError: Khi page hoặc page_size không phải số nguyên, hoặc keyword không phải chuỗi.
         """
-        matched = self.deck_repository.find_by(title=title.strip())
-        return [d for d in matched if not d.is_deleted]
+        if isinstance(page, bool) or not isinstance(page, int):
+            raise TypeError("page phải là số nguyên")
+        if isinstance(page_size, bool) or not isinstance(page_size, int):
+            raise TypeError("page_size phải là số nguyên")
+        if keyword is not None and not isinstance(keyword, str):
+            raise TypeError("keyword phải là chuỗi hoặc None")
 
-    def search_decks_by_title_prefix(self, prefix: str) -> list[Deck]:
-        """Tìm kiếm các bộ thẻ có tiêu đề bắt đầu bằng prefix với độ phức tạp O(log N + K).
+        actual_page = max(1, page)
+        actual_page_size = max(1, min(page_size, 10))
 
-        Định vị nhánh cây AVL trong O(log N) và thu thập K kết quả khớp tiền tố trong O(K) thông qua CsvRepository.
+        clean_kw = keyword.strip() if isinstance(keyword, str) and keyword.strip() else None
 
-        Args:
-            prefix: Tiền tố tiêu đề cần tìm kiếm.
+        # 1. Đếm tổng số deck thỏa mãn bằng phương thức count() của CsvRepository
+        total_count = self.deck_repository.count(
+            keyword=clean_kw,
+            search_field="title",
+            is_deleted=False,
+        )
 
-        Returns:
-            Danh sách các bộ thẻ có tiêu đề bắt đầu bằng tiền tố (chưa bị xóa).
-        """
-        matched = self.deck_repository.find_by_prefix("title", prefix.strip())
-        return [d for d in matched if not d.is_deleted]
+        # 2. Tính toán tổng số trang
+        total_pages = (
+            (total_count + actual_page_size - 1) // actual_page_size
+            if total_count > 0
+            else 0
+        )
 
-    def search_decks(self, query: str | int) -> list[Deck]:
-        """Tìm kiếm bộ thẻ linh hoạt theo ID hoặc Tiêu đề với độ phức tạp O(log N).
+        # 3. Lấy dữ liệu của trang hiện tại (tối đa 10 deck)
+        if actual_page > total_pages or total_count == 0:
+            paged_decks = []
+        else:
+            matched = self.deck_repository.find_by_keyword(
+                keyword=clean_kw,
+                search_field="title",
+                is_deleted=False,
+            )
+            start_idx = (actual_page - 1) * actual_page_size
+            end_idx = start_idx + actual_page_size
+            paged_decks = matched[start_idx:end_idx]
 
-        - Nếu query là số: tìm theo deck_id bằng cây AVL chính với O(log N).
-        - Nếu query là chuỗi: tìm theo tiêu đề chính xác O(log N), hoặc tiền tố O(log N + K).
-
-        Args:
-            query: Từ khóa tìm kiếm (chuỗi hoặc số nguyên ID).
-
-        Returns:
-            Danh sách các bộ thẻ khớp điều kiện tìm kiếm.
-        """
-        if isinstance(query, int):
-            found = self.get_deck_by_id(query)
-            return [found] if found is not None else []
-
-        q_str = str(query).strip()
-        if not q_str:
-            return self.get_all_decks()
-
-        if q_str.isdigit():
-            found = self.get_deck_by_id(int(q_str))
-            if found is not None:
-                return [found]
-
-        # Tìm kiếm chính xác tiêu đề trước (O(log N))
-        exact_matches = self.search_deck_by_title(q_str)
-        if exact_matches:
-            return exact_matches
-
-        # Tìm kiếm theo tiền tố tiêu đề (O(log N + K))
-        return self.search_decks_by_title_prefix(q_str)
+        return {
+            "items": paged_decks,
+            "total_pages": total_pages,
+            "page": actual_page,
+            "page_size": actual_page_size,
+        }
 
     def get_cards_by_deck_id(self, deck_id: int) -> list[Card]:
         """Lấy tất cả các thẻ của một bộ thẻ với độ phức tạp O(log N).
