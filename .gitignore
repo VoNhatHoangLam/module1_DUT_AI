@@ -4,3 +4,13 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 sample_doc.txt
+
+# Word report files and generator scripts
+*.docx
+*.doc
+~$*.docx
+~$*.doc
+create_project_word_report.py
+generate_docx_report.py
+*word_report*.py
+*docx_report*.py

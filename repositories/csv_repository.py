@@ -143,7 +143,11 @@ class CsvRepository(Generic[T]):
 
             # Kiểm tra xem có trường chỉ mục phụ nào trong criteria không
             indexed_match = next(
-                (field for field in criteria if field in self._secondary_indices),
+                (
+                    field
+                    for field in criteria
+                    if field in self._secondary_indices and criteria[field] is not None
+                ),
                 None,
             )
 
@@ -204,9 +208,10 @@ class CsvRepository(Generic[T]):
     ) -> int:
         """Đếm số lượng bản ghi thỏa mãn điều kiện lọc và/hoặc từ khóa tìm kiếm.
 
-        - Nếu không có điều kiện nào: trả về tổng số bản ghi với độ phức tạp O(1) từ cây AVL.
-        - Nếu có điều kiện tìm kiếm chuỗi con keyword hoặc criteria: duyệt qua các bản ghi trong RAM
-          với O(N) mà không sao chép đối tượng (zero-copy), tối ưu bộ nhớ và CPU.
+        - Nếu không truyền điều kiện nào: Trả về tổng số bản ghi trong cây AVL với O(1).
+        - Nếu có điều kiện thuộc chỉ mục phụ: Tìm kiếm nhánh cây O(log N) bằng MultiAVLTree.
+        - Nếu có keyword hoặc nhiều tiêu chí: Đếm trực tiếp các nút thỏa mãn trên Cây AVL in-memory
+          mà không cần tạo danh sách bản ghi mới trong bộ nhớ RAM (zero-copy).
 
         Args:
             keyword: Chuỗi từ khóa cần tìm kiếm con (substring, không phân biệt hoa thường).
@@ -214,7 +219,7 @@ class CsvRepository(Generic[T]):
             **criteria: Các cặp field=value để so khớp chính xác (ví dụ is_deleted=False).
 
         Returns:
-            Số lượng bản ghi thỏa mãn tất cả các điều kiện.
+            int: Số lượng bản ghi thỏa mãn tất cả các điều kiện.
 
         Raises:
             ValueError: Nếu search_field hoặc các trường trong criteria không tồn tại trong model.
@@ -236,18 +241,40 @@ class CsvRepository(Generic[T]):
         with self._lock:
             self._ensure_cache_loaded()
 
-            # 1. Trường hợp không có điều kiện lọc nào: O(1)
+            # 1. Trường hợp không có điều kiện nào: O(1)
             if not criteria and clean_kw is None:
                 return len(self._primary_index)
 
-            # 2. Trường hợp chỉ có 1 điều kiện exact match và trường đó có chỉ mục phụ MultiAVLTree: O(log N)
-            if len(criteria) == 1 and clean_kw is None:
-                field, val = next(iter(criteria.items()))
-                if field in self._secondary_indices:
-                    indexed_items = self._secondary_indices[field].search(val)
-                    return len(indexed_items) if indexed_items is not None else 0
+            # 2. Kiểm tra xem có trường chỉ mục phụ nào trong criteria không (O(log N))
+            indexed_match = next(
+                (
+                    field
+                    for field in criteria
+                    if field in self._secondary_indices and criteria[field] is not None
+                ),
+                None,
+            )
 
-            # 3. Duyệt trên các bản ghi trong RAM (zero-copy)
+            if indexed_match is not None:
+                candidates = self._secondary_indices[indexed_match].search(criteria[indexed_match])
+                remaining_criteria = {
+                    k: v for k, v in criteria.items() if k != indexed_match
+                }
+                if not remaining_criteria and clean_kw is None:
+                    return len(candidates)
+
+                count_val = 0
+                for record in candidates:
+                    if remaining_criteria and not all(getattr(record, k) == v for k, v in remaining_criteria.items()):
+                        continue
+                    if clean_kw is not None and search_field is not None:
+                        field_val = str(getattr(record, search_field, "")).lower()
+                        if clean_kw not in field_val:
+                            continue
+                    count_val += 1
+                return count_val
+
+            # 3. Nếu không có chỉ mục phụ khớp, duyệt trực tiếp trên cây AVL in-memory (O(N) zero-copy)
             count_val = 0
             for record in self._primary_index.inorder():
                 if criteria and not all(getattr(record, k) == v for k, v in criteria.items()):
@@ -303,15 +330,34 @@ class CsvRepository(Generic[T]):
             if not criteria and clean_kw is None:
                 return [copy.copy(record) for record in self._primary_index.inorder()]
 
-            # 2. Trường hợp chỉ có 1 điều kiện exact match và trường đó có chỉ mục phụ MultiAVLTree: O(log N)
-            if len(criteria) == 1 and clean_kw is None:
-                field, val = next(iter(criteria.items()))
-                if field in self._secondary_indices:
-                    indexed_items = self._secondary_indices[field].search(val)
-                    return [copy.copy(record) for record in indexed_items]
+            # 2. Kiểm tra xem có trường chỉ mục phụ nào trong criteria không
+            indexed_match = next(
+                (
+                    field
+                    for field in criteria
+                    if field in self._secondary_indices and criteria[field] is not None
+                ),
+                None,
+            )
+
+            if indexed_match is not None:
+                candidates = self._secondary_indices[indexed_match].search(criteria[indexed_match])
+                remaining_criteria = {
+                    k: v for k, v in criteria.items() if k != indexed_match
+                }
+                results: list[T] = []
+                for record in candidates:
+                    if remaining_criteria and not all(getattr(record, k) == v for k, v in remaining_criteria.items()):
+                        continue
+                    if clean_kw is not None and search_field is not None:
+                        field_val = str(getattr(record, search_field, "")).lower()
+                        if clean_kw not in field_val:
+                            continue
+                    results.append(copy.copy(record))
+                return results
 
             # 3. Duyệt trên các bản ghi trong RAM
-            results: list[T] = []
+            results = []
             for record in self._primary_index.inorder():
                 if criteria and not all(getattr(record, k) == v for k, v in criteria.items()):
                     continue
@@ -322,6 +368,7 @@ class CsvRepository(Generic[T]):
                 results.append(copy.copy(record))
 
             return results
+
 
     def add(self, record: T) -> T:
         """Thêm bản ghi, tự cấp khóa chính nếu model chưa có ID.
@@ -348,7 +395,8 @@ class CsvRepository(Generic[T]):
             # Thêm vào các chỉ mục phụ (O(log N))
             for field_name in self._indexed_fields:
                 val = getattr(stored_record, field_name)
-                self._secondary_indices[field_name].insert(val, stored_record)
+                if val is not None:
+                    self._secondary_indices[field_name].insert(val, stored_record)
 
             # Ghi đĩa đồng bộ (Write-Through)
             self._write_all(self._primary_index.inorder())
@@ -378,12 +426,21 @@ class CsvRepository(Generic[T]):
             for field_name in self._indexed_fields:
                 old_val = getattr(existing, field_name)
                 new_val = getattr(stored_record, field_name)
-                self._secondary_indices[field_name].update_record(
-                    old_key=old_val,
-                    new_key=new_val,
-                    value=stored_record,
-                    identifier_func=lambda r: getattr(r, self.id_field),
-                )
+                if old_val is not None and new_val is not None:
+                    self._secondary_indices[field_name].update_record(
+                        old_key=old_val,
+                        new_key=new_val,
+                        value=stored_record,
+                        identifier_func=lambda r: getattr(r, self.id_field),
+                    )
+                elif old_val is not None and new_val is None:
+                    self._secondary_indices[field_name].remove(
+                        old_val,
+                        stored_record,
+                        identifier_func=lambda r: getattr(r, self.id_field),
+                    )
+                elif old_val is None and new_val is not None:
+                    self._secondary_indices[field_name].insert(new_val, stored_record)
 
             # Cập nhật chỉ mục chính (O(log N))
             self._primary_index.update(record_id, stored_record)
@@ -394,44 +451,80 @@ class CsvRepository(Generic[T]):
             return record
 
     def delete(self, record_id: int) -> bool:
-        """Xóa vĩnh viễn bản ghi theo khóa chính (Hard Delete).
-
-        Xóa khỏi Cây AVL chính O(log N), xóa khỏi các cây chỉ mục phụ O(log N),
-        sau đó ghi đồng bộ lại file CSV xuống đĩa.
+        """Xóa một bản ghi theo khóa chính với O(log N) và ghi đồng bộ xuống file CSV.
 
         Args:
             record_id: Khóa chính của bản ghi cần xóa.
 
         Returns:
-            True nếu xóa thành công.
-
-        Raises:
-            RecordNotFoundError: Nếu không tìm thấy record_id trong repository.
+            bool: True nếu xóa thành công, False nếu bản ghi không tồn tại.
         """
         with self._lock:
             self._ensure_cache_loaded()
             existing = self._primary_index.search(record_id)
             if existing is None:
-                raise RecordNotFoundError(
-                    f"Không tìm thấy {self.id_field}={record_id} trong {self.file_path.name}"
-                )
+                return False
 
             # Xóa khỏi các chỉ mục phụ (O(log N))
             for field_name in self._indexed_fields:
                 val = getattr(existing, field_name)
-                self._secondary_indices[field_name].remove(
-                    val,
-                    existing,
-                    identifier_func=lambda r: getattr(r, self.id_field),
-                )
+                if val is not None:
+                    self._secondary_indices[field_name].remove(
+                        val,
+                        existing,
+                        identifier_func=lambda r: getattr(r, self.id_field),
+                    )
 
             # Xóa khỏi chỉ mục chính (O(log N))
             self._primary_index.delete(record_id)
 
-            # Ghi đĩa đồng bộ (Write-Through)
+            # Ghi đĩa đồng bộ an toàn (Write-Through)
             self._write_all(self._primary_index.inorder())
             self._last_mtime = self.file_path.stat().st_mtime
             return True
+
+    def delete_where(self, **criteria: Any) -> int:
+        """Xóa tất cả các bản ghi khớp với điều kiện truyền vào và ghi đồng bộ xuống file CSV.
+
+        Args:
+            **criteria: Các điều kiện lọc bản ghi cần xóa (ví dụ: quiz_id=10).
+
+        Returns:
+            int: Số lượng bản ghi đã được xóa.
+        """
+        unknown_fields = set(criteria) - set(self._field_names)
+        if unknown_fields:
+            names = ", ".join(sorted(unknown_fields))
+            raise ValueError(f"Model không có trường: {names}")
+
+        with self._lock:
+            self._ensure_cache_loaded()
+            matches = self.find_by(**criteria)
+            if not matches:
+                return 0
+
+            for record in matches:
+                rec_id = getattr(record, self.id_field)
+                if rec_id is None:
+                    continue
+
+                # Xóa khỏi các chỉ mục phụ
+                for field_name in self._indexed_fields:
+                    val = getattr(record, field_name)
+                    if val is not None:
+                        self._secondary_indices[field_name].remove(
+                            val,
+                            record,
+                            identifier_func=lambda r: getattr(r, self.id_field),
+                        )
+
+                # Xóa khỏi chỉ mục chính (O(log N))
+                self._primary_index.delete(rec_id)
+
+            # Ghi đĩa đồng bộ an toàn (Write-Through)
+            self._write_all(self._primary_index.inorder())
+            self._last_mtime = self.file_path.stat().st_mtime
+            return len(matches)
 
     def _ensure_cache_loaded(self) -> None:
         """Nạp dữ liệu từ CSV vào cây AVL hoặc làm mới nếu file trên đĩa bị thay đổi."""
@@ -459,7 +552,8 @@ class CsvRepository(Generic[T]):
                 self._primary_index.insert(rec_id, record)
             for field_name in self._indexed_fields:
                 sec_val = getattr(record, field_name)
-                self._secondary_indices[field_name].insert(sec_val, record)
+                if sec_val is not None:
+                    self._secondary_indices[field_name].insert(sec_val, record)
 
         self._last_mtime = self.file_path.stat().st_mtime
         self._is_loaded = True
