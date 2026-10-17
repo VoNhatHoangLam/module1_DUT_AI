@@ -4,17 +4,151 @@ from __future__ import annotations
 
 import csv
 import io
-from decimal import Decimal, InvalidOperation
+from dataclasses import dataclass
+from datetime import datetime
+from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, Mapping, Optional
 
 from config import DATA_DIR
 from models import Question, Quiz, QuizAnswer, QuizAttempt
 from repositories import CsvRepository
+from utils import Stack
+
+
+class QuizNotFoundError(LookupError):
+    """Không tìm thấy quiz có thể làm."""
+
+
+class AttemptNotFoundError(LookupError):
+    """Không tìm thấy lượt làm bài."""
+
+
+class AttemptAlreadySubmittedError(ValueError):
+    """Lượt làm bài đã được nộp trước đó."""
+
+
+class NoQuestionError(ValueError):
+    """Quiz không có câu hỏi để làm."""
+
+
+@dataclass(frozen=True, slots=True)
+class QuizAttemptResult:
+    """Kết quả tổng quát và chi tiết đáp án của một lượt làm bài."""
+
+    attempt: QuizAttempt
+    answers: tuple[QuizAnswer, ...]
+
+
+class QuizSession:
+    """Phiên làm bài tuần tự hỗ trợ Undo/Redo bằng mô hình 2 Stack.
+
+    _undo_stack: Lưu các câu hỏi trong quá khứ để lùi lại khi bấm undo().
+    _redo_stack: Lưu các câu hỏi ở tương lai để tiến tới khi bấm redo().
+    _current_question: Câu hỏi hiện tại đang hiển thị trên màn hình.
+    """
+
+    def __init__(self, attempt: QuizAttempt, questions: list[Question]) -> None:
+        self.attempt = attempt
+        self._undo_stack: Stack[Question] = Stack()
+        self._redo_stack: Stack[Question] = Stack()
+        self._selected_answers: dict[int, Optional[str]] = {}
+
+        sorted_questions = sorted(questions, key=lambda item: item.position)
+        if not sorted_questions:
+            raise NoQuestionError("Quiz không có câu hỏi để làm")
+
+        self._total_questions = len(sorted_questions)
+        self._current_question: Optional[Question] = sorted_questions[0]
+
+        # Đẩy các câu còn lại (từ câu 2 đến câu N) vào _redo_stack theo thứ tự đảo ngược
+        # để câu thứ 2 nằm ở đỉnh stack (peek / pop ra đầu tiên khi tiến tới)
+        for question in reversed(sorted_questions[1:]):
+            self._redo_stack.push(question)
+
+    @property
+    def current_question(self) -> Optional[Question]:
+        """Câu hỏi hiện tại đang chờ thí sinh làm hoặc xem lại."""
+        return self._current_question
+
+    @property
+    def current_answer(self) -> Optional[str]:
+        """Đáp án thí sinh đã chọn cho câu hỏi hiện tại (nếu có)."""
+        if self._current_question is None or self._current_question.question_id is None:
+            return None
+        return self._selected_answers.get(self._current_question.question_id)
+
+    @property
+    def can_undo(self) -> bool:
+        """Cho biết có thể quay lại câu hỏi trước đó hay không."""
+        return not self._undo_stack.is_empty()
+
+    @property
+    def can_redo(self) -> bool:
+        """Cho biết có thể tiến tới câu hỏi kế tiếp trong lịch sử hay không."""
+        return not self._redo_stack.is_empty()
+
+    @property
+    def remaining_count(self) -> int:
+        """Số câu hỏi còn lại chưa được hoàn thành (tính cả câu hiện tại)."""
+        if self._current_question is None:
+            return 0
+        return 1 + len(self._redo_stack)
+
+    @property
+    def is_completed(self) -> bool:
+        """Cho biết thí sinh đã trả lời hết câu cuối cùng hay chưa."""
+        return self._current_question is None and self._redo_stack.is_empty()
+
+    @property
+    def selected_answers(self) -> dict[int, Optional[str]]:
+        """Bản sao từ điển chứa các đáp án thí sinh đã chọn."""
+        return dict(self._selected_answers)
+
+    def answer_current(self, selected_answer: Optional[str]) -> Question:
+        """Ghi nhận đáp án cho câu hỏi hiện tại và chuyển sang câu tiếp theo."""
+        if self._current_question is None:
+            raise NoQuestionError("Phiên làm bài không còn câu hỏi")
+
+        normalized = QuizService.normalize_answer(selected_answer)
+        assert self._current_question.question_id is not None
+        self._selected_answers[self._current_question.question_id] = normalized
+
+        answered_question = self._current_question
+        self._undo_stack.push(answered_question)
+
+        if not self._redo_stack.is_empty():
+            self._current_question = self._redo_stack.pop()
+        else:
+            self._current_question = None
+
+        return answered_question
+
+    def undo(self) -> Question:
+        """Quay lại câu hỏi trước đó (lấy từ _undo_stack)."""
+        if not self.can_undo:
+            raise NoQuestionError("Không thể quay lại vì đang ở câu hỏi đầu tiên")
+
+        if self._current_question is not None:
+            self._redo_stack.push(self._current_question)
+
+        self._current_question = self._undo_stack.pop()
+        return self._current_question
+
+    def redo(self) -> Question:
+        """Tiến tới câu hỏi kế tiếp (lấy từ _redo_stack)."""
+        if not self.can_redo:
+            raise NoQuestionError("Không thể làm lại vì không có câu hỏi kế tiếp")
+
+        if self._current_question is not None:
+            self._undo_stack.push(self._current_question)
+
+        self._current_question = self._redo_stack.pop()
+        return self._current_question
 
 
 class QuizService:
-    """Lớp nghiệp vụ quản lý bài kiểm tra trắc nghiệm."""
+    """Nghiệp vụ quản lý bài kiểm tra trắc nghiệm, phiên làm bài và chấm điểm."""
 
     def __init__(
         self,
@@ -455,3 +589,139 @@ class QuizService:
             "page": actual_page,
             "page_size": actual_page_size,
         }
+
+    def start_quiz(self, quiz_id: int) -> QuizSession:
+        quiz = self.quiz_repository.get_by_id(quiz_id)
+        if quiz is None or quiz.is_deleted:
+            raise QuizNotFoundError(f"Không tìm thấy quiz_id={quiz_id}")
+
+        questions = sorted(
+            (
+                question
+                for question in self.question_repository.find_by(quiz_id=quiz_id)
+                if not question.is_deleted
+            ),
+            key=lambda item: item.position,
+        )
+        if not questions:
+            raise NoQuestionError("Quiz không có câu hỏi để làm")
+
+        attempt = self.attempt_repository.add(
+            QuizAttempt(
+                quiz_id=quiz_id,
+                quiz_title_snapshot=quiz.title,
+                total_questions=len(questions),
+            )
+        )
+        return QuizSession(attempt, questions)
+
+    def submit_quiz(
+        self,
+        attempt_id: int,
+        selected_answers: Mapping[int, Optional[str]],
+    ) -> QuizAttemptResult:
+        attempt = self.attempt_repository.get_by_id(attempt_id)
+        if attempt is None:
+            raise AttemptNotFoundError(f"Không tìm thấy attempt_id={attempt_id}")
+        if attempt.attempt_status != "STARTED" or attempt.submitted_at is not None:
+            raise AttemptAlreadySubmittedError(f"attempt_id={attempt_id} đã được nộp")
+
+        questions = sorted(
+            (
+                question
+                for question in self.question_repository.find_by(quiz_id=attempt.quiz_id)
+                if not question.is_deleted
+            ),
+            key=lambda item: item.position,
+        )
+        if not questions:
+            raise NoQuestionError("Quiz không có câu hỏi để chấm")
+
+        question_ids = {question.question_id for question in questions}
+        unknown_ids = set(selected_answers) - question_ids
+        if unknown_ids:
+            raise ValueError(f"Câu hỏi không thuộc quiz: {sorted(unknown_ids)}")
+
+        normalized_answers = {
+            question_id: self.normalize_answer(answer)
+            for question_id, answer in selected_answers.items()
+        }
+        answer_records: list[QuizAnswer] = []
+        earned_points = Decimal("0")
+        total_points = Decimal("0")
+        correct_count = 0
+
+        for question in questions:
+            selected = normalized_answers.get(question.question_id)
+            correct_answer = self.normalize_answer(question.correct_answer)
+            assert correct_answer is not None
+            is_correct = selected == correct_answer
+            points = question.points if question.points > 0 else Decimal("0")
+            total_points += points
+            if is_correct:
+                correct_count += 1
+                earned_points += points
+            answer_records.append(
+                QuizAnswer(
+                    attempt_id=attempt_id,
+                    selected_answer=selected,
+                    correct_answer_snapshot=correct_answer,
+                    is_correct=is_correct,
+                    points_earned=points if is_correct else Decimal("0"),
+                    question_text_snapshot=question.question_text,
+                    selected_option_text_snapshot=(
+                        self._option_text(question, selected) if selected else None
+                    ),
+                    correct_option_text_snapshot=self._option_text(
+                        question, correct_answer
+                    ),
+                )
+            )
+
+        # Ghi chi tiết trước; chỉ chuyển attempt sang SUBMITTED khi chi tiết đã lưu đủ.
+        saved_answers = tuple(
+            self.answer_repository.add(answer) for answer in answer_records
+        )
+        attempt.attempt_status = "SUBMITTED"
+        attempt.submitted_at = datetime.now().replace(microsecond=0)
+        attempt.total_questions = len(questions)
+        attempt.correct_count = correct_count
+        attempt.score_percent = (
+            (earned_points * Decimal("100") / total_points).quantize(
+                Decimal("0.01"), rounding=ROUND_HALF_UP
+            )
+            if total_points > 0
+            else Decimal("0.00")
+        )
+        self.attempt_repository.update(attempt)
+        return QuizAttemptResult(attempt=attempt, answers=saved_answers)
+
+    def submit_session(self, session: QuizSession) -> QuizAttemptResult:
+        if session.attempt.attempt_id is None:
+            raise AttemptNotFoundError("Phiên làm bài chưa có attempt_id")
+        return self.submit_quiz(session.attempt.attempt_id, session.selected_answers)
+
+    @staticmethod
+    def normalize_answer(selected_answer: Optional[str]) -> Optional[str]:
+        if selected_answer is None:
+            return None
+        if not isinstance(selected_answer, str):
+            raise TypeError("Đáp án phải là chuỗi A, B, C, D hoặc None")
+        normalized = selected_answer.strip().upper()
+        if normalized not in {"A", "B", "C", "D"}:
+            raise ValueError("Đáp án phải là A, B, C hoặc D")
+        return normalized
+
+    @staticmethod
+    def _option_text(question: Question, answer: str) -> str:
+        normalized = answer.strip().upper()
+        try:
+            return {
+                "A": question.option_a,
+                "B": question.option_b,
+                "C": question.option_c,
+                "D": question.option_d,
+            }[normalized]
+        except KeyError as error:
+            raise ValueError("Đáp án đúng của câu hỏi phải là A, B, C hoặc D") from error
+
