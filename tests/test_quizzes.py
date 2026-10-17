@@ -151,8 +151,8 @@ class QuizServiceTestCase(unittest.TestCase):
             [submitted.attempt.attempt_id],
         )
 
-    def test_quiz_session_undo_and_redo_navigation(self) -> None:
-        """Kiểm tra điều hướng tới và lui (Undo/Redo) giữa 3 câu hỏi bằng 2 Stack."""
+    def test_quiz_session_back_and_forward_navigation(self) -> None:
+        """Kiểm tra điều hướng tới và lui (Back/Forward) giữa 3 câu hỏi bằng 2 Stack."""
         self.question_repo.add(
             Question(
                 question_id=102,
@@ -171,8 +171,8 @@ class QuizServiceTestCase(unittest.TestCase):
 
         # 1. Bắt đầu tại Câu 100
         self.assertEqual(session.current_question.question_id, 100)
-        self.assertFalse(session.can_undo)
-        self.assertTrue(session.can_redo)
+        self.assertFalse(session.can_back)
+        self.assertTrue(session.can_forward)
         self.assertIsNone(session.current_answer)
         self.assertEqual(session.remaining_count, 3)
 
@@ -180,48 +180,48 @@ class QuizServiceTestCase(unittest.TestCase):
         ans_q100 = session.answer_current("a")
         self.assertEqual(ans_q100.question_id, 100)
         self.assertEqual(session.current_question.question_id, 101)
-        self.assertTrue(session.can_undo)
-        self.assertTrue(session.can_redo)
+        self.assertTrue(session.can_back)
+        self.assertTrue(session.can_forward)
         self.assertEqual(session.remaining_count, 2)
 
         # 3. Trả lời Câu 101 -> Tiến sang Câu 102
         ans_q101 = session.answer_current("b")
         self.assertEqual(ans_q101.question_id, 101)
         self.assertEqual(session.current_question.question_id, 102)
-        self.assertTrue(session.can_undo)
-        self.assertFalse(session.can_redo)
+        self.assertTrue(session.can_back)
+        self.assertFalse(session.can_forward)
         self.assertEqual(session.remaining_count, 1)
 
-        # 4. UNDO lần 1: Từ Câu 102 quay lại Câu 101
-        prev_q = session.undo()
+        # 4. BACK lần 1: Từ Câu 102 quay lại Câu 101
+        prev_q = session.back()
         self.assertEqual(prev_q.question_id, 101)
         self.assertEqual(session.current_question.question_id, 101)
         self.assertEqual(session.current_answer, "B")
-        self.assertTrue(session.can_undo)
-        self.assertTrue(session.can_redo)
+        self.assertTrue(session.can_back)
+        self.assertTrue(session.can_forward)
 
-        # 5. UNDO lần 2: Từ Câu 101 quay lại Câu 100
-        prev_q2 = session.undo()
+        # 5. BACK lần 2: Từ Câu 101 quay lại Câu 100
+        prev_q2 = session.back()
         self.assertEqual(prev_q2.question_id, 100)
         self.assertEqual(session.current_question.question_id, 100)
         self.assertEqual(session.current_answer, "A")
-        self.assertFalse(session.can_undo)  # Đã ở câu đầu tiên
-        self.assertTrue(session.can_redo)
+        self.assertFalse(session.can_back)  # Đã ở câu đầu tiên
+        self.assertTrue(session.can_forward)
 
-        # 6. REDO lần 1: Từ Câu 100 tiến lại Câu 101
-        next_q = session.redo()
+        # 6. FORWARD lần 1: Từ Câu 100 tiến lại Câu 101
+        next_q = session.forward()
         self.assertEqual(next_q.question_id, 101)
         self.assertEqual(session.current_question.question_id, 101)
         self.assertEqual(session.current_answer, "B")
-        self.assertTrue(session.can_undo)
-        self.assertTrue(session.can_redo)
+        self.assertTrue(session.can_back)
+        self.assertTrue(session.can_forward)
 
-        # 7. REDO lần 2: Từ Câu 101 tiến lại Câu 102
-        next_q2 = session.redo()
+        # 7. FORWARD lần 2: Từ Câu 101 tiến lại Câu 102
+        next_q2 = session.forward()
         self.assertEqual(next_q2.question_id, 102)
         self.assertEqual(session.current_question.question_id, 102)
-        self.assertTrue(session.can_undo)
-        self.assertFalse(session.can_redo)
+        self.assertTrue(session.can_back)
+        self.assertFalse(session.can_forward)
 
         # 8. Trả lời Câu 102 và hoàn tất bài thi
         session.answer_current("b")
@@ -232,22 +232,22 @@ class QuizServiceTestCase(unittest.TestCase):
             {100: "A", 101: "B", 102: "B"},
         )
 
-        # 9. Sau khi hoàn thành, vẫn có thể UNDO để xem lại câu cuối trước khi nộp
-        last_q = session.undo()
+        # 9. Sau khi hoàn thành, vẫn có thể BACK để xem lại câu cuối trước khi nộp
+        last_q = session.back()
         self.assertEqual(last_q.question_id, 102)
         self.assertFalse(session.is_completed)
         self.assertEqual(session.current_answer, "B")
 
-    def test_quiz_session_change_answer_after_undo(self) -> None:
-        """Kiểm tra thay đổi đáp án sau khi Undo."""
+    def test_quiz_session_change_answer_after_back(self) -> None:
+        """Kiểm tra thay đổi đáp án sau khi Back."""
         session = self.service.start_quiz(10)
 
         # Trả lời câu 100 là A
         session.answer_current("a")
         self.assertEqual(session.current_question.question_id, 101)
 
-        # Undo về câu 100 và đổi đáp án thành D
-        session.undo()
+        # Back về câu 100 và đổi đáp án thành D
+        session.back()
         self.assertEqual(session.current_question.question_id, 100)
         self.assertEqual(session.current_answer, "A")
 
@@ -263,22 +263,22 @@ class QuizServiceTestCase(unittest.TestCase):
         result = self.service.submit_session(session)
         self.assertEqual(result.attempt.correct_count, 1)  # 100 sai (D!=A), 101 đúng (B==B)
 
-    def test_quiz_session_undo_at_first_question_raises_error(self) -> None:
-        """Bấm Undo khi đang ở câu đầu tiên ném ngoại lệ NoQuestionError."""
+    def test_quiz_session_back_at_first_question_raises_error(self) -> None:
+        """Bấm Back khi đang ở câu đầu tiên ném ngoại lệ NoQuestionError."""
         session = self.service.start_quiz(10)
-        self.assertFalse(session.can_undo)
+        self.assertFalse(session.can_back)
         with self.assertRaises(NoQuestionError):
-            session.undo()
+            session.back()
 
-    def test_quiz_session_redo_when_empty_raises_error(self) -> None:
-        """Bấm Redo khi không có câu phía trước ném ngoại lệ NoQuestionError."""
+    def test_quiz_session_forward_when_empty_raises_error(self) -> None:
+        """Bấm Forward khi không có câu phía trước ném ngoại lệ NoQuestionError."""
         session = self.service.start_quiz(10)
         session.answer_current("a")
         session.answer_current("b")
-        # Đã ở câu cuối cùng và hoàn thành, không có câu nào phía trước để redo
-        self.assertFalse(session.can_redo)
+        # Đã ở câu cuối cùng và hoàn thành, không có câu nào phía trước để forward
+        self.assertFalse(session.can_forward)
         with self.assertRaises(NoQuestionError):
-            session.redo()
+            session.forward()
 
 
 if __name__ == "__main__":

@@ -41,30 +41,27 @@ class QuizAttemptResult:
 
 
 class QuizSession:
-    """Phiên làm bài tuần tự hỗ trợ Undo/Redo bằng mô hình 2 Stack.
+    """Phiên làm bài tuần tự hỗ trợ điều hướng Back/Forward bằng mô hình 2 Stack.
 
-    _undo_stack: Lưu các câu hỏi trong quá khứ để lùi lại khi bấm undo().
-    _redo_stack: Lưu các câu hỏi ở tương lai để tiến tới khi bấm redo().
+    _back_stack: Lưu các câu hỏi trong quá khứ để quay lại khi bấm back().
+    _forward_stack: Lưu các câu hỏi ở tương lai để tiến tới khi bấm forward().
     _current_question: Câu hỏi hiện tại đang hiển thị trên màn hình.
     """
 
     def __init__(self, attempt: QuizAttempt, questions: list[Question]) -> None:
         self.attempt = attempt
-        self._undo_stack: Stack[Question] = Stack()
-        self._redo_stack: Stack[Question] = Stack()
+        self._back_stack: Stack[Question] = Stack()
+        self._forward_stack: Stack[Question] = Stack()
         self._selected_answers: dict[int, Optional[str]] = {}
 
-        sorted_questions = sorted(questions, key=lambda item: item.position)
-        if not sorted_questions:
+        for question in sorted(questions, key=lambda item: item.position, reverse=True):
+            self._forward_stack.push(question)
+
+        if self._forward_stack.is_empty():
             raise NoQuestionError("Quiz không có câu hỏi để làm")
 
-        self._total_questions = len(sorted_questions)
-        self._current_question: Optional[Question] = sorted_questions[0]
-
-        # Đẩy các câu còn lại (từ câu 2 đến câu N) vào _redo_stack theo thứ tự đảo ngược
-        # để câu thứ 2 nằm ở đỉnh stack (peek / pop ra đầu tiên khi tiến tới)
-        for question in reversed(sorted_questions[1:]):
-            self._redo_stack.push(question)
+        self._total_questions = len(self._forward_stack)
+        self._current_question: Optional[Question] = self._forward_stack.pop()
 
     @property
     def current_question(self) -> Optional[Question]:
@@ -79,26 +76,26 @@ class QuizSession:
         return self._selected_answers.get(self._current_question.question_id)
 
     @property
-    def can_undo(self) -> bool:
+    def can_back(self) -> bool:
         """Cho biết có thể quay lại câu hỏi trước đó hay không."""
-        return not self._undo_stack.is_empty()
+        return not self._back_stack.is_empty()
 
     @property
-    def can_redo(self) -> bool:
-        """Cho biết có thể tiến tới câu hỏi kế tiếp trong lịch sử hay không."""
-        return not self._redo_stack.is_empty()
+    def can_forward(self) -> bool:
+        """Cho biết có thể tiến tới câu hỏi kế tiếp hay không."""
+        return not self._forward_stack.is_empty()
 
     @property
     def remaining_count(self) -> int:
         """Số câu hỏi còn lại chưa được hoàn thành (tính cả câu hiện tại)."""
         if self._current_question is None:
             return 0
-        return 1 + len(self._redo_stack)
+        return 1 + len(self._forward_stack)
 
     @property
     def is_completed(self) -> bool:
         """Cho biết thí sinh đã trả lời hết câu cuối cùng hay chưa."""
-        return self._current_question is None and self._redo_stack.is_empty()
+        return self._current_question is None and self._forward_stack.is_empty()
 
     @property
     def selected_answers(self) -> dict[int, Optional[str]]:
@@ -115,37 +112,36 @@ class QuizSession:
         self._selected_answers[self._current_question.question_id] = normalized
 
         answered_question = self._current_question
-        self._undo_stack.push(answered_question)
+        self._back_stack.push(answered_question)
 
-        if not self._redo_stack.is_empty():
-            self._current_question = self._redo_stack.pop()
+        if not self._forward_stack.is_empty():
+            self._current_question = self._forward_stack.pop()
         else:
             self._current_question = None
 
         return answered_question
 
-    def undo(self) -> Question:
-        """Quay lại câu hỏi trước đó (lấy từ _undo_stack)."""
-        if not self.can_undo:
+    def back(self) -> Question:
+        """Quay lại câu hỏi trước đó (lấy từ _back_stack)."""
+        if not self.can_back:
             raise NoQuestionError("Không thể quay lại vì đang ở câu hỏi đầu tiên")
 
         if self._current_question is not None:
-            self._redo_stack.push(self._current_question)
+            self._forward_stack.push(self._current_question)
 
-        self._current_question = self._undo_stack.pop()
+        self._current_question = self._back_stack.pop()
         return self._current_question
 
-    def redo(self) -> Question:
-        """Tiến tới câu hỏi kế tiếp (lấy từ _redo_stack)."""
-        if not self.can_redo:
-            raise NoQuestionError("Không thể làm lại vì không có câu hỏi kế tiếp")
+    def forward(self) -> Question:
+        """Tiến tới câu hỏi kế tiếp (lấy từ _forward_stack)."""
+        if not self.can_forward:
+            raise NoQuestionError("Không thể tiến tới vì không có câu hỏi kế tiếp")
 
         if self._current_question is not None:
-            self._undo_stack.push(self._current_question)
+            self._back_stack.push(self._current_question)
 
-        self._current_question = self._redo_stack.pop()
+        self._current_question = self._forward_stack.pop()
         return self._current_question
-
 
 class QuizService:
     """Nghiệp vụ quản lý bài kiểm tra trắc nghiệm, phiên làm bài và chấm điểm."""
