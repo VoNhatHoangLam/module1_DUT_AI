@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from 'react';
-import { Menu } from 'lucide-react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { Menu, Loader2 } from 'lucide-react';
 
-// Data types & initial data
+// Data types
 import {
   UserProfile,
   FlashcardSet,
@@ -9,13 +9,15 @@ import {
   QuizAttempt,
   TabType,
   QuizQuestionInput,
+  StudySessionState,
+  QuizSessionState,
 } from './types';
-import {
-  INITIAL_USERS,
-  INITIAL_SETS,
-  INITIAL_QUIZZES,
-  INITIAL_HISTORY,
-} from './data/mockData';
+
+// Business Services (API client layer)
+import { deckService } from './services/deckService';
+import { studyService } from './services/studyService';
+import { quizService } from './services/quizService';
+import { historyService } from './services/historyService';
 
 // Layout components
 import { Sidebar } from './components/layout/Sidebar';
@@ -35,21 +37,35 @@ import { CreateQuizModal } from './components/modals/CreateQuizModal';
 import { ImportQuizModal } from './components/modals/ImportQuizModal';
 import { ConfirmModal } from './components/modals/ConfirmModal';
 
+const DEFAULT_USER: UserProfile = {
+  id: '1',
+  name: 'Học viên DUT',
+  email: 'hocvien@dut.udn.vn',
+  role: 'user',
+  avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces',
+  joinDate: '2026-10-01',
+  status: 'active',
+  bio: 'Sinh viên Khoa CNTT - Đại học Bách Khoa ĐN',
+};
+
 export default function App() {
   // Navigation & User state
-  const [currentUser] = useState<UserProfile>(INITIAL_USERS[0]);
+  const [currentUser] = useState<UserProfile>(DEFAULT_USER);
   const [currentTab, setCurrentTab] = useState<TabType>('sets');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
-  // Application Data States (Mock DB)
-  const [sets, setSets] = useState<FlashcardSet[]>(INITIAL_SETS);
-  const [quizzes, setQuizzes] = useState<QuizSet[]>(INITIAL_QUIZZES);
-  const [history, setHistory] = useState<QuizAttempt[]>(INITIAL_HISTORY);
+  // Application Data States (Đồng bộ với Python CSV Backend)
+  const [sets, setSets] = useState<FlashcardSet[]>([]);
+  const [quizzes, setQuizzes] = useState<QuizSet[]>([]);
+  const [history, setHistory] = useState<QuizAttempt[]>([]);
+  const [isLoadingData, setIsLoadingData] = useState(true);
 
   // Study & Quiz Active sessions
-  const [activeStudySet, setActiveStudySet] = useState<FlashcardSet>(INITIAL_SETS[0]);
-  const [activeQuiz, setActiveQuiz] = useState<QuizSet>(INITIAL_QUIZZES[0]);
+  const [activeStudySet, setActiveStudySet] = useState<FlashcardSet | null>(null);
+  const [activeStudySession, setActiveStudySession] = useState<StudySessionState | null>(null);
+  const [activeQuiz, setActiveQuiz] = useState<QuizSet | null>(null);
+  const [activeQuizSession, setActiveQuizSession] = useState<QuizSessionState | null>(null);
 
   // Modals Visibility
   const [showCreateSetModal, setShowCreateSetModal] = useState(false);
@@ -85,29 +101,79 @@ export default function App() {
     setIsMobileSidebarOpen(false);
   };
 
+  // Nạp toàn bộ dữ liệu từ Backend khi khởi chạy
+  const loadInitialData = async () => {
+    setIsLoadingData(true);
+    try {
+      const [decksRes, quizzesRes, historyRes] = await Promise.allSettled([
+        deckService.getDecks(),
+        quizService.getQuizzes(),
+        historyService.listAttempts(),
+      ]);
+
+      if (decksRes.status === 'fulfilled') {
+        setSets(decksRes.value.items || []);
+      } else {
+        console.warn('Không thể nạp danh sách bộ thẻ từ backend:', decksRes.reason);
+      }
+
+      if (quizzesRes.status === 'fulfilled') {
+        setQuizzes(quizzesRes.value.items || []);
+      } else {
+        console.warn('Không thể nạp danh sách quiz từ backend:', quizzesRes.reason);
+      }
+
+      if (historyRes.status === 'fulfilled') {
+        setHistory(historyRes.value || []);
+      } else {
+        console.warn('Không thể nạp lịch sử thi từ backend:', historyRes.reason);
+      }
+    } catch (err: any) {
+      console.error('Lỗi khi nạp dữ liệu từ backend:', err);
+      notify('Không thể kết nối đến máy chủ Backend (FastAPI). Vui lòng đảm bảo `python main.py` đang chạy!', 'error');
+    } finally {
+      setIsLoadingData(false);
+    }
+  };
+
+  useEffect(() => {
+    loadInitialData();
+  }, []);
+
   // --- DERIVED / FILTERED DATA MEMOS ---
-  // Flashcard sets displayed
   const myPersonalSets = useMemo(() => {
     return sets.filter((s) => Boolean(s));
   }, [sets]);
 
-  // Quizzes displayed
   const myPersonalQuizzes = useMemo(() => {
     return quizzes.filter((q) => Boolean(q));
   }, [quizzes]);
 
-  // --- ACTIONS ---
-  const handleStartStudy = (set: FlashcardSet) => {
-    setActiveStudySet(set);
-    navigateTo('study');
+  // --- ACTIONS TÍCH HỢP VỚI SERVICES ---
+
+  const handleStartStudy = async (set: FlashcardSet) => {
+    try {
+      const session = await studyService.startStudy(set.id);
+      setActiveStudySet(set);
+      setActiveStudySession(session);
+      navigateTo('study');
+    } catch (err: any) {
+      notify(`Không thể bắt đầu học: ${err.message}`, 'error');
+    }
   };
 
-  const handleStartQuiz = (quiz: QuizSet) => {
-    setActiveQuiz(quiz);
-    navigateTo('quiz_mode');
+  const handleStartQuiz = async (quiz: QuizSet) => {
+    try {
+      const session = await quizService.startQuiz(quiz.id);
+      setActiveQuiz(quiz);
+      setActiveQuizSession(session);
+      navigateTo('quiz_mode');
+    } catch (err: any) {
+      notify(`Không thể bắt đầu làm bài quiz: ${err.message}`, 'error');
+    }
   };
 
-  const handleCreateSet = (data: {
+  const handleCreateSet = async (data: {
     title: string;
     description: string;
     category: string;
@@ -124,60 +190,51 @@ export default function App() {
       return;
     }
 
-    const created: FlashcardSet = {
-      id: `set_${Date.now()}`,
-      title: data.title.trim(),
-      description: data.description.trim() || 'Bộ thẻ tự tạo bởi học viên.',
-      category: data.category,
-      createdBy: currentUser.name,
-      userId: currentUser.id,
-      privacy: data.privacy,
-      status: 'approved',
-      updatedAt: new Date().toLocaleDateString('vi-VN'),
-      cards: validCards.map((c, i) => ({
-        id: `c_${Date.now()}_${i}`,
-        term: c.term.trim(),
-        definition: c.definition.trim(),
-      })),
-    };
+    try {
+      const created = await deckService.createDeck({
+        title: data.title.trim(),
+        description: data.description.trim() || 'Bộ thẻ tự tạo bởi học viên.',
+        category: data.category,
+        privacy: data.privacy,
+        cards: validCards,
+      });
 
-    setSets([created, ...sets]);
-    setShowCreateSetModal(false);
-    if (data.privacy === 'public') {
-      notify('Bộ flashcard đã được đăng công khai ngay lập tức!', 'success');
-    } else {
-      notify('Tạo bộ flashcard cá nhân thành công!', 'success');
+      setSets((prev) => [created, ...prev]);
+      setShowCreateSetModal(false);
+      notify('Đã tạo và lưu bộ flashcard thành công vào hệ thống!', 'success');
+    } catch (err: any) {
+      notify(`Lỗi tạo bộ thẻ: ${err.message}`, 'error');
     }
   };
 
-  const handleDeleteSet = (id: string) => {
+  const handleDeleteSet = async (id: string) => {
     if (!id) return;
-    setSets((prev) => prev.filter((s) => s && s.id !== id));
-    setShowDeleteConfirm(null);
-    notify('Đã xóa bộ flashcard thành công!', 'info');
+    try {
+      await deckService.deleteDeck(id);
+      setSets((prev) => prev.filter((s) => s && s.id !== id));
+      setShowDeleteConfirm(null);
+      notify('Đã xóa bộ flashcard thành công khỏi hệ thống!', 'info');
+    } catch (err: any) {
+      notify(`Lỗi xóa bộ thẻ: ${err.message}`, 'error');
+    }
   };
 
-  const handleConfirmImportSet = (cards: { term: string; definition: string }[]) => {
-    const importedSet: FlashcardSet = {
-      id: `set_import_${Date.now()}`,
-      title: `Bộ thẻ nhập từ file (${new Date().toLocaleDateString('vi-VN')})`,
-      description: 'Dữ liệu được nhập tự động từ tệp CSV/JSON mẫu.',
-      category: 'Công nghệ thông tin',
-      createdBy: currentUser.name,
-      userId: currentUser.id,
-      privacy: 'public',
-      status: 'approved',
-      updatedAt: new Date().toLocaleDateString('vi-VN'),
-      cards: cards.map((d, i) => ({
-        id: `c_imp_${Date.now()}_${i}`,
-        term: d.term,
-        definition: d.definition,
-      })),
-    };
+  const handleConfirmImportSet = async (cards: { term: string; definition: string }[]) => {
+    try {
+      const created = await deckService.createDeck({
+        title: `Bộ thẻ nhập từ file (${new Date().toLocaleDateString('vi-VN')})`,
+        description: 'Dữ liệu được nhập tự động từ tệp CSV mẫu.',
+        category: 'Công nghệ thông tin',
+        privacy: 'public',
+        cards,
+      });
 
-    setSets([importedSet, ...sets]);
-    setShowImportModal(false);
-    notify(`Đã nhập thành công ${importedSet.cards.length} flashcard!`, 'success');
+      setSets((prev) => [created, ...prev]);
+      setShowImportModal(false);
+      notify(`Đã nhập thành công ${created.cards?.length || cards.length} flashcard vào hệ thống!`, 'success');
+    } catch (err: any) {
+      notify(`Lỗi nhập bộ thẻ: ${err.message}`, 'error');
+    }
   };
 
   const handleForwardImportToManualCreate = (cards: { term: string; definition: string }[]) => {
@@ -187,7 +244,7 @@ export default function App() {
     notify(`Đã chuyển ${cards.length} thẻ sang giao diện tạo bộ thẻ thủ công!`, 'info');
   };
 
-  const handleCreateQuiz = (data: {
+  const handleCreateQuiz = async (data: {
     title: string;
     description: string;
     category: string;
@@ -207,38 +264,28 @@ export default function App() {
       return;
     }
 
-    const createdQuiz: QuizSet = {
-      id: `quiz_${Date.now()}`,
-      title: data.title.trim(),
-      description: data.description.trim() || 'Bộ đề thi trắc nghiệm do học viên tạo.',
-      category: data.category,
-      createdBy: currentUser.name,
-      userId: currentUser.id,
-      privacy: data.privacy || 'public',
-      status: data.privacy === 'private' ? 'approved' : 'pending',
-      timeLimitMinutes: Number(data.timeLimitMinutes) || 10,
-      questions: validQuestions.map((q, idx) => ({
-        id: idx + 1,
-        question: q.question.trim(),
-        optionA: q.optionA.trim(),
-        optionB: q.optionB.trim(),
-        optionC: q.optionC.trim() || 'None',
-        optionD: q.optionD.trim() || 'None',
-        correctAnswer: q.correctAnswer,
-        explanation: q.explanation.trim() || 'Chưa có giải thích chi tiết.',
-        points: typeof q.points === 'number' ? q.points : 1,
-      })),
-    };
+    try {
+      const sourceDeckId = selectedDeckForQuiz
+        ? selectedDeckForQuiz.deck_id || Number(selectedDeckForQuiz.id)
+        : null;
 
-    setQuizzes([createdQuiz, ...quizzes]);
-    setShowCreateQuizModal(false);
-    setSelectedDeckForQuiz(null);
-    notify(
-      data.privacy === 'public'
-        ? 'Đã tạo bộ đề Quiz mới! Bộ đề ở chế độ Công khai (chờ duyệt để hiển thị cho cộng đồng).'
-        : 'Đã tạo bộ đề Quiz mới ở chế độ Riêng tư (chỉ mình bạn xem được)!',
-      'success'
-    );
+      const createdQuiz = await quizService.createQuiz({
+        title: data.title.trim(),
+        description: data.description.trim() || 'Bộ đề thi trắc nghiệm do học viên tạo.',
+        category: data.category,
+        privacy: data.privacy || 'public',
+        time_limit_minutes: Number(data.timeLimitMinutes) || 10,
+        source_deck_id: sourceDeckId,
+        questions: validQuestions,
+      });
+
+      setQuizzes((prev) => [createdQuiz, ...prev]);
+      setShowCreateQuizModal(false);
+      setSelectedDeckForQuiz(null);
+      notify('Đã tạo và lưu bộ đề Quiz mới thành công vào hệ thống!', 'success');
+    } catch (err: any) {
+      notify(`Lỗi tạo bài quiz: ${err.message}`, 'error');
+    }
   };
 
   const handleOpenCreateQuizForDeck = (set: FlashcardSet) => {
@@ -251,47 +298,53 @@ export default function App() {
     setShowImportQuizModal(true);
   };
 
-  const handleDeleteQuiz = (id: string) => {
+  const handleDeleteQuiz = async (id: string) => {
     if (!id) return;
-    setQuizzes((prev) => prev.filter((q) => q && q.id !== id));
-    setShowDeleteQuizConfirm(null);
-    notify('Đã xóa bộ đề Quiz thành công!', 'info');
+    try {
+      await quizService.deleteQuiz(id);
+      setQuizzes((prev) => prev.filter((q) => q && q.id !== id));
+      setShowDeleteQuizConfirm(null);
+      notify('Đã xóa bộ đề Quiz thành công khỏi hệ thống!', 'info');
+    } catch (err: any) {
+      notify(`Lỗi xóa bài quiz: ${err.message}`, 'error');
+    }
   };
 
-  const handleConfirmImportQuiz = (
+  const handleConfirmImportQuiz = async (
     questions: QuizQuestionInput[],
     privacy: 'public' | 'private' = 'public'
   ) => {
-    const importedQuiz: QuizSet = {
-      id: `quiz_import_${Date.now()}`,
-      title: selectedDeckForQuiz
-        ? `Quiz: ${selectedDeckForQuiz.title}`
-        : `Đề thi trắc nghiệm nhập từ file (${new Date().toLocaleDateString('vi-VN')})`,
-      description: selectedDeckForQuiz
-        ? `Đề thi trắc nghiệm được tạo từ bộ thẻ flashcard "${selectedDeckForQuiz.title}".`
-        : 'Đề thi được tạo tự động từ tệp CSV/JSON câu hỏi.',
-      category: selectedDeckForQuiz?.category || 'Công nghệ thông tin',
-      createdBy: currentUser.name,
-      userId: currentUser.id,
-      privacy: privacy,
-      status: 'approved',
-      timeLimitMinutes: 15,
-      questions: questions.map((q, idx) => ({
-        id: idx + 1,
-        ...q,
-        points: typeof q.points === 'number' ? q.points : 1,
-      })),
-    };
+    try {
+      const sourceDeckId = selectedDeckForQuiz
+        ? selectedDeckForQuiz.deck_id || Number(selectedDeckForQuiz.id)
+        : null;
 
-    setQuizzes([importedQuiz, ...quizzes]);
-    setShowImportQuizModal(false);
-    setSelectedDeckForQuiz(null);
-    notify(
-      selectedDeckForQuiz
-        ? `Đã tạo đề thi trắc nghiệm từ bộ thẻ "${selectedDeckForQuiz.title}" với ${importedQuiz.questions.length} câu hỏi (${privacy === 'public' ? 'Công khai' : 'Riêng tư'})!`
-        : `Đã nhập thành công bộ đề với ${importedQuiz.questions.length} câu hỏi (${privacy === 'public' ? 'Công khai' : 'Riêng tư'})!`,
-      'success'
-    );
+      const importedQuiz = await quizService.createQuiz({
+        title: selectedDeckForQuiz
+          ? `Quiz: ${selectedDeckForQuiz.title}`
+          : `Đề thi trắc nghiệm nhập từ file (${new Date().toLocaleDateString('vi-VN')})`,
+        description: selectedDeckForQuiz
+          ? `Đề thi trắc nghiệm được tạo từ bộ thẻ flashcard "${selectedDeckForQuiz.title}".`
+          : 'Đề thi được tạo tự động từ tệp CSV câu hỏi.',
+        category: selectedDeckForQuiz?.category || 'Công nghệ thông tin',
+        privacy: privacy,
+        time_limit_minutes: 15,
+        source_deck_id: sourceDeckId,
+        questions,
+      });
+
+      setQuizzes((prev) => [importedQuiz, ...quizzes]);
+      setShowImportQuizModal(false);
+      setSelectedDeckForQuiz(null);
+      notify(
+        selectedDeckForQuiz
+          ? `Đã tạo đề thi từ bộ thẻ "${selectedDeckForQuiz.title}" với ${questions.length} câu hỏi!`
+          : `Đã nhập và lưu thành công bộ đề với ${questions.length} câu hỏi!`,
+        'success'
+      );
+    } catch (err: any) {
+      notify(`Lỗi nhập đề thi quiz: ${err.message}`, 'error');
+    }
   };
 
   const handleForwardImportQuizToManualCreate = (
@@ -303,20 +356,6 @@ export default function App() {
     setPrefilledQuizForCreate({ questions, privacy, deck: deck || selectedDeckForQuiz });
     setShowCreateQuizModal(true);
     notify(`Đã chuyển ${questions.length} câu hỏi sang giao diện tạo quiz thủ công!`, 'info');
-  };
-
-  const handleToggleSetPrivacy = (setId: string) => {
-    setSets((prev) =>
-      prev.map((s) => {
-        if (s.id === setId) {
-          return {
-            ...s,
-            privacy: s.privacy === 'public' ? 'private' : 'public',
-          };
-        }
-        return s;
-      })
-    );
   };
 
   const handleFinishQuizAttempt = (attempt: QuizAttempt) => {
@@ -374,62 +413,81 @@ export default function App() {
 
         {/* Page Content Container */}
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          {/* VIEW: FLASHCARD */}
-          {currentTab === 'sets' && (
-            <MySetsView
-              currentUser={currentUser}
-              myPersonalSets={myPersonalSets}
-              onOpenCreateSetModal={() => setShowCreateSetModal(true)}
-              onOpenImportSetModal={() => setShowImportModal(true)}
-              onDeleteSetConfirm={(id) => setShowDeleteConfirm(id)}
-              handleStartStudy={handleStartStudy}
-              navigateTo={navigateTo}
-              onOpenCreateQuizForDeck={handleOpenCreateQuizForDeck}
-              onOpenImportQuizForDeck={handleOpenImportQuizForDeck}
-            />
-          )}
+          {isLoadingData ? (
+            <div className="flex flex-col items-center justify-center min-h-[50vh] gap-3">
+              <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+              <p className="text-sm font-semibold text-slate-600">
+                Đang nạp dữ liệu từ hệ thống lưu trữ...
+              </p>
+            </div>
+          ) : (
+            <>
+              {/* VIEW: FLASHCARD */}
+              {currentTab === 'sets' && (
+                <MySetsView
+                  currentUser={currentUser}
+                  myPersonalSets={myPersonalSets}
+                  onOpenCreateSetModal={() => setShowCreateSetModal(true)}
+                  onOpenImportSetModal={() => setShowImportModal(true)}
+                  onDeleteSetConfirm={(id) => setShowDeleteConfirm(id)}
+                  handleStartStudy={handleStartStudy}
+                  navigateTo={navigateTo}
+                  onOpenCreateQuizForDeck={handleOpenCreateQuizForDeck}
+                  onOpenImportQuizForDeck={handleOpenImportQuizForDeck}
+                />
+              )}
 
-          {/* VIEW: QUIZ */}
-          {currentTab === 'my_quizzes' && (
-            <MyQuizzesView
-              currentUser={currentUser}
-              myPersonalQuizzes={myPersonalQuizzes}
-              onOpenCreateQuizModal={() => {
-                setSelectedDeckForQuiz(null);
-                setShowCreateQuizModal(true);
-              }}
-              onOpenImportQuizModal={() => {
-                setSelectedDeckForQuiz(null);
-                setShowImportQuizModal(true);
-              }}
-              onDeleteQuizConfirm={(id) => setShowDeleteQuizConfirm(id)}
-              handleStartQuiz={handleStartQuiz}
-              navigateTo={navigateTo}
-            />
-          )}
+              {/* VIEW: QUIZ */}
+              {currentTab === 'my_quizzes' && (
+                <MyQuizzesView
+                  currentUser={currentUser}
+                  myPersonalQuizzes={myPersonalQuizzes}
+                  onOpenCreateQuizModal={() => {
+                    setSelectedDeckForQuiz(null);
+                    setShowCreateQuizModal(true);
+                  }}
+                  onOpenImportQuizModal={() => {
+                    setSelectedDeckForQuiz(null);
+                    setShowImportQuizModal(true);
+                  }}
+                  onDeleteQuizConfirm={(id) => setShowDeleteQuizConfirm(id)}
+                  handleStartQuiz={handleStartQuiz}
+                  navigateTo={navigateTo}
+                />
+              )}
 
-          {/* VIEW: LỊCH SỬ THI */}
-          {currentTab === 'history' && (
-            <HistoryView history={history} />
-          )}
+              {/* VIEW: LỊCH SỬ THI */}
+              {currentTab === 'history' && <HistoryView history={history} />}
 
-          {/* VIEW: HỌC FLASHCARD (LẬT THẺ 3D) */}
-          {currentTab === 'study' && (
-            <StudyView
-              activeStudySet={activeStudySet}
-              onExit={() => navigateTo('sets')}
-              notify={notify}
-            />
-          )}
+              {/* VIEW: HỌC FLASHCARD (HÀNG ĐỢI FIFO QUEUE) */}
+              {currentTab === 'study' && activeStudySet && (
+                <StudyView
+                  activeStudySet={activeStudySet}
+                  initialSession={activeStudySession}
+                  onExit={() => {
+                    setActiveStudySet(null);
+                    setActiveStudySession(null);
+                    navigateTo('sets');
+                  }}
+                  notify={notify}
+                />
+              )}
 
-          {/* VIEW: LÀM BÀI THI QUIZ */}
-          {currentTab === 'quiz_mode' && (
-            <QuizRunnerView
-              activeQuiz={activeQuiz}
-              onFinishAttempt={handleFinishQuizAttempt}
-              onExit={() => navigateTo('my_quizzes')}
-              notify={notify}
-            />
+              {/* VIEW: LÀM BÀI THI QUIZ (NGĂN XẾP 2-STACK) */}
+              {currentTab === 'quiz_mode' && activeQuiz && (
+                <QuizRunnerView
+                  activeQuiz={activeQuiz}
+                  initialSession={activeQuizSession}
+                  onFinishAttempt={handleFinishQuizAttempt}
+                  onExit={() => {
+                    setActiveQuiz(null);
+                    setActiveQuizSession(null);
+                    navigateTo('my_quizzes');
+                  }}
+                  notify={notify}
+                />
+              )}
+            </>
           )}
         </main>
       </div>
@@ -491,7 +549,7 @@ export default function App() {
       <ConfirmModal
         isOpen={!!showDeleteConfirm}
         title="Xác nhận xóa bộ Flashcard này?"
-        description='Hành động này sẽ xóa bộ thẻ khỏi danh sách "Flashcard của tôi" và loại bỏ khỏi bộ nhớ demo. Không ảnh hưởng đến các bộ flashcard khác.'
+        description="Hành động này sẽ xóa vĩnh viễn bộ thẻ khỏi hệ thống và xóa toàn bộ thẻ con liên kết (Cascade Delete). Không thể hoàn tác."
         confirmText="Xác nhận xóa"
         type="danger"
         onConfirm={() => {
@@ -504,7 +562,7 @@ export default function App() {
       <ConfirmModal
         isOpen={!!showDeleteQuizConfirm}
         title="Xác nhận xóa đề Quiz này?"
-        description="Hành động này sẽ xóa bộ đề thi trắc nghiệm khỏi danh sách của bạn và không thể hoàn tác."
+        description="Hành động này sẽ xóa bài thi khỏi hệ thống và xóa liên đới các câu hỏi cùng kết quả thi liên quan. Không thể hoàn tác."
         confirmText="Xác nhận xóa"
         type="danger"
         onConfirm={() => {
