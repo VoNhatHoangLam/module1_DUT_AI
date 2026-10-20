@@ -47,3 +47,7 @@ answer_id,attempt_id,selected_answer,correct_answer_snapshot,is_correct,points_e
 46,12,,B,0,0,Một chuyến đi nhanh ra ngoài để giải quyết việc cá nhân gọi là gì?,,Errand
 47,12,,A,0,0,Tính từ nào mang ý nghĩa luôn xuất hiện đúng giờ hẹn?,,Punctual
 48,12,,C,0,0,"Từ nào chỉ những công việc lặp lại nhàm chán trong nhà (rửa bát, lau nhà)?",,Chore
+49,14,C,A,0,0,Từ nào diễn tả việc đi lại đều đặn mỗi ngày giữa nhà và nơi làm việc?,Vacation,Commute
+50,14,C,B,0,0,Một chuyến đi nhanh ra ngoài để giải quyết việc cá nhân gọi là gì?,Chore,Errand
+51,14,C,A,0,0,Tính từ nào mang ý nghĩa luôn xuất hiện đúng giờ hẹn?,Tardy,Punctual
+52,14,C,C,1,1.00,"Từ nào chỉ những công việc lặp lại nhàm chán trong nhà (rửa bát, lau nhà)?",Chore,Chore

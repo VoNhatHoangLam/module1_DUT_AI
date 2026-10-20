@@ -1,0 +1,7 @@
+front_text,back_text
+"AVL Tree","Cây tìm kiếm nhị phân tự cân bằng với hệ số cân bằng giữa 2 cây con không quá 1"
+"Binary Search","Thuật toán tìm kiếm trên mảng đã sắp xếp với độ phức tạp O(log N)"
+"Stack","Cấu trúc dữ liệu hoạt động theo nguyên lý LIFO (Last In First Out)"
+"Queue","Cấu trúc dữ liệu hoạt động theo nguyên lý FIFO (First In First Out)"
+"Time Complexity","Độ phức tạp thời gian biểu thị thời gian thực thi của thuật toán theo kích thước dữ liệu đầu vào"
+"Ephemeral Port","Cổng tạm thời được hệ điều hành cấp phát tự động cho kết nối client"

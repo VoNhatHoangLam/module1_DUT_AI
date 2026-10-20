@@ -1,0 +1,6 @@
+question_text,option_a,option_b,option_c,option_d,correct_answer,points
+"Độ phức tạp thời gian trung bình của tìm kiếm nhị phân (Binary Search) là gì?",O(1),O(log N),O(N),O(N log N),B,1.0
+"Trong cây AVL, chênh lệch chiều cao tối đa giữa cây con trái và cây con phải của mọi nút là bao nhiêu?",0,1,2,Tùy ý,B,1.0
+"Giao thức nào hoạt động ở tầng giao vận (Transport Layer) trong mô hình OSI?",HTTP,TCP,IP,Ethernet,B,1.0
+"Thủ đô của Nhật Bản là thành phố nào?",Kyoto,Osaka,Tokyo,Nagoya,C,1.0
+"Trong Python, kiểu dữ liệu nào sau đây là immutable (bất biến)?",List,Dict,Set,Tuple,D,1.0

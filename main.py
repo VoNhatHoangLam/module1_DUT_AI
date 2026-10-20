@@ -529,13 +529,17 @@ def start_quiz_session(quiz_id: int) -> dict[str, Any]:
 
 @app.post("/api/quizzes/session/{attempt_id}/answer")
 def answer_quiz_question(attempt_id: int, payload: AnswerQuestionRequest) -> dict[str, Any]:
-    """Ghi nhận đáp án và chuyển tiếp sang câu kế tiếp (Stack push vào back_stack)."""
+    """Ghi nhận đáp án câu hỏi. Khi trả lời câu cuối cùng, giữ nguyên ở câu đó (không chuyển tiếp sang None)."""
     session = quiz_sessions.get(attempt_id)
     if session is None:
         raise HTTPException(status_code=404, detail="Phiên làm bài không tồn tại hoặc đã nộp")
 
     try:
+        is_last = not session.can_forward
         session.answer_current(payload.selected_answer)
+        if is_last and session.can_back:
+            session.back()
+
         current_q = session.current_question
         return {
             "attempt_id": attempt_id,

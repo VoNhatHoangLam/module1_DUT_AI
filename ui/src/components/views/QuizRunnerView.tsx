@@ -84,7 +84,17 @@ export const QuizRunnerView: React.FC<QuizRunnerViewProps> = ({
 
     try {
       const updated = await quizService.answerQuestion(session.attempt_id, opt);
-      setSession(updated);
+      // Bảo đảm khi trả lời câu cuối cùng, giao diện vẫn giữ nguyên câu đó
+      if (!updated.current_question && session.current_question) {
+        setSession({
+          ...updated,
+          current_question: session.current_question,
+          current_answer: opt,
+          can_forward: false,
+        });
+      } else {
+        setSession(updated);
+      }
     } catch (err: any) {
       notify(`Lỗi chọn đáp án: ${err.message}`, 'error');
     }

@@ -99,3 +99,4 @@ deck_id,title,description,total_cards,is_studied,is_deleted,created_at,updated_a
 98,Lịch sử Điện toán: Các Cột mốc & Danh nhân,"Alan Turing, Ada Lovelace, ENIAC, Transistor và sự ra đời của mạng Internet.",4,0,0,2026-10-13 14:00:00,2026-10-13 14:00:00
 99,Khoa học Tự nhiên: Vật lý Hiện đại,"Thuyết tương đối hẹp của Einstein, Lưỡng tính sóng-hạt và Cơ học lượng tử.",4,0,0,2026-10-13 17:00:00,2026-10-13 17:00:00
 100,Khoa học Vũ trụ: Hệ Mặt Trời & Các Thiên thể,"8 hành tinh trong Hệ Mặt Trời, Hố đen vũ trụ (Black Hole) và Dải Ngân Hà (Milky Way).",4,0,0,2026-10-13 20:00:00,2026-10-13 20:00:00
+101,ABC,Bộ thẻ tự tạo bởi học viên.,6,0,0,2026-10-20 17:30:53,2026-10-20 17:30:53

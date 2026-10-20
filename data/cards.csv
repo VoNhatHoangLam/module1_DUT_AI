@@ -399,3 +399,9 @@ card_id,deck_id,front_text,back_text,position
 398,100,Jupiter Dominance,Sao Mộc (Jupiter) là hành tinh lớn nhất trong Hệ Mặt Trời với khối lượng gấp 2.5 lần tất cả các hành tinh khác cộng lại.,2
 399,100,Black Hole Event Horizon,Chân trời sự kiện (Event Horizon) là ranh giới quanh hố đen mà ngay cả ánh sáng cũng không thể thoát ra ngoài.,3
 400,100,Milky Way Galaxy,"Dải Ngân Hà là một thiên hà xoắn ốc chứa từ 100 đến 400 tỷ ngôi sao, trong đó có Hệ Mặt Trời của chúng ta.",4
+401,101,AVL Tree,Cây tìm kiếm nhị phân tự cân bằng với hệ số cân bằng giữa 2 cây con không quá 1,1
+402,101,Binary Search,Thuật toán tìm kiếm trên mảng đã sắp xếp với độ phức tạp O(log N),2
+403,101,Stack,Cấu trúc dữ liệu hoạt động theo nguyên lý LIFO (Last In First Out),3
+404,101,Queue,Cấu trúc dữ liệu hoạt động theo nguyên lý FIFO (First In First Out),4
+405,101,Time Complexity,Độ phức tạp thời gian biểu thị thời gian thực thi của thuật toán theo kích thước dữ liệu đầu vào,5
+406,101,Ephemeral Port,Cổng tạm thời được hệ điều hành cấp phát tự động cho kết nối client,6
