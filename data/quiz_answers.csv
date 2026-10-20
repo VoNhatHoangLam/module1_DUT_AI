@@ -1,2 +1,13 @@
 answer_id,attempt_id,selected_answer,correct_answer_snapshot,is_correct,points_earned,question_text_snapshot,selected_option_text_snapshot,correct_option_text_snapshot
 80,70,A,A,1,1.00,Apple nghĩa là gì?,Quả táo,Quả táo
+81,71,A,A,1,1.00,Apple nghĩa là gì?,Quả táo,Quả táo
+82,72,B,B,1,1.00,CPU là viết tắt của bộ phận nào?,Bộ xử lý trung tâm,Bộ xử lý trung tâm
+83,72,A,A,1,1.00,RAM dùng để làm gì?,Lưu trữ tạm thời dữ liệu,Lưu trữ tạm thời dữ liệu
+84,72,B,B,1,1.00,Phần mềm quản lý tài nguyên máy tính gọi là gì?,Hệ điều hành,Hệ điều hành
+85,72,C,C,1,1.00,Tập hợp dữ liệu có tổ chức gọi là gì?,Cơ sở dữ liệu,Cơ sở dữ liệu
+86,72,A,A,1,1.00,Dãy bước hữu hạn giải quyết một bài toán gọi là gì?,Thuật toán,Thuật toán
+87,72,B,B,1,1.00,Hệ thống kết nối nhiều máy tính gọi là gì?,Mạng máy tính,Mạng máy tính
+88,72,C,C,1,1.00,Phần mềm dùng để truy cập website gọi là gì?,Trình duyệt,Trình duyệt
+89,72,A,A,1,1.00,Cung cấp tài nguyên máy tính qua Internet gọi là gì?,Điện toán đám mây,Điện toán đám mây
+90,72,B,B,1,1.00,Hệ thống bảo vệ mạng khỏi truy cập trái phép gọi là gì?,Tường lửa,Tường lửa
+91,72,C,C,1,1.00,Tập hợp lệnh do lập trình viên viết gọi là gì?,Mã nguồn,Mã nguồn

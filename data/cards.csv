@@ -1,3 +1,53 @@
 card_id,deck_id,front_text,back_text,position
 1,1,Apple,Quả táo,1
 2,1,Banana,Quả chuối,2
+100,10,Hello,Xin chào,1
+101,10,Thank you,Cảm ơn,2
+102,10,Sorry,Xin lỗi,3
+103,10,Goodbye,Tạm biệt,4
+104,10,Please,Làm ơn,5
+105,10,Friend,Bạn bè,6
+106,10,Family,Gia đình,7
+107,10,School,Trường học,8
+108,10,Teacher,Giáo viên,9
+109,10,Student,Học sinh,10
+110,11,CPU,Bộ xử lý trung tâm,1
+111,11,RAM,Bộ nhớ truy cập ngẫu nhiên,2
+112,11,Operating System,Hệ điều hành,3
+113,11,Database,Cơ sở dữ liệu,4
+114,11,Algorithm,Thuật toán,5
+115,11,Network,Mạng máy tính,6
+116,11,Browser,Trình duyệt web,7
+117,11,Cloud Computing,Điện toán đám mây,8
+118,11,Firewall,Tường lửa,9
+119,11,Source Code,Mã nguồn,10
+120,12,Thủ đô Việt Nam,Hà Nội,1
+121,12,Thành phố lớn nhất,Thành phố Hồ Chí Minh,2
+122,12,Đỉnh núi cao nhất,Fansipan,3
+123,12,Sông dài nhất chảy hoàn toàn trong nước,Sông Đồng Nai,4
+124,12,Vịnh nổi tiếng ở Quảng Ninh,Vịnh Hạ Long,5
+125,12,Đồng bằng lớn nhất,Đồng bằng sông Cửu Long,6
+126,12,Tỉnh cực Bắc,Hà Giang,7
+127,12,Tỉnh cực Nam,Cà Mau,8
+128,12,Quần đảo thuộc Đà Nẵng,Hoàng Sa,9
+129,12,Quần đảo thuộc Khánh Hòa,Trường Sa,10
+130,13,Diện tích hình vuông,S = a²,1
+131,13,Chu vi hình vuông,P = 4a,2
+132,13,Diện tích hình chữ nhật,S = a × b,3
+133,13,Chu vi hình chữ nhật,P = 2(a + b),4
+134,13,Diện tích hình tam giác,S = a × h ÷ 2,5
+135,13,Diện tích hình tròn,S = πr²,6
+136,13,Chu vi hình tròn,C = 2πr,7
+137,13,Định lý Pythagore,a² + b² = c²,8
+138,13,Nghiệm phương trình bậc hai,x = (-b ± √Δ) ÷ 2a,9
+139,13,Thể tích hình hộp chữ nhật,V = a × b × h,10
+140,14,Năm thành lập nước Văn Lang,Khoảng thế kỷ VII trước Công nguyên,1
+141,14,Người lãnh đạo khởi nghĩa Hai Bà Trưng,Trưng Trắc và Trưng Nhị,2
+142,14,Chiến thắng Bạch Đằng năm 938,Ngô Quyền,3
+143,14,Người dời đô ra Thăng Long,Lý Công Uẩn,4
+144,14,Người chỉ huy kháng chiến chống quân Nguyên Mông,Trần Hưng Đạo,5
+145,14,Người lãnh đạo khởi nghĩa Lam Sơn,Lê Lợi,6
+146,14,Người lãnh đạo phong trào Tây Sơn,Quang Trung Nguyễn Huệ,7
+147,14,Năm thành lập Đảng Cộng sản Việt Nam,1930,8
+148,14,Ngày Quốc khánh Việt Nam,2 tháng 9 năm 1945,9
+149,14,Ngày thống nhất đất nước,30 tháng 4 năm 1975,10

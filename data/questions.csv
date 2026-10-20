@@ -2,3 +2,53 @@ question_id,quiz_id,question_text,option_a,option_b,option_c,option_d,correct_an
 200,20,Apple nghĩa là gì?,Quả táo,Quả chuối,Con mèo,Quả cam,A,1,1.00,0
 201,21,Thủ đô của Nhật Bản là gì?,Tokyo,Kyoto,Osaka,Nagoya,A,1,1.00,0
 202,21,Số nguyên tố chẵn duy nhất là số nào?,0,2,4,6,B,2,1.00,0
+300,30,Hello nghĩa là gì?,Xin chào,Tạm biệt,Cảm ơn,Xin lỗi,A,1,1.00,0
+301,30,Thank you nghĩa là gì?,Xin lỗi,Làm ơn,Cảm ơn,Bạn bè,C,2,1.00,0
+302,30,Sorry nghĩa là gì?,Gia đình,Xin lỗi,Trường học,Tạm biệt,B,3,1.00,0
+303,30,Goodbye nghĩa là gì?,Xin chào,Cảm ơn,Tạm biệt,Làm ơn,C,4,1.00,0
+304,30,Please nghĩa là gì?,Làm ơn,Bạn bè,Học sinh,Giáo viên,A,5,1.00,0
+305,30,Friend nghĩa là gì?,Gia đình,Bạn bè,Trường học,Học sinh,B,6,1.00,0
+306,30,Family nghĩa là gì?,Bạn bè,Giáo viên,Gia đình,Trường học,C,7,1.00,0
+307,30,School nghĩa là gì?,Trường học,Học sinh,Giáo viên,Gia đình,A,8,1.00,0
+308,30,Teacher nghĩa là gì?,Học sinh,Giáo viên,Bạn bè,Gia đình,B,9,1.00,0
+309,30,Student nghĩa là gì?,Giáo viên,Trường học,Gia đình,Học sinh,D,10,1.00,0
+310,31,CPU là viết tắt của bộ phận nào?,Bộ nhớ trong,Bộ xử lý trung tâm,Ổ cứng,Card đồ họa,B,1,1.00,0
+311,31,RAM dùng để làm gì?,Lưu trữ tạm thời dữ liệu,Xử lý hình ảnh,Kết nối mạng,In tài liệu,A,2,1.00,0
+312,31,Phần mềm quản lý tài nguyên máy tính gọi là gì?,Trình duyệt,Hệ điều hành,Cơ sở dữ liệu,Tường lửa,B,3,1.00,0
+313,31,Tập hợp dữ liệu có tổ chức gọi là gì?,Thuật toán,Mạng máy tính,Cơ sở dữ liệu,Mã nguồn,C,4,1.00,0
+314,31,Dãy bước hữu hạn giải quyết một bài toán gọi là gì?,Thuật toán,Trình duyệt,Phần cứng,Tường lửa,A,5,1.00,0
+315,31,Hệ thống kết nối nhiều máy tính gọi là gì?,Cơ sở dữ liệu,Mạng máy tính,Hệ điều hành,Bộ xử lý,B,6,1.00,0
+316,31,Phần mềm dùng để truy cập website gọi là gì?,Trình biên dịch,Tường lửa,Trình duyệt,Hệ điều hành,C,7,1.00,0
+317,31,Cung cấp tài nguyên máy tính qua Internet gọi là gì?,Điện toán đám mây,Lập trình hướng đối tượng,Mã hóa dữ liệu,Thiết kế đồ họa,A,8,1.00,0
+318,31,Hệ thống bảo vệ mạng khỏi truy cập trái phép gọi là gì?,RAM,Tường lửa,CPU,Trình duyệt,B,9,1.00,0
+319,31,Tập hợp lệnh do lập trình viên viết gọi là gì?,Dữ liệu đầu ra,Mạng máy tính,Mã nguồn,Hệ điều hành,C,10,1.00,0
+320,32,Thủ đô của Việt Nam là thành phố nào?,Huế,Đà Nẵng,Hà Nội,Hải Phòng,C,1,1.00,0
+321,32,Thành phố đông dân và có quy mô kinh tế lớn nhất Việt Nam là gì?,Cần Thơ,Thành phố Hồ Chí Minh,Đà Nẵng,Hà Nội,B,2,1.00,0
+322,32,Đỉnh núi cao nhất Việt Nam là gì?,Fansipan,Bạch Mã,Langbiang,Bà Đen,A,3,1.00,0
+323,32,Sông dài nhất chảy hoàn toàn trong lãnh thổ Việt Nam là sông nào?,Sông Hồng,Sông Mã,Sông Đồng Nai,Sông Thu Bồn,C,4,1.00,0
+324,32,Vịnh Hạ Long thuộc tỉnh nào?,Quảng Bình,Quảng Ninh,Khánh Hòa,Kiên Giang,B,5,1.00,0
+325,32,Đồng bằng lớn nhất Việt Nam là đồng bằng nào?,Đồng bằng sông Hồng,Đồng bằng Thanh Nghệ Tĩnh,Đồng bằng sông Cửu Long,Đồng bằng duyên hải miền Trung,C,6,1.00,0
+326,32,Tỉnh nằm ở cực Bắc Việt Nam là tỉnh nào?,Hà Giang,Lào Cai,Cao Bằng,Lạng Sơn,A,7,1.00,0
+327,32,Tỉnh nằm ở cực Nam Việt Nam là tỉnh nào?,Bạc Liêu,Kiên Giang,Sóc Trăng,Cà Mau,D,8,1.00,0
+328,32,Quần đảo Hoàng Sa thuộc đơn vị hành chính nào?,Đà Nẵng,Khánh Hòa,Quảng Ngãi,Bình Định,A,9,1.00,0
+329,32,Quần đảo Trường Sa thuộc tỉnh nào?,Phú Yên,Khánh Hòa,Ninh Thuận,Bình Thuận,B,10,1.00,0
+330,33,Công thức tính diện tích hình vuông cạnh a là gì?,S = 4a,S = a²,S = 2a,S = a³,B,1,1.00,0
+331,33,Công thức tính chu vi hình vuông cạnh a là gì?,P = 4a,P = a²,P = 2a,P = a + 4,A,2,1.00,0
+332,33,Công thức tính diện tích hình chữ nhật là gì?,S = a + b,S = 2(a + b),S = a × b,S = a ÷ b,C,3,1.00,0
+333,33,Công thức tính chu vi hình chữ nhật là gì?,P = a × b,P = 2(a + b),P = a + b,P = 4a,B,4,1.00,0
+334,33,Công thức tính diện tích tam giác là gì?,S = a × h,S = a × h ÷ 2,S = 2a + h,S = a²,B,5,1.00,0
+335,33,Công thức tính diện tích hình tròn bán kính r là gì?,S = 2πr,S = πr,S = πr²,S = r²,C,6,1.00,0
+336,33,Công thức tính chu vi hình tròn bán kính r là gì?,C = 2πr,C = πr²,C = r²,C = 4r,A,7,1.00,0
+337,33,Định lý Pythagore trong tam giác vuông là gì?,a + b = c,a² + b² = c²,a × b = c²,a² - b² = c,B,8,1.00,0
+338,33,Trong phương trình bậc hai thì biệt thức delta bằng gì?,Δ = b² - 4ac,Δ = b - 4ac,Δ = a² + b²,Δ = 2a + b,A,9,1.00,0
+339,33,Công thức thể tích hình hộp chữ nhật là gì?,V = a + b + h,V = 2(a + b)h,V = a × b × h,V = a × b ÷ h,C,10,1.00,0
+340,34,Nước Văn Lang ra đời vào khoảng thời gian nào?,Thế kỷ VII trước Công nguyên,Thế kỷ I,Thế kỷ X,Thế kỷ XV,A,1,1.00,0
+341,34,Ai lãnh đạo cuộc khởi nghĩa Hai Bà Trưng?,Bà Triệu,Trưng Trắc và Trưng Nhị,Lê Chân,Nguyễn Thị Minh Khai,B,2,1.00,0
+342,34,Ai lãnh đạo chiến thắng Bạch Đằng năm 938?,Đinh Bộ Lĩnh,Lê Hoàn,Ngô Quyền,Lý Thường Kiệt,C,3,1.00,0
+343,34,Vị vua nào dời đô ra Thăng Long năm 1010?,Lý Công Uẩn,Trần Thái Tông,Lê Thánh Tông,Gia Long,A,4,1.00,0
+344,34,Ai chỉ huy quân dân nhà Trần chống quân Nguyên Mông?,Nguyễn Trãi,Trần Hưng Đạo,Lê Lợi,Quang Trung,B,5,1.00,0
+345,34,Ai lãnh đạo cuộc khởi nghĩa Lam Sơn?,Ngô Quyền,Lý Thường Kiệt,Lê Lợi,Phan Đình Phùng,C,6,1.00,0
+346,34,Người lãnh đạo phong trào Tây Sơn và đại phá quân Thanh là ai?,Quang Trung Nguyễn Huệ,Trần Hưng Đạo,Lê Hoàn,Đinh Bộ Lĩnh,A,7,1.00,0
+347,34,Đảng Cộng sản Việt Nam được thành lập vào năm nào?,1925,1930,1945,1954,B,8,1.00,0
+348,34,Ngày Quốc khánh Việt Nam là ngày nào?,30 tháng 4 năm 1975,19 tháng 8 năm 1945,2 tháng 9 năm 1945,7 tháng 5 năm 1954,C,9,1.00,0
+349,34,Ngày giải phóng miền Nam thống nhất đất nước là ngày nào?,30 tháng 4 năm 1975,2 tháng 9 năm 1945,7 tháng 5 năm 1954,19 tháng 12 năm 1946,A,10,1.00,0

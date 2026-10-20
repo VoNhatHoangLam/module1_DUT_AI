@@ -1,2 +1,7 @@
 deck_id,title,description,total_cards,is_studied,is_deleted,created_at,updated_at
 1,Từ vựng tiếng Anh cơ bản,Bộ từ vựng demo bài test,2,0,0,2026-10-15 14:08:41,2026-10-15 14:08:41
+10,Từ vựng tiếng Anh giao tiếp,10 từ vựng thông dụng trong giao tiếp hằng ngày,10,0,0,2026-10-20 09:00:00,2026-10-20 09:00:00
+11,Kiến thức Công nghệ thông tin,10 khái niệm nền tảng về máy tính và Internet,10,0,0,2026-10-20 09:05:00,2026-10-20 09:05:00
+12,Địa lý Việt Nam,10 kiến thức cơ bản về địa lý Việt Nam,10,0,0,2026-10-20 09:10:00,2026-10-20 09:10:00
+13,Công thức Toán học,10 công thức toán học phổ biến,10,0,0,2026-10-20 09:15:00,2026-10-20 09:15:00
+14,Lịch sử Việt Nam,10 sự kiện và nhân vật lịch sử tiêu biểu,10,0,0,2026-10-20 09:20:00,2026-10-20 09:20:00

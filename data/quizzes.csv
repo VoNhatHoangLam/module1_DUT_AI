@@ -1,3 +1,8 @@
 quiz_id,source_deck_id,title,description,time_limit_minutes,is_deleted,created_at,updated_at
 20,10,Quiz từ vựng tiếng Anh,Trắc nghiệm 2 câu,15,0,2026-10-10 11:00:00,2026-10-10 11:00:00
 21,,Bài kiểm tra Địa lý & Toán học,Bài thi trắc nghiệm thử nghiệm thực tế,10,0,2026-10-15 20:49:49,2026-10-15 20:49:49
+30,10,Quiz tiếng Anh giao tiếp,Kiểm tra 10 từ vựng giao tiếp cơ bản,10,0,2026-10-20 10:00:00,2026-10-20 10:00:00
+31,11,Quiz Công nghệ thông tin,Kiểm tra 10 khái niệm CNTT nền tảng,12,0,2026-10-20 10:05:00,2026-10-20 10:05:00
+32,12,Quiz Địa lý Việt Nam,Kiểm tra 10 kiến thức địa lý Việt Nam,10,0,2026-10-20 10:10:00,2026-10-20 10:10:00
+33,13,Quiz Công thức Toán học,Kiểm tra 10 công thức toán học cơ bản,15,0,2026-10-20 10:15:00,2026-10-20 10:15:00
+34,14,Quiz Lịch sử Việt Nam,Kiểm tra 10 sự kiện lịch sử Việt Nam,15,0,2026-10-20 10:20:00,2026-10-20 10:20:00

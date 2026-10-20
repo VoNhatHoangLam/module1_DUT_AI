@@ -38,7 +38,7 @@ export const MySetsView: React.FC<MySetsViewProps> = ({
   const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
-  const PAGE_SIZE = 4;
+  const PAGE_SIZE = 6;
 
   const filteredSets = useMemo(() => {
     return myPersonalSets.filter((s) => {

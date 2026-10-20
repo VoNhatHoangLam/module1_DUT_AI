@@ -32,7 +32,7 @@ export const MyQuizzesView: React.FC<MyQuizzesViewProps> = ({
 }) => {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
-  const PAGE_SIZE = 4;
+  const PAGE_SIZE = 6;
 
   const filteredQuizzes = useMemo(() => {
     return myPersonalQuizzes.filter((q) => {
