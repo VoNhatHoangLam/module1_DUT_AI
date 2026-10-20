@@ -10,6 +10,7 @@ from repositories import CsvRepository
 from services import (
     AttemptAlreadySubmittedError,
     HistoryService,
+    NoQuestionError,
     QuizService,
 )
 from utils import EmptyStackError, Stack
@@ -150,6 +151,136 @@ class QuizServiceTestCase(unittest.TestCase):
             [submitted.attempt.attempt_id],
         )
 
+    def test_quiz_session_back_and_forward_navigation(self) -> None:
+        """Kiểm tra điều hướng tới và lui (Back/Forward) giữa 3 câu hỏi bằng 2 Stack."""
+        self.question_repo.add(
+            Question(
+                question_id=102,
+                quiz_id=10,
+                question_text="2 * 3 = ?",
+                option_a="5",
+                option_b="6",
+                option_c="7",
+                option_d="8",
+                correct_answer="B",
+                position=3,
+                points=Decimal("1"),
+            )
+        )
+        session = self.service.start_quiz(10)
+
+        # 1. Bắt đầu tại Câu 100
+        self.assertEqual(session.current_question.question_id, 100)
+        self.assertFalse(session.can_back)
+        self.assertTrue(session.can_forward)
+        self.assertIsNone(session.current_answer)
+        self.assertEqual(session.remaining_count, 3)
+
+        # 2. Trả lời Câu 100 -> Tiến sang Câu 101
+        ans_q100 = session.answer_current("a")
+        self.assertEqual(ans_q100.question_id, 100)
+        self.assertEqual(session.current_question.question_id, 101)
+        self.assertTrue(session.can_back)
+        self.assertTrue(session.can_forward)
+        self.assertEqual(session.remaining_count, 2)
+
+        # 3. Trả lời Câu 101 -> Tiến sang Câu 102
+        ans_q101 = session.answer_current("b")
+        self.assertEqual(ans_q101.question_id, 101)
+        self.assertEqual(session.current_question.question_id, 102)
+        self.assertTrue(session.can_back)
+        self.assertFalse(session.can_forward)
+        self.assertEqual(session.remaining_count, 1)
+
+        # 4. BACK lần 1: Từ Câu 102 quay lại Câu 101
+        prev_q = session.back()
+        self.assertEqual(prev_q.question_id, 101)
+        self.assertEqual(session.current_question.question_id, 101)
+        self.assertEqual(session.current_answer, "B")
+        self.assertTrue(session.can_back)
+        self.assertTrue(session.can_forward)
+
+        # 5. BACK lần 2: Từ Câu 101 quay lại Câu 100
+        prev_q2 = session.back()
+        self.assertEqual(prev_q2.question_id, 100)
+        self.assertEqual(session.current_question.question_id, 100)
+        self.assertEqual(session.current_answer, "A")
+        self.assertFalse(session.can_back)  # Đã ở câu đầu tiên
+        self.assertTrue(session.can_forward)
+
+        # 6. FORWARD lần 1: Từ Câu 100 tiến lại Câu 101
+        next_q = session.forward()
+        self.assertEqual(next_q.question_id, 101)
+        self.assertEqual(session.current_question.question_id, 101)
+        self.assertEqual(session.current_answer, "B")
+        self.assertTrue(session.can_back)
+        self.assertTrue(session.can_forward)
+
+        # 7. FORWARD lần 2: Từ Câu 101 tiến lại Câu 102
+        next_q2 = session.forward()
+        self.assertEqual(next_q2.question_id, 102)
+        self.assertEqual(session.current_question.question_id, 102)
+        self.assertTrue(session.can_back)
+        self.assertFalse(session.can_forward)
+
+        # 8. Trả lời Câu 102 và hoàn tất bài thi
+        session.answer_current("b")
+        self.assertTrue(session.is_completed)
+        self.assertIsNone(session.current_question)
+        self.assertEqual(
+            session.selected_answers,
+            {100: "A", 101: "B", 102: "B"},
+        )
+
+        # 9. Sau khi hoàn thành, vẫn có thể BACK để xem lại câu cuối trước khi nộp
+        last_q = session.back()
+        self.assertEqual(last_q.question_id, 102)
+        self.assertFalse(session.is_completed)
+        self.assertEqual(session.current_answer, "B")
+
+    def test_quiz_session_change_answer_after_back(self) -> None:
+        """Kiểm tra thay đổi đáp án sau khi Back."""
+        session = self.service.start_quiz(10)
+
+        # Trả lời câu 100 là A
+        session.answer_current("a")
+        self.assertEqual(session.current_question.question_id, 101)
+
+        # Back về câu 100 và đổi đáp án thành D
+        session.back()
+        self.assertEqual(session.current_question.question_id, 100)
+        self.assertEqual(session.current_answer, "A")
+
+        session.answer_current("d")
+        self.assertEqual(session.selected_answers[100], "D")
+
+        # Trả lời câu 101 là B
+        self.assertEqual(session.current_question.question_id, 101)
+        session.answer_current("b")
+        self.assertTrue(session.is_completed)
+
+        # Nộp bài và xác nhận điểm số phản ánh đáp án mới
+        result = self.service.submit_session(session)
+        self.assertEqual(result.attempt.correct_count, 1)  # 100 sai (D!=A), 101 đúng (B==B)
+
+    def test_quiz_session_back_at_first_question_raises_error(self) -> None:
+        """Bấm Back khi đang ở câu đầu tiên ném ngoại lệ NoQuestionError."""
+        session = self.service.start_quiz(10)
+        self.assertFalse(session.can_back)
+        with self.assertRaises(NoQuestionError):
+            session.back()
+
+    def test_quiz_session_forward_when_empty_raises_error(self) -> None:
+        """Bấm Forward khi không có câu phía trước ném ngoại lệ NoQuestionError."""
+        session = self.service.start_quiz(10)
+        session.answer_current("a")
+        session.answer_current("b")
+        # Đã ở câu cuối cùng và hoàn thành, không có câu nào phía trước để forward
+        self.assertFalse(session.can_forward)
+        with self.assertRaises(NoQuestionError):
+            session.forward()
+
 
 if __name__ == "__main__":
     unittest.main()
+

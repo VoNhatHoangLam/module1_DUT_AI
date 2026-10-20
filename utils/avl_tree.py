@@ -236,6 +236,36 @@ class AVLTree(Generic[K, V]):
             curr = curr.right
         return result
 
+    def prefix_search(self, prefix: str) -> list[tuple[K, V]]:
+        """Tìm tất cả các cặp (khóa, giá trị) có khóa bắt đầu bằng prefix.
+
+        Sử dụng cấu trúc cây AVL tự cân bằng để cắt tỉa các nhánh không thể khớp:
+        - Định vị nhánh có tiền tố trong O(log N).
+        - Thu thập K phần tử thỏa mãn tiền tố trong O(K).
+        Tổng độ phức tạp: O(log N + K).
+        """
+        if not isinstance(prefix, str) or self._root is None:
+            return []
+
+        result: list[tuple[K, V]] = []
+
+        def _traverse(node: Optional[_AVLNode[K, V]]) -> None:
+            if node is None:
+                return
+
+            node_key_str = str(node.key)
+            if node_key_str < prefix and not node_key_str.startswith(prefix):
+                _traverse(node.right)
+            elif node_key_str.startswith(prefix):
+                _traverse(node.left)
+                result.append((node.key, node.value))
+                _traverse(node.right)
+            else:
+                _traverse(node.left)
+
+        _traverse(self._root)
+        return result
+
     def is_balanced(self) -> bool:
         """Kiểm tra điều kiện cân bằng của cây AVL (dành cho kiểm thử)."""
         def _check(node: Optional[_AVLNode[K, V]]) -> bool:
@@ -431,6 +461,14 @@ class MultiAVLTree(Generic[K, V]):
         """Duyệt toàn bộ các bản ghi theo thứ tự khóa tăng dần."""
         result: list[V] = []
         for bucket in self._tree.inorder():
+            result.extend(bucket)
+        return result
+
+    def prefix_search(self, prefix: str) -> list[V]:
+        """Tìm kiếm tất cả bản ghi có khóa bắt đầu bằng prefix với độ phức tạp O(log N + K)."""
+        matches = self._tree.prefix_search(prefix)
+        result: list[V] = []
+        for _key, bucket in matches:
             result.extend(bucket)
         return result
 

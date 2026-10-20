@@ -39,7 +39,7 @@ class Stack(Generic[T]):
         if self._top is None:
             raise EmptyStackError("Không thể lấy phần tử từ ngăn xếp rỗng")
         node = self._top
-        self._top = node.next
+        self._top = self._top.next
         node.next = None
         self._size -= 1
         return node.value
