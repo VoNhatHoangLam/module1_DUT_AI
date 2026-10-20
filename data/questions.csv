@@ -1,4 +1,401 @@
-question_id,quiz_id,question_text,option_a,option_b,option_c,option_d,correct_answer,position,points,is_deleted
-200,20,Apple nghĩa là gì?,Quả táo,Quả chuối,Con mèo,Quả cam,A,1,1.00,0
-201,21,Thủ đô của Nhật Bản là gì?,Tokyo,Kyoto,Osaka,Nagoya,A,1,1.00,0
-202,21,Số nguyên tố chẵn duy nhất là số nào?,0,2,4,6,B,2,1.00,0
+﻿question_id,quiz_id,question_text,option_a,option_b,option_c,option_d,correct_answer,position,points,is_deleted
+1,1,Từ nào diễn tả việc đi lại đều đặn mỗi ngày giữa nhà và nơi làm việc?,Commute,Errand,Vacation,Stroll,A,1,1.00,0
+2,1,Một chuyến đi nhanh ra ngoài để giải quyết việc cá nhân gọi là gì?,Holiday,Errand,Chore,Flight,B,2,1.00,0
+3,1,Tính từ nào mang ý nghĩa luôn xuất hiện đúng giờ hẹn?,Punctual,Reluctant,Tardy,Careless,A,3,1.00,0
+4,1,"Từ nào chỉ những công việc lặp lại nhàm chán trong nhà (rửa bát, lau nhà)?",Adventure,Hobby,Chore,Mission,C,4,1.00,0
+5,2,Từ 'Sibling' trong tiếng Anh dùng để chỉ đối tượng nào?,Bố mẹ,Anh chị em ruột,Họ hàng xa,Bạn cùng lớp,B,1,1.00,0
+6,2,Một người bạn quen mặt nhưng chưa thân gọi là gì?,Colleague,Spouse,Acquaintance,Soulmate,C,2,1.00,0
+7,2,"Từ nào mô tả sự giáo dưỡng, dạy dỗ của cha mẹ đối với con cái từ nhỏ?",Upbringing,Heritage,Adolescence,Kinship,A,3,1.00,0
+8,2,'Kinship' thể hiện điều gì?,Tình bạn bè,Quan hệ huyết thống/gia tộc,Hợp đồng kinh doanh,Cạnh tranh công việc,B,4,1.00,0
+9,3,Món ăn khai vị phục vụ đầu bữa tiệc được gọi là gì?,Dessert,Beverage,Appetizer,Entree,C,1,1.00,0
+10,3,"Muối, tiêu, thảo mộc dùng để nêm nếm món ăn được xếp vào nhóm nào?",Seasoning,Appetizer,Utensil,Nutrient,A,2,1.00,0
+11,3,"Từ nào chỉ chung các loại thức uống (trà, cà phê, nước trái cây)?",Beverage,Cuisine,Course,Snack,A,3,1.00,0
+12,3,Thực phẩm giàu vitamin và khoáng chất tốt cho sức khỏe có tính chất gì?,Harmful,Nutritious,Bland,Stale,B,4,1.00,0
+13,4,Bản kế hoạch ghi rõ lộ trình và các điểm dừng chân trong chuyến đi gọi là gì?,Receipt,Itinerary,Passport,Brochure,B,1,1.00,0
+14,4,Hành khách cần xuất trình giấy tờ gì tại cửa khởi hành máy bay?,Driver license,Boarding pass,Credit card,Luggage tag,B,2,1.00,0
+15,4,Triệu chứng mệt mỏi sau chuyến bay dài vượt nhiều múi giờ gọi là gì?,Homesick,Seasick,Jet lag,Headache,C,3,1.00,0
+16,4,Khoảng thời gian chờ nối chuyến tại sân bay trung gian gọi là gì?,Takeoff,Layover,Check-in,Turbulence,B,4,1.00,0
+17,5,"Khi mua được một món hàng chất lượng tốt với giá rất rẻ, ta gọi đó là gì?",Rip-off,Bargain,Deficit,Debt,B,1,1.00,0
+18,5,Giấy tờ chứng minh bạn đã hoàn tất thanh toán tại quầy thu ngân là gì?,Coupon,Warranty,Receipt,Catalog,C,2,1.00,0
+19,5,Hình thức trả tiền mua hàng chia nhỏ thành nhiều tháng gọi là gì?,Lump sum,Installment,Cash advance,Mortgage,B,3,1.00,0
+20,5,Sản phẩm có mức giá hợp lý và nằm trong khả năng tài chính gọi là gì?,Extravagant,Priceless,Affordable,Costly,C,4,1.00,0
+21,6,"Cơn mưa hạt nhỏ, bay lất phất trong không gian được gọi là gì?",Downpour,Hail,Drizzle,Blizzard,C,1,1.00,0
+22,6,Khái niệm chỉ lượng hơi nước có trong không khí là gì?,Pressure,Altitude,Humidity,Visibility,C,2,1.00,0
+23,6,Thời tiết mùa hè với nắng gắt và nhiệt độ cực cao được miêu tả bằng từ nào?,Freezing,Breezy,Scorching,Overcast,C,3,1.00,0
+24,6,Thông tin dự đoán thời tiết trong 24-48 giờ tới gọi là gì?,Weather log,Weather forecast,Weather history,Weather alarm,B,4,1.00,0
+25,7,"Biểu hiện sốt, ho, đau đầu khi cơ thể nhiễm bệnh được gọi là gì?",Treatment,Symptom,Placebo,Vaccine,B,1,1.00,0
+26,7,Tờ giấy ghi danh mục thuốc do bác sĩ chỉ định dùng gọi là gì?,Receipt,Prescription,Manual,Certificate,B,2,1.00,0
+27,7,Khả năng cơ thể tự bảo vệ trước sự xâm nhập của virus và vi khuẩn gọi là gì?,Fatigue,Allergy,Immunity,Infection,C,3,1.00,0
+28,7,Quá trình bác sĩ xác định bệnh nhân mắc căn bệnh cụ thể nào gọi là gì?,Diagnosis,Prognosis,Therapy,Surgery,A,4,1.00,0
+29,8,Phần tầng nhà nằm bên dưới mặt đất thường dùng để chứa đồ gọi là gì?,Attic,Balcony,Basement,Porch,C,1,1.00,0
+30,8,"Các thiết bị điện như máy giặt, lò vi sóng trong nhà được gọi chung là gì?",Utensils,Fixtures,Appliances,Tools,C,2,1.00,0
+31,8,Một căn phòng có diện tích lớn và thoáng mát có thể miêu tả bằng từ nào?,Cramped,Spacious,Narrow,Gloomy,B,3,1.00,0
+32,8,Khu vực ban công ngoài trời ở các tầng lầu gọi là gì?,Terrace,Balcony,Basement,Hallway,B,4,1.00,0
+33,9,Người luôn nhìn thấy mặt tích cực trong mọi hoàn cảnh được gọi là gì?,Pessimistic,Cynical,Optimistic,Indifferent,C,1,1.00,0
+34,9,"Phẩm chất kiên cường, mau chóng đứng dậy sau thất bại gọi là gì?",Vulnerable,Fragile,Resilient,Stubborn,C,2,1.00,0
+35,9,Người biết đặt mình vào vị trí của người khác để cảm nhận được gọi là gì?,Empathetic,Arrogant,Selfish,Ruthless,A,3,1.00,0
+36,9,"Tính từ miêu tả người làm việc cần mẫn, chịu khó và kiên trì là gì?",Lazy,Diligent,Hasty,Passive,B,4,1.00,0
+37,10,Hoạt động làm vào thời gian rảnh rỗi để giải trí gọi là gì?,Pastime,Duty,Chore,Obligation,A,1,1.00,0
+38,10,Người có niềm đam mê đặc biệt sâu sắc với một lĩnh vực nào đó gọi là gì?,Amateur,Enthusiast,Spectator,Critic,B,2,1.00,0
+39,10,Nghệ thuật chụp ảnh và ghi lại khoảnh khắc bằng máy ảnh gọi là gì?,Pottery,Sculpture,Photography,Calligraphy,C,3,1.00,0
+40,10,Từ 'Recreation' đồng nghĩa gần nhất với khái niệm nào sau đây?,Labor,Exhaustion,Relaxation,Discipline,C,4,1.00,0
+41,11,"Cụm từ nào mang nghĩa 'hòa thuận, hợp tính với ai đó'?",Get out of,Get along with,Get down to,Get behind,B,1,1.00,0
+42,11,"Khi bạn hồi phục sau một cơn bạo bệnh hoặc chia tay, bạn đã làm gì?",Get through,Get over,Get off,Get up,B,2,1.00,0
+43,11,Xoay xở sống sót trong điều kiện kinh tế khó khăn dùng cụm từ nào?,Get by,Get away,Get across,Get into,A,3,1.00,0
+44,11,Làm điều phạm pháp nhưng không bị bắt hay trừng phạt gọi là gì?,Get off with,Get around,Get away with,Get in on,C,4,1.00,0
+45,12,"Khi máy bay rời khỏi mặt đất để bay lên không trung, động từ nào được dùng?",Take in,Take off,Take away,Take down,B,1,1.00,0
+46,12,'She really takes after her mother' có nghĩa là gì?,Cô ấy chăm sóc mẹ,Cô ấy giống mẹ về ngoại hình/tính cách,Cô ấy đuổi theo mẹ,Cô ấy nghe lời mẹ,B,2,1.00,0
+47,12,Một tập đoàn mua lại và nắm quyền điều hành doanh nghiệp khác gọi là gì?,Take up,Take down,Take over,Take out,C,3,1.00,0
+48,12,Bắt đầu luyện tập một môn thể thao mới như Yoga thì dùng cụm nào?,Take up,Take on,Take back,Take off,A,4,1.00,0
+49,13,Sau cụm 'Look forward to' ta luôn dùng dạng từ nào?,V-infinitive,V-ing / Danh từ,V-ed,Bare verb,B,1,1.00,0
+50,13,"Cảnh sát đang kiểm tra nguyên nhân vụ cháy, họ đang làm gì?",Looking after,Looking down,Looking into,Looking back,C,2,1.00,0
+51,13,Tôn trọng và ngưỡng mộ thần tượng được diễn tả bằng cụm nào?,Look out for,Look up to,Look down upon,Look away,B,3,1.00,0
+52,13,Coi thường những người có hoàn cảnh khó khăn hơn mình là hành vi gì?,Look up to,Look after,Look down on,Look around,C,4,1.00,0
+53,14,'Don't put off until tomorrow what you can do today' khuyên chúng ta điều gì?,Không nên trì hoãn,Không nên dập lửa,Nên mặc ấm,Nên chịu đựng,A,1,1.00,0
+54,14,Tôi không thể chịu đựng được tiếng ồn này nữa' tương ứng với cụm từ nào?,Put up with,Put across,Put away,Put forward,A,2,1.00,0
+55,14,"Lực lượng cứu hỏa đã dập tắt đám cháy rừng, họ đã làm gì?",Put off the fire,Put out the fire,Put up the fire,Put in the fire,B,3,1.00,0
+56,14,Mặc áo khoác trước khi ra ngoài trời lạnh được nói là gì?,Put down your coat,Put on your coat,Put up your coat,Put off your coat,B,4,1.00,0
+57,15,Từ chối một lời đề nghị việc làm hấp dẫn dùng cụm từ nào?,Turn in,Turn down,Turn over,Turn away,B,1,1.00,0
+58,15,"Anh ấy đến bữa tiệc muộn và bất ngờ, ta có thể nói gì?",He turned off,He turned up,He turned into,He turned out,B,2,1.00,0
+59,15,Kết quả sự việc hóa ra lại tốt đẹp ngoài mong đợi dùng cụm nào?,Turned away,Turned down,Turned out,Turned back,C,3,1.00,0
+60,15,Nước đóng băng biến thành đá cứng là quá trình gì?,Turns off ice,Turns into ice,Turns down ice,Turns up ice,B,4,1.00,0
+61,16,Bớt xén vật liệu xây dựng để giảm chi phí là hành vi gì trong tiếng Anh?,Cutting corners,Thinking outside the box,Calling it a day,Hitting the sack,A,1,1.00,0
+62,16,Khi chiến dịch kinh doanh thất bại hoàn toàn và phải lập lại kế hoạch mới từ đầu:,Back to the drawing board,Piece of cake,Spill the beans,Break a leg,A,2,1.00,0
+63,16,"Đã 6 giờ tối rồi, chúng ta kết thúc công việc hôm nay thôi!",Let's call it a day,Let's bite the bullet,Let's cut corners,Let's burn bridges,A,3,1.00,0
+64,16,Tìm kiếm giải pháp sáng tạo không đi theo lối mòn gọi là gì?,Stay in the box,Think outside the box,Keep in mind,Face the music,B,4,1.00,0
+65,17,Bài kiểm tra hôm nay dễ đến mức ai cũng làm được điểm 10:,A hot potato,A piece of cake,A bad apple,A couch potato,B,1,1.00,0
+66,17,Lỡ miệng tiết lộ kế hoạch tổ chức tiệc sinh nhật bí mật là gì?,Spill the beans,Cry over spilt milk,Bring home the bacon,Cool as a cucumber,A,2,1.00,0
+67,17,"Nghe tin đồn trên mạng thì nên cẩn trọng, không vội tin tuyệt đối:",Take it with a grain of salt,Butter someone up,Chew the fat,Egg someone on,A,3,1.00,0
+68,17,Ôm đồm quá nhiều dự án cùng một lúc đến mức kiệt sức là biểu hiện của gì?,Biting the dust,Biting off more than you can chew,Eating humble pie,Having a sweet tooth,B,4,1.00,0
+69,18,Giải quyết được 2 công việc chỉ bằng một hành động duy nhất:,Kill two birds with one stone,Bark up the wrong tree,Hold your horses,Smell a rat,A,1,1.00,0
+70,18,Một cây cầu xây hàng nghìn tỷ nhưng bỏ hoang không ai đi gọi là gì?,Black sheep,White elephant,Trojan horse,Paper tiger,B,2,1.00,0
+71,18,Một ứng viên ít tên tuổi bỗng chốc trở thành quán quân cuộc thi:,Dark horse,Lone wolf,Eager beaver,Early bird,A,3,1.00,0
+72,18,Ý nghĩa của 'Let the cat out of the bag' tương tự thành ngữ nào?,Spill the beans,Cry wolf,Face the music,Hit the road,A,4,1.00,0
+73,19,"Chiếc siêu xe này giá hàng chục triệu đô la, nó thật sự:",Costs an arm and a leg,Costs peanuts,Is dirt cheap,Is a dime a dozen,A,1,1.00,0
+74,19,Chuyện hiếm khi diễn ra trong tự nhiên được ví với hiện tượng nào?,Once in a blue moon,At the drop of a hat,Around the clock,In the nick of time,A,2,1.00,0
+75,19,Kỳ nghỉ hè trôi qua chớp mắt như một giấc mơ:,Time stands still,Time flies,Time heals,Time drags,B,3,1.00,0
+76,19,Mua một món đồ vừa túi tiền mà không sợ rỗng ví:,Won't break the bank,Will cost a fortune,Will pay through the nose,Will cost the earth,A,4,1.00,0
+77,20,Một lá thư bí ẩn bất ngờ gửi đến mà không ai hay biết trước:,Out of the blue,In black and white,Red-handed,Green thumb,A,1,1.00,0
+78,20,"Thấy bạn mình trúng số độc đắc, anh ấy cảm thấy ghen tức:",Green with envy,Tickled pink,Feeling blue,Grey area,A,2,1.00,0
+79,20,Doanh nghiệp kinh doanh thua lỗ và đang ngập trong nợ nần:,In the black,In the red,In the pink,In the clear,B,3,1.00,0
+80,20,Một cơ hội nghề nghiệp tuyệt vời không thể bỏ lỡ gọi là gì?,Golden opportunity,Silver lining,White lie,Blue-collar job,A,4,1.00,0
+81,21,Thuật ngữ chỉ sự phong phú về giống loài sinh vật trong tự nhiên là gì?,Deforestation,Biodiversity,Erosion,Emission,B,1,1.00,0
+82,21,Nguồn năng lượng có thể tái tạo và không làm tổn hại môi trường trong tương lai có tính chất gì?,Depleted,Hazardous,Sustainable,Fossil,C,2,1.00,0
+83,21,Chỉ số đo lường lượng khí nhà kính cá nhân hoặc tổ chức thải ra gọi là gì?,Carbon footprint,Ozone layer,Acid rain,Ecological niche,A,3,1.00,0
+84,21,Nạn chặt phá rừng hàng loạt trên diện rộng gọi là gì?,Afforestation,Deforestation,Irrigation,Agriculture,B,4,1.00,0
+85,22,Một phát minh mang tính cách mạng mở ra hướng đi hoàn toàn mới được gọi là gì?,Stagnation,Breakthrough,Setback,Drawback,B,1,1.00,0
+86,22,"Smartphone hiện nay xuất hiện ở khắp mọi nơi trên thế giới, tính chất này là gì?",Obsolete,Ubiquitous,Scarce,Primitive,B,2,1.00,0
+87,22,Việc máy móc thay thế dây chuyền sản xuất của con người được gọi là gì?,Manual labor,Automation,Craftsmanship,Deceleration,B,3,1.00,0
+88,22,"Khi AI đứng trước câu hỏi về tính đúng sai trong việc quyết định mạng sống, đó là gì?",Technical bug,Ethical dilemma,Financial crisis,Cyber attack,B,4,1.00,0
+89,23,Khung chương trình học tập toàn diện được thiết kế bởi nhà trường gọi là gì?,Syllabus,Curriculum,Transcript,Diploma,B,1,1.00,0
+90,23,Phương pháp giảng dạy và nghệ thuật sư phạm của giáo viên gọi là gì?,Psychology,Pedagogy,Sociology,Morphology,B,2,1.00,0
+91,23,"Bậc học cao đẳng, đại học được gọi bằng thuật ngữ học thuật nào?",Primary education,Secondary education,Tertiary education,Vocational training,C,3,1.00,0
+92,23,Tỷ lệ người dân biết đọc và biết viết trong một quốc gia gọi là tỷ lệ gì?,Literacy rate,Drop-out rate,Employment rate,Birth rate,A,4,1.00,0
+93,24,Căn bệnh kéo dài liên tục nhiều năm không thể chữa dứt điểm ngay gọi là bệnh gì?,Acute,Chronic,Mild,Transient,B,1,1.00,0
+94,24,Quá trình tập luyện vật lý trị liệu để hồi phục cơ thể sau tai nạn gọi là gì?,Surgery,Rehabilitation,Prescription,Sterilization,B,2,1.00,0
+95,24,Hiện tượng một bệnh truyền nhiễm bùng nổ dữ dội trong cộng đồng gọi là gì?,Epidemic,Remission,Hygiene,Immunity,A,3,1.00,0
+96,24,Phương pháp tiêm phòng để kích hoạt hệ miễn dịch phòng bệnh được gọi là gì?,Chemotherapy,Vaccination,Sedation,Dialysis,B,4,1.00,0
+97,25,Khoản thuế đánh vào hàng hóa nhập khẩu từ nước ngoài gọi là gì?,Subsidy,Tariff,Dividend,Inflation,B,1,1.00,0
+98,25,Một công ty có chi nhánh và nhà máy tại 20 quốc gia được gọi là gì?,Domestic firm,Multinational corporation,Start-up,Sole trader,B,2,1.00,0
+99,25,Hiện tượng các nền kinh tế trên thế giới phụ thuộc mật thiết vào nhau gọi là gì?,Isolation,Interdependence,Protectionism,Autonomy,B,3,1.00,0
+100,25,Quá trình các quốc gia gắn kết và hợp tác sâu rộng trên toàn cầu gọi là gì?,Integration,Segregation,Colonization,Decoupling,A,4,1.00,0
+101,26,"Di sản văn hóa phi vật thể (như ca trù, nhã nhạc cung đình) được mô tả bằng từ nào?",Tangible,Intangible,Concrete,Physical,B,1,1.00,0
+102,26,Những hiện vật khảo cổ học khai quật từ lăng mộ cổ gọi là gì?,Artifacts,Fossils,Minerals,Novels,A,2,1.00,0
+103,26,Các bộ tộc bản địa sinh sống từ ngàn xưa tại vùng đất châu Úc gọi là gì?,Immigrant population,Indigenous people,Colonial settlers,Urban dwellers,B,3,1.00,0
+104,26,Nỗ lực bảo vệ rừng nguyên sinh và các đền đài cổ khỏi sự tàn phá gọi là gì?,Demolition,Preservation,Exploitation,Urbanization,B,4,1.00,0
+105,27,"Hệ thống giao thông, điện lưới, cấp thoát nước của một quốc gia gọi chung là gì?",Superstructure,Infrastructure,Demographics,Architecture,B,1,1.00,0
+106,27,Tình trạng ùn tắc kẹt xe giờ cao điểm tại các ngã tư được diễn đạt bằng từ nào?,Free flow,Traffic congestion,Rapid transit,Pedestrian zone,B,2,1.00,0
+107,27,Người tham gia giao thông bằng cách đi bộ trên phố gọi là gì?,Driver,Cyclist,Pedestrian,Commuter,C,3,1.00,0
+108,27,Một siêu đô thị hàng chục triệu dân như Tokyo hay New York được gọi là gì?,Hamlet,Village,Metropolis,Suburb,C,4,1.00,0
+109,28,Hình phạt nặng nhằm răn đe không cho kẻ khác phạm tội gọi là gì?,Incentive,Deterrent,Reward,Pardon,B,1,1.00,0
+110,28,Phán quyết cuối cùng của tòa án tuyên bố bị cáo có tội hay không gọi là gì?,Lawsuit,Verdict,Testimony,Indictment,B,2,1.00,0
+111,28,Mục tiêu cải tạo người lầm lỡ thành công dân có ích cho xã hội được diễn tả bằng từ nào?,Incarcerate,Rehabilitate,Condemn,Penalize,B,3,1.00,0
+112,28,Người bị truy tố và đứng trước vành móng ngựa gọi là gì?,Prosecutor,Judge,Defendant,Juror,C,4,1.00,0
+113,29,"Các quá trình tư duy, ghi nhớ và xử lý logic của não bộ gọi là khả năng gì?",Sensory,Cognitive,Motor,Reflex,B,1,1.00,0
+114,29,Người nạp lại năng lượng tinh thần khi ở một mình và ít thích tụ tập đông người là ai?,Extrovert,Introvert,Optimist,Altruist,B,2,1.00,0
+115,29,Vết thương tâm lý dai dẳng sau biến cố thảm khốc gọi là gì?,Euphoria,Nostalgia,Trauma,Apathy,C,3,1.00,0
+116,29,Tầng nhận thức vận hành âm thầm phía sau ý thức hàng ngày được gọi là gì?,Conscious,Subconscious,Instinct,Intuition,B,4,1.00,0
+117,30,Đường đi hình elip mà Trái Đất quay xung quanh Mặt Trời được gọi là gì?,Axis,Orbit,Equator,Horizon,B,1,1.00,0
+118,30,Thiết bị chuyên dụng giúp các nhà khoa học ngắm nhìn các thiên hà xa xôi là gì?,Microscope,Periscope,Telescope,Stethoscope,C,2,1.00,0
+119,30,Sinh vật được cho là đến từ các hành tinh khác ngoài Trái Đất gọi là gì?,Terrestrial,Extraterrestrial,Aquatic,Subterranean,B,3,1.00,0
+120,30,"Mặt trời, mặt trăng và các chòm sao được gọi chung là các thiên thể gì?",Terrestrial bodies,Celestial bodies,Atmospheric bodies,Oceanic bodies,B,4,1.00,0
+121,31,Văn phòng trung tâm đầu não của một doanh nghiệp lớn gọi là gì?,Branch,Warehouse,Headquarters,Outlet,C,1,1.00,0
+122,31,Khả năng nhà quản lý giao việc cho cấp dưới thực hiện được gọi là gì?,Delegation,Supervision,Demotion,Resignation,A,2,1.00,0
+123,31,Chỉ số đo lường khối lượng sản phẩm làm ra trên mỗi giờ làm việc là gì?,Deficit,Productivity,Overhead,Liability,B,3,1.00,0
+124,31,Người quản lý theo dõi sát sao công việc hàng ngày của bạn trong công ty là ai?,Intern,Supervisor,Competitor,Shareholder,B,4,1.00,0
+125,32,Mỗi mục quy định quyền lợi và nghĩa vụ riêng biệt trong hợp đồng gọi là gì?,Clause,Chapter,Stanza,Heading,A,1,1.00,0
+126,32,Khi hai đối tác đàm phán cùng lùi một bước để đi đến tiếng nói chung:,Breach,Compromise,Penalty,Dispute,B,2,1.00,0
+127,32,Hành vi phá vỡ cam kết đã ký kết trong văn bản thỏa thuận gọi là gì?,Extension,Breach of contract,Amendment,Termination,B,3,1.00,0
+128,32,Một bản hợp đồng có hiệu lực pháp lý bắt buộc được miêu tả bằng tính từ nào?,Void,Optional,Binding,Informal,C,4,1.00,0
+129,33,Tổng số tiền một công ty thu được từ hoạt động kinh doanh bán hàng là gì?,Expense,Revenue,Debt,Loss,B,1,1.00,0
+130,33,Phần lợi nhuận ròng được ban lãnh đạo trích ra chia cho cổ đông gọi là gì?,Bonus,Dividend,Commission,Royalty,B,2,1.00,0
+131,33,Tình trạng pháp lý khi một công ty không còn khả năng trả nợ và tuyên bố sụp đổ:,Merger,Liquidity,Bankruptcy,Solvency,C,3,1.00,0
+132,33,Quá trình kiểm tra độc lập các báo cáo tài chính của công ty gọi là gì?,Audit,Forecast,Transaction,Investment,A,4,1.00,0
+133,34,"Thông tin về độ tuổi, thu nhập, nơi ở của người tiêu dùng thuộc về chỉ số nào?",Psychographics,Demographics,Geography,Analytics,B,1,1.00,0
+134,34,Câu khẩu hiệu ngắn gọn dễ nhớ của một nhãn hàng được gọi là gì?,Logo,Slogan,Trademark,Billboard,B,2,1.00,0
+135,34,Việc thuê một ca sĩ nổi tiếng sử dụng và khen ngợi dòng điện thoại mới là gì?,Endorsement,Boycott,Plagiarism,Defamation,A,3,1.00,0
+136,34,Ngày đầu tiên đưa một sản phẩm công nghệ mới toanh ra thị trường gọi là lễ gì?,Recall,Launch,Liquidation,Clearance,B,4,1.00,0
+137,35,Người nộp hồ sơ tham gia phỏng vấn xin việc được gọi là gì?,Interviewer,Candidate,Executive,Recruiter,B,1,1.00,0
+138,35,Giai đoạn 2 tháng đầu làm quen và thử thách năng lực tại công ty gọi là gì?,Tenure,Sabbatical,Probation,Retirement,C,2,1.00,0
+139,35,"Gói thu nhập gồm lương cứng, thưởng và bảo hiểm y tế gọi chung là gì?",Deduction,Penalty,Compensation,Tax,C,3,1.00,0
+140,35,Văn bản nhân viên gửi ban giám đốc khi muốn chủ động thôi việc là gì?,Promotion,Resignation,Appraisal,Contract,B,4,1.00,0
+141,36,Hàng hóa được chuyên chở bằng tàu biển hoặc máy bay chở hàng gọi là gì?,Luggage,Baggage,Freight,Parcel,C,1,1.00,0
+142,36,Cơ quan nhà nước chịu trách nhiệm thu thuế và kiểm tra hàng hóa tại cảng là gì?,Customs,Immigration,Police,Coast Guard,A,2,1.00,0
+143,36,Tòa nhà có diện tích rộng dùng để chứa các pallet hàng hóa lưu kho gọi là gì?,Factory,Showroom,Warehouse,Laboratory,C,3,1.00,0
+144,36,Mỗi kiện hàng hoặc lô hàng ký gửi chuyển phát nhanh gọi là gì?,Consignment,Insurance,Inventory,Vessel,A,4,1.00,0
+145,37,Một lỗi kỹ thuật khiến sản phẩm không thể xuất xưởng gọi là gì?,Asset,Defect,Feature,Patent,B,1,1.00,0
+146,37,Hệ thống chuyền sản phẩm qua từng công nhân để lắp ráp hoàn thiện gọi là gì?,Supply chain,Assembly line,Pipeline,Grid,B,2,1.00,0
+147,37,"Tài liệu ghi rõ kích thước, trọng lượng, điện áp của linh kiện là bảng gì?",Invoice,Specification,Warranty,Manifest,B,3,1.00,0
+148,37,Hành động áp dụng chung một quy chuẩn thống nhất cho toàn nhà máy là gì?,Diversify,Standardize,Complicate,Disrupt,B,4,1.00,0
+149,38,"Khi máy in bị kẹt giấy, nhân viên IT đến tìm lỗi và sửa chữa, anh ta đang làm gì?",Troubleshooting,Purchasing,Programming,Marketing,A,1,1.00,0
+150,38,Mạng thông tin nội bộ chỉ cho phép máy tính trong công ty kết nối là gì?,Internet,Intranet,Ethernet,Extranet,B,2,1.00,0
+151,38,Thiết bị văn phòng đột ngột ngừng hoạt động hoặc chạy chập chờn gọi là gì?,Efficiency,Malfunction,Optimization,Innovation,B,3,1.00,0
+152,38,Hành động thay thế thanh RAM dung lượng cao hơn cho máy tính là gì?,Downgrade,Discard,Upgrade,Installment,C,4,1.00,0
+153,39,Một email hỏi về giá cả và thông số kỹ thuật của sản phẩm thuộc dạng gì?,Complaint,Inquiry,Invoice,Warranty,B,1,1.00,0
+154,39,Phiếu khảo sát ý kiến người tiêu dùng nhằm thu thập thông tin gì?,Feedback,Deficit,Dividend,Revenue,A,2,1.00,0
+155,39,Mục tiêu cao nhất của phòng chăm sóc khách hàng là gì?,Customer satisfaction,Customer dispute,Customer turnover,Customer penalty,A,3,1.00,0
+156,39,"Khi khách hàng nhận phải món đồ bị vỡ và gọi điện bức xúc, đó là một:",Praise,Complaint,Referral,Recommendation,B,4,1.00,0
+157,40,Danh sách các đề mục cần bàn thảo trong buổi họp giao ban gọi là gì?,Agenda,Resume,Manifest,Brochure,A,1,1.00,0
+158,40,Nhà khoa học nổi tiếng phát biểu bài nói quan trọng nhất tại hội nghị là ai?,Keynote speaker,Audience,Organizer,Sponsor,A,2,1.00,0
+159,40,Hoạt động trao đổi danh thiếp và làm quen với các giám đốc công ty khác gọi là gì?,Networking,Benchmarking,Outsourcing,Downsizing,A,3,1.00,0
+160,40,Những người có mặt và lắng nghe trong phòng hội thảo được gọi chung là gì?,Participants,Competitors,Supervisors,Inspectors,A,4,1.00,0
+161,41,Thì nào dùng để nhấn mạnh tính liên tục của hành động kéo dài từ quá khứ đến hiện tại?,Present Continuous,Present Perfect Continuous,Simple Past,Future Simple,B,1,1.00,0
+162,41,Hành động xảy ra trước một hành động khác trong quá khứ được chia ở thì nào?,Past Simple,Past Perfect,Past Continuous,Present Perfect,B,2,1.00,0
+163,41,"Trong câu: 'By the time you arrive tomorrow, I ______', chỗ trống cần điền thì gì?",will have left,had left,have left,left,A,3,1.00,0
+164,41,"Trong mệnh đề thời gian bắt đầu bằng 'As soon as', ta dùng thì gì thay cho tương lai đơn?",Hiện tại đơn,Quá khứ đơn,Tương lai gần,Quá khứ hoàn thành,A,4,1.00,0
+165,42,"'If you heat ice, it melts' là cấu trúc câu điều kiện loại mấy?",Loại 0,Loại 1,Loại 2,Loại 3,A,1,1.00,0
+166,42,"Cấu trúc 'If I had studied harder, I would have passed the exam' là loại mấy?",Loại 1,Loại 2,Loại 3,Mixed,C,2,1.00,0
+167,42,"Giả định về một điều không có thật ở hiện tại: 'If I ______ a bird, I would fly':",am,were,had been,will be,B,3,1.00,0
+168,42,Câu điều kiện hỗn hợp (Mixed) thường kết hợp giả định quá khứ (If had V3) với kết quả ở đâu?,Ở tương lai xa,Ở hiện tại (would + V),Ở thời tiền sử,Ở quá khứ hoàn thành,B,4,1.00,0
+169,43,Điền từ vào chỗ trống: 'I had the mechanic ______ my car brakes.',repair,to repair,repaired,repairing,A,1,1.00,0
+170,43,Điền từ vào chỗ trống: 'I got my brother ______ me with my homework.',help,to help,helped,helping,B,2,1.00,0
+171,43,Cấu trúc nhờ cắt tóc: 'I am going to have my hair ______ tomorrow.',cut,to cut,cutting,cuts,A,3,1.00,0
+172,43,"Trong câu bị động, tân ngữ 'by them/people' thường được xử lý như thế nào?",Bắt buộc giữ lại,Lược bỏ vì không xác định rõ,Đặt lên đầu câu,Chuyển thành tính từ,B,4,1.00,0
+173,44,"Trong mệnh đề quan hệ có dấu phẩy (không xác định), đại từ quan hệ nào TUYỆT ĐỐI không được dùng?",Which,Who,Whom,That,D,1,1.00,0
+174,44,"Rút gọn câu chủ động: 'Because she felt tired, she went to bed early' thành:","Feeling tired, she went to bed early","Felt tired, she went to bed early","To feel tired, she went to bed early","Having felt, she went to bed early",A,2,1.00,0
+175,44,Đại từ quan hệ 'Whose' được dùng để chỉ điều gì?,Nơi chốn,Thời gian,Sở hữu,Lý do,C,3,1.00,0
+176,44,Rút gọn câu bị động: 'The car which was damaged in the crash was towed away' thành:,The car damaging in the crash...,The car damaged in the crash...,The car to damage in the crash...,The car being damaged...,B,4,1.00,0
+177,45,"Sau động từ 'Enjoy', động từ theo sau bắt buộc chia ở dạng nào?",To-Infinitive,Bare Infinitive,Gerund (V-ing),Past Participle,C,1,1.00,0
+178,45,'He stopped smoking 5 years ago' mang ý nghĩa gì?,Anh ấy dừng lại để hút thuốc,Anh ấy đã bỏ hẳn hút thuốc 5 năm trước,Anh ấy quên hút thuốc,Anh ấy nhớ đã hút thuốc,B,2,1.00,0
+179,45,"Sau giới từ 'without', dạng động từ nào là chính xác?",Without leave,Without to leave,Without leaving,Without left,C,3,1.00,0
+180,45,'Remember ______ the front door before going to bed' cần điền gì?,lock,to lock,locking,locked,B,4,1.00,0
+181,46,Đèn phòng vẫn sáng và có tiếng gõ bàn phím: 'He ______ be working now.',can't,must,shouldn't,needn't,B,1,1.00,0
+182,46,Anh ấy đã ở Nhật Bản tuần trước nên không thể nào gặp tôi ở Hà Nội hôm đó:,He must have seen me,He can't have seen me,He might see me,He should see me,B,2,1.00,0
+183,46,Lẽ ra tôi nên ôn tập bài kỹ hơn cho kỳ thi nhưng tôi lại mải chơi:,I must have studied,I should have studied,I can't have studied,I might have studied,B,3,1.00,0
+184,46,Một phỏng đoán không chắc chắn lắm ở hiện tại (khoảng 30-50%) thường dùng từ nào?,Must,Might / May,Can't,Will,B,4,1.00,0
+185,47,Chọn đáp án đúng: 'The doctor recommended that he ______ more exercise.',does,do,did,doing,B,1,1.00,0
+186,47,Đảo ngữ với 'Never': 'Never ______ such a magnificent view in my life.',I have seen,have I seen,I saw,did I saw,B,2,1.00,0
+187,47,Cấu trúc 'Hardly had he arrived ______ the phone rang.' điền từ gì?,than,when,then,after,B,3,1.00,0
+188,47,"Đảo ngữ với 'Not only': 'Not only ______ talented, but she is also hardworking.'",is she,she is,does she,she does,A,4,1.00,0
+189,48,Cụm từ nào sau đây là ĐÚNG chuẩn tiếng Anh?,Do a mistake,Make a mistake,Create a mistake,Take a mistake,B,1,1.00,0
+190,48,"Để nói về việc giặt quần áo dọn dẹp, ta dùng cụm nào?",Make the laundry,Do the laundry,Build the laundry,Give the laundry,B,2,1.00,0
+191,48,Đưa ra một lời phàn nàn chính thức với cửa hàng:,Do a complaint,Make a complaint,Form a complaint,Act a complaint,B,3,1.00,0
+192,48,Tập thể dục nâng cao sức khỏe:,Make exercise,Do exercise,Hold exercise,Get exercise,B,4,1.00,0
+193,49,Thời tiết xấu tác động tiêu cực đến tâm trạng: 'Bad weather ______ my mood.',effects,affects,effective,affective,B,1,1.00,0
+194,49,Anh ấy khen chiếc váy mới của cô ấy rất đẹp: 'He paid her a nice ______.',complement,compliment,component,complex,B,2,1.00,0
+195,49,Người đứng đầu một trường trung học được gọi là gì?,Principle,Principal,Prince,Primary,B,3,1.00,0
+196,49,Chiến thắng Điện Biên Phủ là một sự kiện có ý nghĩa trọng đại trong lịch sử:,A historical event,A historic event,A prehistoric event,A history event,B,4,1.00,0
+197,50,"Từ nối nào mang nghĩa 'Hơn thế nữa, ngoài ra' tương đương với 'In addition'?",Consequently,Furthermore,Otherwise,Whereas,B,1,1.00,0
+198,50,"Từ nào diễn tả mối quan hệ nguyên nhân - kết quả (Do đó, vì vậy)?",Consequently,Conversely,Meanwhile,Instead,A,2,1.00,0
+199,50,"Để bắt đầu một đoạn văn đối chiếu quan điểm hoàn toàn trái ngược, ta dùng từ nào?",Similarly,Conversely,Likewise,Namely,B,3,1.00,0
+200,50,Từ 'Notwithstanding' tương đương về nghĩa với từ nào sau đây?,Because of,In spite of,Due to,Owing to,B,4,1.00,0
+201,51,Độ phức tạp thời gian khi truy cập một phần tử trong mảng qua chỉ mục index là bao nhiêu?,O(1),O(log N),O(N),O(N^2),A,1,1.00,0
+202,51,Ưu điểm nổi bật của Danh sách liên kết so với Mảng tĩnh là gì?,Truy cập ngẫu nhiên nhanh hơn,Bộ nhớ luôn liên tục,Chèn/xóa ở đầu danh sách đạt O(1),Không tốn thêm bộ nhớ cho con trỏ,C,2,1.00,0
+203,51,"Trong danh sách liên kết đôi, mỗi nút lưu trữ bao nhiêu con trỏ liên kết?",0,1 (next),2 (prev và next),3,C,3,1.00,0
+204,51,"Khi xóa phần tử đầu tiên của một mảng tĩnh kích thước N, ta mất độ phức tạp bao nhiêu?",O(1),O(log N),O(N),O(1) amortized,C,4,1.00,0
+205,52,Ngăn xếp (Stack) hoạt động theo nguyên tắc trật tự nào?,FIFO (First In First Out),LIFO (Last In First Out),Priority First,Random Access,B,1,1.00,0
+206,52,Thao tác lấy phần tử ra khỏi đỉnh của ngăn xếp gọi là gì?,Enqueue,Dequeue,Push,Pop,D,2,1.00,0
+207,52,"Trong tính năng thi trắc nghiệm Quiz của hệ thống, nút 'Quay lại' (Undo) hoạt động thế nào?",Pop từ _back_stack và Push vào _forward_stack,Xóa hết ngăn xếp,Duyệt cây AVL,Dequeue hàng đợi,A,3,1.00,0
+208,52,Ứng dụng nào sau đây KHÔNG phù hợp sử dụng ngăn xếp Stack?,Khử đệ quy và quản lý Call Stack,Kiểm tra đóng mở ngoặc hợp lệ,Hàng đợi in ấn văn phòng theo thứ tự nộp,Thuật toán duyệt đồ thị theo chiều sâu (DFS),C,4,1.00,0
+209,53,Hàng đợi (Queue) tiêu chuẩn hoạt động theo nguyên lý nào?,LIFO,FIFO,FILO,Random,B,1,1.00,0
+210,53,Thao tác đưa một phần tử vào cuối hàng đợi gọi là gì?,Pop,Peek,Enqueue,Dequeue,C,2,1.00,0
+211,53,"Trong tính năng Học thẻ Flashcard, khi người dùng bấm 'Chưa nhớ', thẻ đó sẽ được xử lý ra sao?",Xóa vĩnh viễn khỏi bộ thẻ,Được Enqueue vào cuối hàng đợi để học lại,Đẩy vào đỉnh Stack,Đổi tên thẻ,B,3,1.00,0
+212,53,Cấu trúc dữ liệu nào thường dùng để triển khai duyệt đồ thị theo chiều rộng (BFS)?,Stack,Queue,Binary Search Tree,Max Heap,B,4,1.00,0
+213,54,Hệ số cân bằng (Balance Factor) hợp lệ của mỗi nút trong Cây AVL chỉ được phép nhận các giá trị nào?,"{-2, 0, 2}","{-1, 0, 1}","{0, 1, 2}",{Tùy ý},B,1,1.00,0
+214,54,"Khi một nút bị lệch Trái - Phải (Left-Right Case), cây AVL thực hiện phép xoay nào?",Xoay phải 1 lần,"Xoay trái tại nút con, rồi xoay phải tại nút cha",Xoay trái 1 lần,Không cần xoay,B,2,1.00,0
+215,54,Độ phức tạp thời gian của một thao tác xoay cây AVL là bao nhiêu?,O(1),O(log N),O(N),O(N log N),A,3,1.00,0
+216,54,Độ phức tạp của thuật toán tìm kiếm tiền tố (Prefix Search) trên Cây AVL là gì?,O(N),O(log N + K),O(K^2),O(1),B,4,1.00,0
+217,55,Lý do chính khiến B-Tree và B+ Tree được ưa chuộng trong các hệ quản trị CSDL là gì?,Dễ cài đặt bằng đệ quy,Giảm thiểu số lần truy xuất đĩa cứng (Disk I/O),Tiết kiệm RAM hơn AVL,Không cần cân bằng,B,1,1.00,0
+218,55,Điểm khác biệt quan trọng của B+ Tree so với B-Tree chuẩn là gì?,Mọi dữ liệu thực tế chỉ nằm ở các nút lá,Không có cây con,Chỉ có 2 nhánh con,Không thể tìm kiếm nhị phân,A,2,1.00,0
+219,55,Các nút lá trong cây B+ Tree được liên kết với nhau theo cấu trúc nào để tối ưu duyệt khoảng (Range Query)?,Ngăn xếp,Danh sách liên kết,Cây con nhị phân,Hàng đợi ưu tiên,B,3,1.00,0
+220,55,Số lượng khóa tối đa trong một nút B-Tree bậc M là bao nhiêu?,M,M - 1,2M,M / 2,B,4,1.00,0
+221,56,"Trong một Min-Heap, phần tử có giá trị nhỏ nhất luôn nằm ở vị trí nào?",Nút lá cuối cùng,Nút gốc (root),Bất kỳ vị trí nào,Con bên phải,B,1,1.00,0
+222,56,"Nếu nút hiện tại trong mảng Heap nằm ở chỉ số i (bắt đầu từ 0), chỉ số nút con trái là gì?",2i,2i + 1,2i + 2,i / 2,B,2,1.00,0
+223,56,Độ phức tạp thời gian để xây dựng một Heap từ mảng N phần tử chưa sắp xếp (Build-Heap) là gì?,O(N),O(N log N),O(N^2),O(log N),A,3,1.00,0
+224,56,Hàng đợi ưu tiên (Priority Queue) thường được cài đặt hiệu quả nhất bằng cấu trúc dữ liệu nào?,Danh sách liên kết đơn,Binary Heap,Ngăn xếp LIFO,Mảng không sắp xếp,B,4,1.00,0
+225,57,Độ phức tạp thời gian trung bình của thao tác tra cứu trên Bảng băm (Hash Table) là bao nhiêu?,O(1),O(log N),O(N),O(N log N),A,1,1.00,0
+226,57,Phương pháp giải quyết xung đột băm gắn một danh sách liên kết tại mỗi ô gọi là gì?,Separate Chaining,Linear Probing,Double Hashing,Quadratic Probing,A,2,1.00,0
+227,57,"Khi bảng băm bị quá tải (nhiều phần tử bị xung đột dồn vào 1 ô), độ phức tạp tệ nhất rơi xuống mức nào?",O(1),O(log N),O(N),O(N^2),C,3,1.00,0
+228,57,Hệ số tải (Load Factor) được tính bằng công thức nào?,Số phần tử / Kích thước bảng,Kích thước bảng / Số phần tử,Chiều cao cây / 2,Số khóa trùng lặp,A,4,1.00,0
+229,58,Thuật toán nào dùng để tìm đường đi ngắn nhất giữa hai đỉnh trên đồ thị không có trọng số?,DFS,BFS,Linear Search,Bubble Sort,B,1,1.00,0
+230,58,Thuật toán duyệt theo chiều sâu (DFS) thường sử dụng cấu trúc dữ liệu nào để lưu vết duyệt?,Hàng đợi Queue,Ngăn xếp Stack,Bảng băm,Binary Heap,B,2,1.00,0
+231,58,"Độ phức tạp thời gian của BFS khi biểu diễn đồ thị bằng Danh sách kề (V đỉnh, E cạnh) là gì?",O(V * E),O(V + E),O(V^2),O(E^2),B,3,1.00,0
+232,58,Ứng dụng nào sau đây thường sử dụng thuật toán DFS?,Sắp xếp Tô pô (Topological Sort),Tìm đường đi ngắn nhất không trọng số,Phát sóng vô tuyến trong mạng LAN,Tìm kiếm theo tầng gần nhất,A,4,1.00,0
+233,59,Độ phức tạp thời gian trung bình của thuật toán QuickSort là gì?,O(N),O(N log N),O(N^2),O(log N),B,1,1.00,0
+234,59,Thuật toán sắp xếp nào luôn đảm bảo thời gian chạy O(N log N) ngay cả trong trường hợp xấu nhất?,QuickSort,MergeSort,Bubble Sort,Insertion Sort,B,2,1.00,0
+235,59,Nhược điểm lớn nhất của thuật toán MergeSort so với QuickSort khi sắp xếp mảng trong RAM là gì?,Chạy chậm hơn gấp 10 lần,Tốn thêm O(N) bộ nhớ phụ để trộn,Không có tính ổn định,Dễ rơi vào O(N^2),B,3,1.00,0
+236,59,Tính ổn định (Stable Sort) của một thuật toán sắp xếp nghĩa là gì?,Luôn chạy dưới 1 giây,Giữ nguyên thứ tự tương đối của các phần tử có cùng giá trị,Không dùng đệ quy,Chỉ chạy trên mảng số nguyên,B,4,1.00,0
+237,60,Hai đặc trưng cốt lõi để một bài toán có thể giải được bằng Quy hoạch động là gì?,Đồ thị và Cây,Cấu trúc tối ưu con & Các bài toán con gối nhau,Sắp xếp và Tìm kiếm,Tham lam và Chia để trị,B,1,1.00,0
+238,60,Kỹ thuật lưu trữ kết quả tính toán đệ quy vào bảng nhớ để tránh tính lại gọi là gì?,Branch and Bound,Memoization,Backtracking,Divide and Conquer,B,2,1.00,0
+239,60,Bài toán kinh điển nào sau đây thường được giải hiệu quả bằng Quy hoạch động?,Tìm kiếm nhị phân,Bài toán Cái ba lô (0/1 Knapsack),Thuật toán tìm kiếm tuyến tính,Kiểm tra số chẵn lẻ,B,3,1.00,0
+240,60,Khác biệt cơ bản giữa Tabulation và Memoization là gì?,"Tabulation chạy từ dưới lên bằng vòng lặp, Memoization chạy từ trên xuống bằng đệ quy",Tabulation tốn nhiều RAM hơn gấp 100 lần,Tabulation không thể giải bài toán cái ba lô,Memoization không dùng bộ nhớ,A,4,1.00,0
+241,61,Kiểu dữ liệu nào sau đây trong Python là BẤT BIẾN (Immutable)?,List,Dictionary,Tuple,Set,C,1,1.00,0
+242,61,Độ phức tạp thời gian khi kiểm tra phần tử 'x in my_set' trong Set là bao nhiêu?,O(1) trung bình,O(N),O(log N),O(N^2),A,2,1.00,0
+243,61,Kết quả của biểu thức: [x * 2 for x in range(3)] là gì?,"[0, 2, 4]","[2, 4, 6]","[0, 1, 2]","[1, 2, 3]",A,3,1.00,0
+244,61,Phương thức nào dùng để lấy giá trị trong Dict mà không bị văng lỗi KeyError nếu key không tồn tại?,dict.search(),"dict.get(key, default)",dict.find(),dict.lookup(),B,4,1.00,0
+245,62,Phương thức khởi tạo (Constructor) của một class trong Python có tên là gì?,__start__,__init__,__create__,__new__,B,1,1.00,0
+246,62,Từ khóa nào được sử dụng để gọi phương thức của lớp cha trong lớp con?,this,base,super(),parent,C,2,1.00,0
+247,62,Quy ước đặt tên biến có một dấu gạch dưới ở đầu (_name) trong Python thể hiện điều gì?,Biến công khai toàn cầu,Biến nội bộ (Protected/Private theo quy ước),Hằng số bất biến,Lỗi cú pháp,B,3,1.00,0
+248,62,Trụ cột OOP nào cho phép định nghĩa các lớp con kế thừa hành vi từ lớp cha?,Đóng gói,Kế thừa,Trừu tượng,Đa hình,B,4,1.00,0
+249,63,Từ khóa nào trong Python biến một hàm bình thường thành một Generator?,return,yield,generate,produce,B,1,1.00,0
+250,63,Ký hiệu nào đứng trước tên hàm được dùng để áp dụng Decorator trong Python?,&,@,#,$,B,2,1.00,0
+251,63,Ưu điểm vượt trội của Generator khi đọc file dữ liệu lớn 10GB là gì?,Chạy nhanh hơn gấp 100 lần,Không nạp toàn bộ file vào RAM gây tràn bộ nhớ,Tự động dịch sang mã máy C,Không cần mở file,B,3,1.00,0
+252,63,Hàm functools.wraps thường được dùng bên trong Decorator nhằm mục đích gì?,Tăng tốc CPU,Giữ nguyên tên hàm và docstring gốc của hàm được bọc,Khóa biến,Bỏ qua lỗi runtime,B,4,1.00,0
+253,64,Từ khóa nào dùng để khai báo một hàm bất đồng bộ (coroutine) trong Python?,def async,async def,promise def,thread def,B,1,1.00,0
+254,64,Thành phần nào chịu trách nhiệm điều phối và lên lịch thực thi các tác vụ async trong asyncio?,Thread Pool,Event Loop,Garbage Collector,Compiler,B,2,1.00,0
+255,64,Lập trình bất đồng bộ (Async I/O) phát huy hiệu quả cao nhất trong bài toán nào sau đây?,Tính toán ma trận số học nặng (CPU-bound),Gọi API mạng và truy vấn CSDL (I/O-bound),Đào tiền ảo,Nén video 4K,B,3,1.00,0
+256,64,Lệnh nào dùng để chờ nhiều tác vụ async chạy đồng thời và gom kết quả?,asyncio.gather(),asyncio.stop(),asyncio.sleep(),asyncio.kill(),A,4,1.00,0
+257,65,Thư viện nào được FastAPI sử dụng để xác thực và chuẩn hóa dữ liệu Request Body?,SQLAlchemy,Pydantic,Django ORM,Requests,B,1,1.00,0
+258,65,Đường dẫn mặc định để xem tài liệu tương tác Swagger UI trong ứng dụng FastAPI là gì?,/swagger,/docs,/api/spec,/info,B,2,1.00,0
+259,65,Mã trạng thái HTTP nào được FastAPI tự động trả về khi dữ liệu đầu vào không hợp lệ với schema Pydantic?,400 Bad Request,404 Not Found,422 Unprocessable Entity,500 Server Error,C,3,1.00,0
+260,65,Cơ chế nào trong FastAPI cho phép chia sẻ kết nối cơ sở dữ liệu hoặc logic xác thực token giữa các endpoint?,Global variables,Dependency Injection (Depends),Hardcoding,Eval,B,4,1.00,0
+261,66,Phương thức HTTP nào được quy chuẩn dùng để tạo mới một tài nguyên trên server?,GET,POST,PUT,DELETE,B,1,1.00,0
+262,66,Mã trạng thái HTTP nào biểu thị việc client chưa đăng nhập hoặc token không hợp lệ?,401 Unauthorized,403 Forbidden,404 Not Found,502 Bad Gateway,A,2,1.00,0
+263,66,Phương thức HTTP nào KHÔNG có tính Idempotent (mỗi lần gọi có thể tạo ra bản ghi mới)?,GET,PUT,DELETE,POST,D,3,1.00,0
+264,66,Mã trạng thái 404 Not Found có nghĩa là gì?,Máy chủ bị sập,Không tìm thấy tài nguyên được yêu cầu,Dữ liệu bị cấm truy cập,Hết thời gian chờ,B,4,1.00,0
+265,67,Chữ 'A' trong từ viết tắt ACID của giao dịch cơ sở dữ liệu đại diện cho từ nào?,Accuracy,Atomicity (Nguyên tử),Availability,Authentication,B,1,1.00,0
+266,67,Chỉ mục (Index) trên cơ sở dữ liệu giúp tăng tốc thao tác đọc nhưng gây nhược điểm gì?,"Làm chậm thao tác ghi/sửa (INSERT, UPDATE) và tốn thêm dung lượng đĩa",Không thể dùng mệnh đề WHERE,Làm mất dữ liệu,Chỉ dùng được cho kiểu chuỗi,A,2,1.00,0
+267,67,Câu lệnh nào trong SQL dùng để xem kế hoạch thực thi và chi phí của một truy vấn?,SHOW QUERY,EXPLAIN / EXPLAIN ANALYZE,DESCRIBE RUN,TEST SELECT,B,3,1.00,0
+268,67,Quá trình phân chia bảng để tránh trùng lặp dữ liệu và dị thường cập nhật gọi là gì?,Denormalization,Normalization,Virtualization,Compilation,B,4,1.00,0
+269,68,Khác biệt cơ bản giữa Docker Image và Docker Container là gì?,"Image là khuôn mẫu tĩnh, Container là thể hiện đang chạy trong bộ nhớ",Image chạy nhanh hơn Container,Container là file văn bản,Không có khác biệt,A,1,1.00,0
+270,68,Chỉ thị nào trong Dockerfile dùng để chỉ định câu lệnh mặc định thực thi khi container khởi động?,RUN,FROM,CMD / ENTRYPOINT,ENV,C,2,1.00,0
+271,68,Cơ chế nào trong Docker dùng để lưu trữ dữ liệu an toàn ngay cả khi container bị hủy?,Layering,Docker Volume,RAM disk,Docker Cache,B,3,1.00,0
+272,68,Công cụ nào của Docker cho phép định nghĩa và chạy nhiều container cùng lúc qua file YAML?,Docker Swarm,Docker Compose,Docker Hub,Docker Registry,B,4,1.00,0
+273,69,Lệnh nào trong Git cho phép lưu tạm các thay đổi đang làm dở mà không cần tạo commit?,git stash,git save,git pause,git hide,A,1,1.00,0
+274,69,Lệnh nào dùng để tạo và chuyển ngay sang một nhánh mới trong Git?,git branch new_branch,git checkout -b new_branch,git push origin,git merge,B,2,1.00,0
+275,69,Sự khác biệt khi dùng 'git rebase' thay vì 'git merge' là gì?,Tạo ra lịch sử commit tuyến tính và sạch hơn,Luôn an toàn hơn trên nhánh công khai,Không bao giờ bị conflict,Chỉ dùng cho file ảnh,A,3,1.00,0
+276,69,Lệnh nào hiển thị lịch sử các lần commit trong repository?,git status,git log,git diff,git blame,B,4,1.00,0
+277,70,Nguyên lý 'Single Responsibility' (chữ S trong SOLID) yêu cầu điều gì?,Một class chỉ nên đảm nhận một trách nhiệm duy nhất,Một phần mềm chỉ có một dòng code,Chỉ dùng một hàm main,Tất cả các biến đều là hằng số,A,1,1.00,0
+278,70,Design Pattern nào đảm bảo một class chỉ có đúng một thể hiện duy nhất trong suốt vòng đời ứng dụng?,Factory,Observer,Singleton,Adapter,C,2,1.00,0
+279,70,Mẫu thiết kế nào được dùng khi hệ thống cần thông báo tự động cho hàng loạt thành phần khi có sự kiện mới?,Observer,Builder,Singleton,Decorator,A,3,1.00,0
+280,70,Mẫu Strategy Pattern cho phép lập trình viên làm gì?,Thay đổi linh hoạt thuật toán xử lý tại thời điểm chạy (runtime),Tăng tốc độ CPU,Bảo mật mật khẩu,Tạo giao diện,A,4,1.00,0
+281,71,Sự khác biệt lớn nhất về mặt bộ nhớ giữa Tiến trình (Process) và Luồng (Thread) là gì?,"Các luồng trong cùng tiến trình chia sẻ chung vùng nhớ, còn các tiến trình có vùng nhớ riêng biệt",Luồng tốn nhiều RAM hơn tiến trình,Tiến trình không có mã code,Luồng không thể chạy trên CPU,A,1,1.00,0
+282,71,Quá trình CPU chuyển đổi qua lại giữa các tiến trình để tạo cảm giác chạy song song gọi là gì?,Compilation,Context Switch (Chuyển ngữ cảnh),Paging,Deadlock,B,2,1.00,0
+283,71,"Khi một tiến trình đang chờ dữ liệu đọc từ đĩa cứng, nó ở trạng thái nào?",Running,Ready,Blocked / Waiting,Terminated,C,3,1.00,0
+284,71,Đơn vị nhỏ nhất của quá trình thực thi mà hệ điều hành có thể lập lịch trên CPU là gì?,Chương trình (Program),Luồng (Thread),Tệp tin (File),Lệnh nhảy (Jump),B,4,1.00,0
+285,72,Tình huống hai luồng cùng cộng dồn vào một biến toàn cục dẫn đến kết quả bị mất mát gọi là gì?,Deadlock,Race Condition,Starvation,Paging,B,1,1.00,0
+286,72,Công cụ đồng bộ hóa nào hoạt động như một chiếc chìa khóa duy nhất: chỉ ai cầm khóa mới được vào phòng?,Mutex,Thread Pool,Pipeline,Compiler,A,2,1.00,0
+287,72,Khác biệt chính giữa Mutex và Counting Semaphore là gì?,"Mutex chỉ cho phép 1 luồng duy nhất truy cập, Semaphore cho phép số lượng N luồng đồng thời",Mutex chạy nhanh hơn 100 lần,Semaphore không thể dùng trong C++,Mutex chỉ dùng cho file,A,3,1.00,0
+288,72,Vùng mã nguồn truy cập vào tài nguyên dùng chung cần được bảo vệ gọi là gì?,Free Section,Critical Section (Miền găng),Dead Zone,Buffer,B,4,1.00,0
+289,73,Lỗi trang (Page Fault) xảy ra trong trường hợp nào sau đây?,Khi trang nhớ được yêu cầu chưa có trong RAM và phải nạp từ đĩa cứng,Khi máy tính bị virus,Khi bộ nhớ RAM bị hỏng vật lý,Khi chia cho số 0,A,1,1.00,0
+290,73,Kỹ thuật chia bộ nhớ ảo thành các khối kích thước cố định (thường là 4KB) gọi là gì?,Segmentation,Paging (Phân trang),Swapping,Fragmentation,B,2,1.00,0
+291,73,Bộ nhớ đệm phần cứng tốc độ cao dùng để lưu vết ánh xạ địa chỉ ảo sang vật lý gọi là gì?,L1 Cache,TLB (Translation Lookaside Buffer),Registers,ROM,B,3,1.00,0
+292,73,Lợi ích cốt lõi của Bộ nhớ ảo (Virtual Memory) là gì?,Cho phép chạy các ứng dụng đòi hỏi nhiều bộ nhớ hơn dung lượng RAM thực,Tăng tốc độ xung nhịp CPU,Bảo vệ máy tính khỏi sét đánh,Không cần đĩa cứng,A,4,1.00,0
+293,74,Có bao nhiêu điều kiện Coffman phải đồng thời xảy ra để dẫn đến hiện tượng Bế tắc (Deadlock)?,2 điều kiện,3 điều kiện,4 điều kiện,5 điều kiện,C,1,1.00,0
+294,74,Điều kiện nào sau đây KHÔNG phải là một trong các điều kiện gây Deadlock?,Loại trừ tương hỗ (Mutual Exclusion),Giữ và chờ (Hold and Wait),Thu hồi tài nguyên cưỡng chế (Preemption),Chờ đợi vòng tròn (Circular Wait),C,2,1.00,0
+295,74,Thuật toán kinh điển nào được Dijkstra đề xuất nhằm phòng tránh bế tắc trong hệ điều hành?,Thuật toán Banker,Thuật toán Dijkstra tìm đường,Thuật toán QuickSort,Thuật toán Round-Robin,A,3,1.00,0
+296,74,Cách đơn giản nhất để phá vỡ hiện tượng Chờ đợi vòng tròn (Circular Wait) là gì?,Đánh số thứ tự các tài nguyên và bắt buộc xin cấp phát theo thứ tự tăng dần,Tắt máy tính,Tăng dung lượng RAM,Dùng đa luồng,A,4,1.00,0
+297,75,Đặc điểm nổi bật nhất của kiến trúc máy tính Von Neumann là gì?,Dữ liệu và tập lệnh chương trình được lưu chung trong cùng một bộ nhớ,CPU không có thanh ghi,Không dùng hệ nhị phân,Mỗi chương trình có một CPU riêng,A,1,1.00,0
+298,75,"Bộ phận nào trong CPU chịu trách nhiệm thực hiện các phép tính số học (+, -) và logic?",CU (Control Unit),ALU (Arithmetic Logic Unit),Cache L3,Bus điều khiển,B,2,1.00,0
+299,75,Chu trình xử lý lệnh của CPU diễn ra theo thứ tự chuẩn nào?,Fetch -> Decode -> Execute,Execute -> Fetch -> Decode,Decode -> Execute -> Fetch,Fetch -> Execute -> Decode,A,3,1.00,0
+300,75,Thanh ghi con trỏ lệnh (Program Counter - PC) có nhiệm vụ gì?,Lưu trữ kết quả phép tính,Lưu địa chỉ của lệnh tiếp theo cần được nạp để thực thi,Đếm số lần khởi động máy,Kiểm soát nhiệt độ CPU,B,4,1.00,0
+301,76,Nguyên lý cơ bản nào cho phép bộ nhớ đệm Cache hoạt động hiệu quả vượt bậc?,Nguyên lý bất định Heisenberg,Nguyên lý cục bộ (Locality of Reference),Định luật bảo toàn năng lượng,Định luật Moore,B,1,1.00,0
+302,76,Cấp độ bộ nhớ đệm nào có tốc độ truy xuất nhanh nhất nhưng dung lượng nhỏ nhất?,L1 Cache,L2 Cache,L3 Cache,Bộ nhớ RAM,A,2,1.00,0
+303,76,Tình huống khi CPU cần dữ liệu nhưng không tìm thấy trong Cache được gọi là gì?,Cache Hit,Cache Miss,Cache Overflow,Cache Fault,B,3,1.00,0
+304,76,"Khi CPU ghi dữ liệu mới, chính sách ghi cập nhật ngay lập tức xuống cả RAM gọi là gì?",Write-Back,Write-Through,Write-Allocate,Write-Around,B,4,1.00,0
+305,77,"Trong hệ điều hành Linux/Unix, cấu trúc dữ liệu nào lưu trữ metadata và thông tin vị trí đĩa của tệp tin?",Inode,FAT Table,Master Boot Record,Registry,A,1,1.00,0
+306,77,"Hệ thống tệp có tính năng 'Journaling' (như Ext4, NTFS) mang lại lợi ích gì?",Tăng dung lượng đĩa gấp đôi,Ghi nhật ký thao tác để dễ dàng phục hồi dữ liệu khi mất điện đột ngột,Tự động xóa virus,Không cần format,B,2,1.00,0
+307,77,Quyền truy cập tệp tin 'chmod 755 file.sh' trên Linux cấp quyền gì cho Owner (chủ sở hữu)?,Chỉ đọc (r),Chỉ thực thi (x),"Toàn quyền đọc, ghi và thực thi (rwx = 7)",Không có quyền gì,C,3,1.00,0
+308,77,Tệp tin đặc biệt trong Linux đại diện cho con trỏ liên kết đến tệp khác gọi là gì?,Symbolic Link (Symlink),Hard Sector,Cluster,Partition,A,4,1.00,0
+309,78,Cơ chế nào cho phép một ứng dụng thông thường yêu cầu hệ điều hành đọc một tệp tin từ đĩa?,System Call (Lời gọi hệ thống),Vòng lặp vô tận,Biến toàn cục,Ép xung CPU,A,1,1.00,0
+310,78,"Trong hệ điều hành Unix, lời gọi hệ thống nào được dùng để tạo ra một tiến trình con mới?",exec(),fork(),exit(),kill(),B,2,1.00,0
+311,78,Tại sao hệ điều hành hiện đại lại phân chia thành User Mode và Kernel Mode?,Để tăng dung lượng ổ cứng,Để bảo vệ hệ thống tránh phần mềm người dùng can thiệp làm sập phần cứng,Để chạy chậm lại,Để tiết kiệm pin,B,3,1.00,0
+312,78,Lệnh ngắt phần mềm đưa CPU từ User Mode vào Kernel Mode thường được gọi là gì?,Trap,Fault,Abort,Signal,A,4,1.00,0
+313,79,"Trong quy ước gọi hàm chuẩn x86, giá trị trả về của một hàm thường được lưu trữ trong thanh ghi nào?",EAX,ESP,EBP,EDX,A,1,1.00,0
+314,79,Thanh ghi nào luôn trỏ tới đỉnh hiện tại của Call Stack trong kiến trúc x86?,EAX,ESP (Stack Pointer),EBX,ECX,B,2,1.00,0
+315,79,"Lệnh hợp ngữ 'MOV EAX, 5' thực hiện công việc gì?",So sánh EAX với 5,Gán giá trị 5 vào thanh ghi EAX,Cộng 5 vào EAX,Xóa thanh ghi EAX,B,3,1.00,0
+316,79,Lệnh nhảy 'JE label' (Jump if Equal) sẽ nhảy đến nhãn label khi nào?,Khi cờ Zero Flag (ZF) = 1 (kết quả so sánh bằng nhau),Khi cờ Carry Flag = 1,Luôn luôn nhảy,Khi thanh ghi EAX bằng 0,A,4,1.00,0
+317,80,"Khi bạn gõ một phím trên bàn phím, tín hiệu nào được gửi tới CPU để thông báo có ký tự mới?",System Call,Hardware Interrupt (Ngắt phần cứng),DMA Request,Polling signal,B,1,1.00,0
+318,80,Cơ chế cho phép card mạng hoặc ổ cứng truyền dữ liệu trực tiếp vào RAM mà không cần CPU trung chuyển gọi là gì?,DMA (Direct Memory Access),Interrupt Handler,Bus Snooping,Virtual Memory,A,2,1.00,0
+319,80,Đoạn mã được CPU thực thi ngay lập tức để xử lý một tín hiệu ngắt cụ thể gọi là gì?,ISR (Interrupt Service Routine),Bootloader,Kernel Thread,BIOS,A,3,1.00,0
+320,80,"So với phương pháp Thăm dò (Polling), cơ chế Ngắt (Interrupt) có ưu điểm vượt trội nào?",Không lãng phí chu kỳ CPU khi thiết bị đang ở trạng thái nhàn rỗi,Dễ viết code hơn,Không cần phần cứng,Tăng dung lượng lưu trữ,A,4,1.00,0
+321,81,Mô hình tham chiếu OSI chuẩn bao gồm tổng cộng bao nhiêu tầng?,4 tầng,5 tầng,7 tầng,9 tầng,C,1,1.00,0
+322,81,Giao thức nào hoạt động tại tầng Giao vận (Transport) cung cấp kết nối tin cậy và đảm bảo đúng thứ tự gói tin?,UDP,TCP,IP,ICMP,B,2,1.00,0
+323,81,Quy trình thiết lập kết nối của giao thức TCP được gọi là gì?,2-Way Handshake,"3-Way Handshake (SYN, SYN-ACK, ACK)",SSL Handshake,Ping Request,B,3,1.00,0
+324,81,Ứng dụng nào sau đây ưu tiên sử dụng giao thức UDP thay vì TCP vì cần độ trễ cực thấp?,Tải file văn bản FTP,Gửi email SMTP,Livestream video và Game online thời gian thực,Truy cập web thương mại,C,4,1.00,0
+325,82,Cổng kết nối (Port) mặc định của giao thức HTTPS là bao nhiêu?,80,8080,443,22,C,1,1.00,0
+326,82,Giao thức nào cho phép máy chủ chủ động đẩy dữ liệu thời gian thực về trình duyệt mà không cần client gửi request liên tục?,HTTP/1.1,WebSockets,FTP,DNS,B,2,1.00,0
+327,82,Tính năng nổi bật nào của HTTP/2 giúp giải quyết hiện tượng nghẽn đầu hàng (Head-of-Line Blocking) ở tầng ứng dụng?,Multiplexing (Đa hợp luồng),Plain text header,Bỏ qua cookie,Không cần mã hóa,A,3,1.00,0
+328,82,Header nào trong HTTP Request cho máy chủ biết kiểu dữ liệu của nội dung body được gửi lên?,Authorization,Content-Type,User-Agent,Accept-Language,B,4,1.00,0
+329,83,Bản ghi DNS nào dùng để ánh xạ một tên miền sang một địa chỉ IPv4 cụ thể?,Bản ghi A,Bản ghi CNAME,Bản ghi MX,Bản ghi TXT,A,1,1.00,0
+330,83,Quy trình 4 bước của giao thức cấp phát địa chỉ IP động DHCP viết tắt là gì?,ACID,"DORA (Discover, Offer, Request, Acknowledge)",CRUD,REST,B,2,1.00,0
+331,83,Thông số TTL (Time-To-Live) trong bản ghi DNS có ý nghĩa gì?,Thời gian tồn tại của tên miền,Thời gian bản ghi được phép lưu cache trước khi cần truy vấn lại,Số lượng IP tối đa,Tốc độ đường truyền,B,3,1.00,0
+332,83,Cổng mặc định mà máy chủ DNS lắng nghe các truy vấn UDP là cổng nào?,21,53,80,110,B,4,1.00,0
+333,84,Địa chỉ IPv4 có độ dài bao nhiêu bit?,16 bit,32 bit,64 bit,128 bit,B,1,1.00,0
+334,84,Một mạng con có ký hiệu CIDR /24 có thể gán tối đa cho bao nhiêu thiết bị máy trạm (khả dụng)?,256 thiết bị,254 thiết bị (trừ địa chỉ mạng và broadcast),128 thiết bị,65534 thiết bị,B,2,1.00,0
+335,84,Dải địa chỉ IP nào sau đây thuộc về IP riêng nội bộ (Private IP)?,8.8.8.8,192.168.1.1,1.1.1.1,172.217.0.1,B,3,1.00,0
+336,84,Địa chỉ Loopback chuẩn dùng để tự kết nối lại chính máy tính của mình trong IPv4 là gì?,192.168.0.1,127.0.0.1 (localhost),255.255.255.255,0.0.0.0,B,4,1.00,0
+337,85,Thuật toán nào sau đây là thuật toán mã hóa ĐỐI XỨNG phổ biến nhất thế giới?,RSA,AES (Advanced Encryption Standard),ECC,Diffie-Hellman,B,1,1.00,0
+338,85,"Trong mã hóa bất đối xứng, bạn nên gửi khóa nào cho đối tác để họ mã hóa dữ liệu gửi cho bạn?",Private Key (Khóa bí mật),Public Key (Khóa công khai),Cả hai khóa,Không gửi khóa nào,B,2,1.00,0
+339,85,Đặc tính cốt lõi của hàm băm mật mã học (như SHA-256) là gì?,Có thể giải mã ngược lại bản gốc dễ dàng,"Là hàm một chiều, không thể suy ngược ra bản gốc",Luôn tạo chuỗi có độ dài thay đổi,Chỉ băm được số,B,3,1.00,0
+340,85,Chữ ký số (Digital Signature) đảm bảo được hai yếu tố bảo mật quan trọng nào?,Nén dung lượng và tăng tốc độ,Tính xác thực nguồn gốc và tính toàn vẹn dữ liệu,Bảo vệ màn hình,Ẩn địa chỉ IP,B,4,1.00,0
+341,86,Biện pháp hiệu quả nhất để phòng chống triệt để lỗ hổng SQL Injection là gì?,Sử dụng Parameterized Queries (Prepared Statements),Chỉ dùng chữ hoa trong input,Khóa máy chủ,Tắt mạng,A,1,1.00,0
+342,86,Lỗ hổng Cross-Site Scripting (XSS) cho phép kẻ tấn công làm điều gì?,Chèn và thực thi mã JavaScript độc hại trên trình duyệt của nạn nhân,Xóa toàn bộ ổ cứng máy chủ,Đổi mật khẩu BIOS,Cắt đứt cáp quang,A,2,1.00,0
+343,86,"Để chống tấn công CSRF, các framework web hiện đại thường thêm yếu tố bảo vệ nào vào Form?",CSRF Token bí mật cho mỗi phiên,Đổi tên form,Xóa hết nút submit,Bắt nhập lại mật khẩu 10 lần,A,3,1.00,0
+344,86,OWASP là từ viết tắt của tổ chức bảo mật web phi lợi nhuận nào?,Open Web Application Security Project,Online Web Attack Security Protocol,Official World Anti-Spam Project,Optimum Windows Application System Protection,A,4,1.00,0
+345,87,Phần mềm NGINX thường được cấu hình đóng vai trò gì trước các máy chủ ứng dụng?,Hệ điều hành,Reverse Proxy và Load Balancer,Trình duyệt web,Trình biên dịch C,B,1,1.00,0
+346,87,Tường lửa ứng dụng web (WAF) hoạt động chủ yếu ở tầng nào trong mô hình OSI?,Tầng Vật lý (Layer 1),Tầng Mạng (Layer 3),Tầng Ứng dụng (Layer 7),Tầng Giao vận (Layer 4),C,2,1.00,0
+347,87,Thuật toán cân bằng tải nào phân phối các request lần lượt tuần tự theo vòng tròn đến các máy chủ?,Round Robin,Random Drop,Shortest Job First,First In First Out,A,3,1.00,0
+348,87,Lợi ích của việc đặt Reverse Proxy trước hệ thống backend là gì?,"Giấu IP máy chủ thật, cân bằng tải và hỗ trợ nén SSL Termination",Tự động viết code backend,Tăng dung lượng pin,Miễn phí tiền điện,A,4,1.00,0
+349,88,Tổ chức uy tín chịu trách nhiệm ký và phát hành chứng chỉ số SSL/TLS cho các website gọi là gì?,DNS,CA (Certificate Authority),DHCP,ISP,B,1,1.00,0
+350,88,"Sau khi hoàn tất quá trình bắt tay TLS Handshake, dữ liệu thực tế giữa trình duyệt và máy chủ được mã hóa bằng gì?",Khóa đối xứng (Symmetric Session Key) tốc độ cao,Mã Morse,Khóa công khai của Google,Không mã hóa nữa,A,2,1.00,0
+351,88,"Nếu chứng chỉ SSL của một website bị hết hạn hoặc không do CA uy tín cấp, trình duyệt sẽ hiển thị gì?",Cảnh báo bảo mật màu đỏ (Security Warning),Tự động tắt máy tính,Không hiển thị gì,Chạy nhanh hơn,A,3,1.00,0
+352,88,Giao thức TLS là phiên bản hiện đại và an toàn hơn thay thế cho giao thức tiền thân nào?,SSL (Secure Sockets Layer),FTP,Telnet,HTTP,A,4,1.00,0
+353,89,Cổng kết nối mặc định của giao thức điều khiển từ xa SSH là gì?,Port 21,Port 22,Port 80,Port 443,B,1,1.00,0
+354,89,Cơ chế chính mà mạng riêng ảo (VPN) sử dụng để bảo vệ dữ liệu trên mạng công cộng là gì?,Tạo đường hầm mã hóa (Tunneling & Encryption),Tăng tốc độ mạng lên 10Gbps,Chặn mọi trang web,Tự động đổi mật khẩu máy tính,A,2,1.00,0
+355,89,"Giao thức VPN hiện đại nào có mã nguồn gọn nhẹ, hiệu năng cực cao và đang dần thay thế OpenVPN?",WireGuard,PPTP,Telnet,FTP,A,3,1.00,0
+356,89,Tại sao giao thức Telnet cũ kỹ lại bị cấm sử dụng trong quản trị máy chủ hiện đại?,Telnet truyền mật khẩu và dữ liệu dưới dạng văn bản thuần túy (Plaintext) không mã hóa,Telnet chỉ chạy trên máy in,Telnet tốn quá nhiều RAM,Telnet không hỗ trợ bàn phím,A,4,1.00,0
+357,90,Một chuỗi JSON Web Token (JWT) tiêu chuẩn bao gồm bao nhiêu phần được ngăn cách bằng dấu chấm?,2 phần,"3 phần (Header, Payload, Signature)",4 phần,5 phần,B,1,1.00,0
+358,90,Khung giao thức nào thường được các ứng dụng sử dụng để triển khai nút 'Đăng nhập bằng tài khoản Google'?,FTP,OAuth 2.0,POP3,SNMP,B,2,1.00,0
+359,90,"Phần nào trong JWT chứa thông tin người dùng (user_id, role, thời gian hết hạn exp)?",Header,Payload,Signature,Footer,B,3,1.00,0
+360,90,Sự khác biệt cốt lõi giữa Authentication và Authorization là gì?,"Authentication xác định danh tính người dùng, Authorization xác định quyền hạn của người đó",Cả hai là một,Authentication là phân quyền,Authorization không cần mật khẩu,A,4,1.00,0
+361,91,Kết quả của phép toán logic '1 XOR 1' là bao nhiêu?,1,0,2,Không xác định,B,1,1.00,0
+362,91,"Theo định luật De Morgan, phủ định của mệnh đề '(A AND B)' tương đương với biểu thức nào?",(NOT A) OR (NOT B),(NOT A) AND (NOT B),A OR B,NOT (A OR B),A,2,1.00,0
+363,91,"Nếu có 13 người trong một căn phòng, ta có thể khẳng định chắc chắn điều gì theo nguyên lý chuồng bồ câu?",Tất cả sinh cùng năm,Có ít nhất 2 người có cùng tháng sinh,Không ai cùng tuổi,Có 3 người sinh cùng ngày,B,3,1.00,0
+364,91,Bảng chân trị (Truth Table) dùng để biểu diễn điều gì?,Giá trị đầu ra của biểu thức logic với mọi tổ hợp giá trị đầu vào,Giá cả cổ phiếu,Tốc độ mạng,Dung lượng bộ nhớ,A,4,1.00,0
+365,92,Điều kiện bắt buộc để có thể nhân ma trận A kích thước (m x k) với ma trận B kích thước (p x n) là gì?,m phải bằng n,k phải bằng p,A và B phải là ma trận vuông,m phải bằng p,B,1,1.00,0
+366,92,Ma trận đơn vị (Identity Matrix) có tính chất đặc biệt nào?,Toàn bộ phần tử đều bằng 0,"Các phần tử trên đường chéo chính bằng 1, các phần tử khác bằng 0",Định thức bằng 0,Không có ma trận nghịch đảo,B,2,1.00,0
+367,92,Phép biến đổi đổi các dòng của ma trận thành các cột gọi là phép toán gì?,Chuyển vị (Transpose),Nghịch đảo (Inverse),Khử Gauss,Định thức,A,3,1.00,0
+368,92,Đại số tuyến tính đóng vai trò nền tảng trong lĩnh vực công nghệ nào sau đây?,Mạng nơ-ron và Xử lý dữ liệu đa chiều trong AI,Hệ thống làm mát quạt gió,Dây cáp mạng,In ấn tài liệu,A,4,1.00,0
+369,93,Quy tắc nào trong thống kê dùng để cập nhật xác suất của một sự kiện khi có thêm thông tin mới?,Định lý Pytago,Định lý Bayes,Quy tắc L'Hopital,Định luật Newton,B,1,1.00,0
+370,93,Đại lượng nào dùng để đo lường độ phân tán của các điểm dữ liệu so với giá trị trung bình?,Kỳ vọng (Mean),Trung vị (Median),Độ lệch chuẩn (Standard Deviation),Mốt (Mode),C,2,1.00,0
+371,93,"Trong phân phối chuẩn chuẩn hóa, giá trị trung bình (Mean) và phương sai (Variance) bằng bao nhiêu?","Mean = 0, Variance = 1","Mean = 1, Variance = 0","Mean = 100, Variance = 15","Mean = 0, Variance = 0",A,3,1.00,0
+372,93,Câu châm ngôn kinh điển trong phân tích dữ liệu là gì?,Correlation implies Causation,Correlation does not imply Causation (Tương quan không chứng minh nhân quả),Data never lies,Mean is always best,B,4,1.00,0
+373,94,Thuật toán phân cụm K-Means thuộc vào nhóm học máy nào?,Học có giám sát (Supervised),Học không giám sát (Unsupervised),Học tăng cường (Reinforcement),Học bán giám sát,B,1,1.00,0
+374,94,Hiện tượng mô hình đạt độ chính xác 100% trên tập huấn luyện nhưng dự đoán rất tệ trên dữ liệu thực tế gọi là gì?,Underfitting,Overfitting (Hiện tượng quá khớp),Convergence,Regularization,B,2,1.00,0
+375,94,Thuật toán Hồi quy tuyến tính (Linear Regression) dùng để dự đoán kiểu dữ liệu nào?,Dữ liệu nhãn phân loại (Có/Không),"Giá trị số liên tục (như giá nhà, nhiệt độ)",Ảnh chụp,Tập hợp file,B,3,1.00,0
+376,94,Kỹ thuật Cross-Validation (K-Fold) thường được áp dụng nhằm mục đích gì?,Tăng kích thước ổ cứng,Đánh giá mô hình khách quan và giảm thiểu rủi ro overfitting,Viết code ngắn hơn,Tự động gắn nhãn,B,4,1.00,0
+377,95,Hàm kích hoạt (Activation Function) phổ biến nhất trong các tầng ẩn của mạng Deep Learning hiện đại là gì?,Sigmoid,ReLU (Rectified Linear Unit),Step Function,Linear,B,1,1.00,0
+378,95,Thuật toán cốt lõi dùng để tính gradient và truyền ngược lỗi qua các tầng mạng để cập nhật trọng số là gì?,Dijkstra,Backpropagation (Lan truyền ngược),Binary Search,Breadth-First Search,B,2,1.00,0
+379,95,"Nếu siêu tham số Tốc độ học (Learning Rate) được đặt quá lớn, điều gì sẽ xảy ra?",Mô hình hội tụ cực nhanh,Quá trình huấn luyện bị mất ổn định và hàm mất mát có thể phân kỳ,Mạng ngừng hoạt động,Mất kết nối mạng,B,3,1.00,0
+380,95,Hàm kích hoạt nào thường được sử dụng ở tầng đầu ra cuối cùng của bài toán phân loại đa lớp (Multi-class)?,ReLU,Softmax,Tanh,Step,B,4,1.00,0
+381,96,"Kiến trúc mạng nơ-ron mang tính cách mạng là nền tảng của các mô hình ngôn ngữ lớn (như GPT, Gemini) là gì?",RNN,Transformer,LSTM,Perceptron,B,1,1.00,0
+382,96,Kỹ thuật mã hóa ngữ nghĩa của từ vựng thành vector trong không gian toán học nhiều chiều gọi là gì?,Word Embeddings,Parsing,Compiling,Hashing,A,2,1.00,0
+383,96,Thao tác cắt một câu văn thành danh sách các từ hoặc cụm từ nhỏ hơn gọi là gì?,Stemming,Tokenization,Lemmatization,Translation,B,3,1.00,0
+384,96,Cơ chế cốt lõi trong Transformer cho phép các từ trong câu 'nhìn' và hiểu ngữ cảnh của nhau gọi là gì?,Attention / Self-Attention,Pooling,Dropout,Convolution,A,4,1.00,0
+385,97,Kiến trúc mạng nơ-ron chuyên dụng và thành công nhất trong các tác vụ xử lý hình ảnh là gì?,RNN,CNN (Convolutional Neural Network),GAN,Decision Tree,B,1,1.00,0
+386,97,Tầng Max-Pooling trong mạng CNN có tác dụng chính là gì?,Tăng gấp đôi kích thước ảnh,Giảm chiều không gian của bản đồ đặc trưng và giảm tải tính toán,Đổi ảnh màu thành ảnh đen trắng,Xóa nhiễu âm thanh,B,2,1.00,0
+387,97,Bộ lọc (Kernel/Filter) trong tầng tích chập trượt qua ảnh nhằm mục đích gì?,"Trích xuất các đặc trưng hình học như góc cạnh, đường viền",Nén dung lượng file JPEG,In ảnh ra giấy,Đổi tên file ảnh,A,3,1.00,0
+388,97,Một bức ảnh màu chuẩn RGB thông thường được biểu diễn bằng tensor có bao nhiêu kênh màu?,1 kênh,2 kênh,"3 kênh (Red, Green, Blue)",4 kênh,C,4,1.00,0
+389,98,Ai được lịch sử tôn vinh là lập trình viên máy tính đầu tiên trên thế giới?,Alan Turing,Ada Lovelace,Charles Babbage,Bill Gates,B,1,1.00,0
+390,98,Nhà khoa học nào được coi là cha đẻ của ngành Khoa học Máy tính và Trí tuệ Nhân tạo?,Alan Turing,Albert Einstein,Isaac Newton,Nikola Tesla,A,2,1.00,0
+391,98,Linh kiện điện tử bán dẫn ra đời năm 1947 thay thế đèn điện tử chân không mở ra kỷ nguyên máy tính hiện đại là gì?,Transistor (Bóng bán dẫn),Điện trở,Tụ điện,Cuộn cảm,A,3,1.00,0
+392,98,Mạng máy tính nào ra đời năm 1969 được coi là tiền thân trực tiếp của mạng Internet toàn cầu?,Ethernet,ARPANET,Intranet,Usenet,B,4,1.00,0
+393,99,Phương trình vật lý nổi tiếng nào của Albert Einstein khẳng định khối lượng có thể chuyển đổi thành năng lượng?,F = ma,E = mc^2,v = s / t,P = U * I,B,1,1.00,0
+394,99,Vận tốc ánh sáng truyền trong môi trường chân không xấp xỉ bằng bao nhiêu?,300 km/s,"300,000 km/s","3,000,000 km/s","30,000 km/s",B,2,1.00,0
+395,99,Nguyên lý bất định trong cơ học lượng tử gắn liền với tên tuổi của nhà vật lý nào?,Werner Heisenberg,Niels Bohr,Max Planck,Marie Curie,A,3,1.00,0
+396,99,"Hiện tượng ánh sáng vừa có tính chất lan truyền như sóng, vừa có tính hạt được gọi là gì?",Giao thoa ánh sáng,Lưỡng tính sóng - hạt,Khúc xạ ánh sáng,Hiện tượng quang điện,B,4,1.00,0
+397,100,Hành tinh nào có kích thước và khối lượng lớn nhất trong Hệ Mặt Trời của chúng ta?,Sao Hỏa,Sao Kim,Sao Mộc (Jupiter),Sao Thổ,C,1,1.00,0
+398,100,Ranh giới vô hình xung quanh hố đen mà vật chất hay ánh sáng khi lọt vào đều không thể thoát ra gọi là gì?,Vành đai bức xạ,Chân trời sự kiện (Event Horizon),Quỹ đạo dừng,Tâm hố đen,B,2,1.00,0
+399,100,Hệ Mặt Trời của chúng ta nằm trong thiên hà xoắn ốc nào?,Thiên hà Tiên Nữ (Andromeda),Dải Ngân Hà (Milky Way),Thiên hà Tam Giác,Đám mây Magellan,B,3,1.00,0
+400,100,Hành tinh nào trong Hệ Mặt Trời được mệnh danh là 'Hành tinh Đỏ' do bề mặt chứa nhiều oxit sắt?,Sao Thủy,Sao Hỏa (Mars),Sao Hải Vương,Sao Thổ,B,4,1.00,0

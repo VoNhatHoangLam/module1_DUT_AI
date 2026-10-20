@@ -1,2 +1,101 @@
 deck_id,title,description,total_cards,is_studied,is_deleted,created_at,updated_at
-1,Từ vựng tiếng Anh cơ bản,Bộ từ vựng demo bài test,2,0,0,2026-10-15 14:08:41,2026-10-15 14:08:41
+1,Oxford 3000: Daily Routines,Từ vựng tiếng Anh thông dụng về thói quen sinh hoạt và nhịp sống hàng ngày.,4,1,0,2026-10-01 11:00:00,2026-10-01 11:00:00
+2,Oxford 3000: Family & Relationships,"Từ vựng tiếng Anh về mối quan hệ gia đình, bạn bè và tương tác xã hội.",4,1,0,2026-10-01 14:00:00,2026-10-01 14:00:00
+3,Oxford 3000: Food & Culinary Arts,"Từ vựng về ẩm thực, nguyên liệu và các phương pháp chế biến món ăn.",4,1,0,2026-10-01 17:00:00,2026-10-01 17:00:00
+4,Oxford 3000: Travel & Aviation,"Từ vựng chuyên dùng khi đi du lịch, tại sân bay và di chuyển quốc tế.",4,1,0,2026-10-01 20:00:00,2026-10-01 20:00:00
+5,Oxford 3000: Shopping & Personal Finance,"Từ vựng mua sắm, quản lý ngân sách cá nhân và giao dịch thương mại.",4,1,0,2026-10-01 23:00:00,2026-10-01 23:00:00
+6,Oxford 3000: Weather & Meteorology,"Từ vựng miêu tả hiện tượng thời tiết, khí hậu và cảnh báo tự nhiên.",4,1,0,2026-10-02 02:00:00,2026-10-02 02:00:00
+7,Oxford 3000: Health & Medicine,"Từ vựng về tình trạng thể chất, y tế cơ bản và lối sống lành mạnh.",4,1,0,2026-10-02 05:00:00,2026-10-02 05:00:00
+8,Oxford 3000: House & Living Space,"Từ vựng về kiến trúc nhà ở, nội thất và không gian sinh hoạt gia đình.",4,1,0,2026-10-02 08:00:00,2026-10-02 08:00:00
+9,Oxford 3000: Emotions & Personality,"Từ vựng miêu tả cảm xúc, tính cách và phẩm chất con người.",4,1,0,2026-10-02 11:00:00,2026-10-02 11:00:00
+10,Oxford 3000: Hobbies & Leisure,"Từ vựng về sở thích cá nhân, hoạt động giải trí và thư giãn.",4,1,0,2026-10-02 14:00:00,2026-10-02 14:00:00
+11,Phrasal Verbs with 'Get',Các cụm động từ quan trọng nhất đi với 'Get' trong giao tiếp tiếng Anh.,4,0,0,2026-10-02 17:00:00,2026-10-02 17:00:00
+12,Phrasal Verbs with 'Take',Các cụm động từ phổ biến nhất đi với 'Take' trong đời sống.,4,0,0,2026-10-02 20:00:00,2026-10-02 20:00:00
+13,Phrasal Verbs with 'Look',Các cụm từ đi với 'Look' thường xuất hiện trong các bài thi quốc tế.,4,0,0,2026-10-02 23:00:00,2026-10-02 23:00:00
+14,Phrasal Verbs with 'Put',Tuyển tập cụm động từ thực tế đi với 'Put'.,4,0,0,2026-10-03 02:00:00,2026-10-03 02:00:00
+15,Phrasal Verbs with 'Turn',Các biến thể cụm động từ thường gặp của động từ 'Turn'.,4,0,0,2026-10-03 05:00:00,2026-10-03 05:00:00
+16,Common Business Idioms,Thành ngữ tiếng Anh được sử dụng phổ biến trong môi trường văn phòng và đàm phán.,4,0,0,2026-10-03 08:00:00,2026-10-03 08:00:00
+17,Food & Kitchen Idioms,Các thành ngữ tiếng Anh thú vị bắt nguồn từ ẩm thực và đồ ăn.,4,0,0,2026-10-03 11:00:00,2026-10-03 11:00:00
+18,Animal Idioms in English,Thành ngữ tiếng Anh mượn hình ảnh các loài động vật quen thuộc.,4,0,0,2026-10-03 14:00:00,2026-10-03 14:00:00
+19,Time & Money Idioms,"Thành ngữ về thời gian, tiền tài và sự quý giá của tài nguyên cuộc sống.",4,0,0,2026-10-03 17:00:00,2026-10-03 17:00:00
+20,Color Idioms & Expressions,Thành ngữ ẩn dụ bằng màu sắc trong văn hóa Anh - Mỹ.,4,0,0,2026-10-03 20:00:00,2026-10-03 20:00:00
+21,IELTS: Environment & Climate Change,Từ vựng học thuật trọng điểm chủ đề môi trường và biến đổi khí hậu toàn cầu.,4,0,0,2026-10-03 23:00:00,2026-10-03 23:00:00
+22,IELTS: Technology & Artificial Intelligence,"Từ vựng IELTS band cao về công nghệ hiện đại, tự động hóa và AI.",4,0,0,2026-10-04 02:00:00,2026-10-04 02:00:00
+23,IELTS: Education & Academic Systems,"Từ vựng về phương pháp giáo dục, thi cử và môi trường đại học.",4,0,0,2026-10-04 05:00:00,2026-10-04 05:00:00
+24,IELTS: Modern Medicine & Healthcare,"Từ vựng học thuật về chăm sóc y tế, phòng ngừa dịch bệnh và dược phẩm.",4,0,0,2026-10-04 08:00:00,2026-10-04 08:00:00
+25,IELTS: Globalization & International Trade,"Từ vựng về toàn cầu hóa, thương mại tự do và hội nhập quốc tế.",4,0,0,2026-10-04 11:00:00,2026-10-04 11:00:00
+26,IELTS: Art & Cultural Heritage,"Từ vựng IELTS về bảo tồn di sản, văn hóa dân gian và nghệ thuật kiến trúc.",4,0,0,2026-10-04 14:00:00,2026-10-04 14:00:00
+27,IELTS: Urbanization & City Infrastructure,"Từ vựng về đô thị hóa, mật độ dân số và quy hoạch giao thông công cộng.",4,0,0,2026-10-04 17:00:00,2026-10-04 17:00:00
+28,IELTS: Crime & Criminal Justice,"Từ vựng học thuật về tội phạm, xét xử và hệ thống tư pháp.",4,0,0,2026-10-04 20:00:00,2026-10-04 20:00:00
+29,IELTS: Psychology & Human Behavior,"Từ vựng tâm lý học, nhận thức và hành vi con người.",4,0,0,2026-10-04 23:00:00,2026-10-04 23:00:00
+30,IELTS: Space Exploration & Astrophysics,Từ vựng về thám hiểm không gian vũ trụ và vật lý thiên văn.,4,0,0,2026-10-05 02:00:00,2026-10-05 02:00:00
+31,TOEIC: Corporate Management,"Từ vựng quản trị doanh nghiệp, điều hành và cơ cấu tổ chức công ty.",4,0,0,2026-10-05 05:00:00,2026-10-05 05:00:00
+32,TOEIC: Contracts & Negotiations,Từ vựng đàm phán hợp đồng thương mại và các điều khoản pháp lý.,4,0,0,2026-10-05 08:00:00,2026-10-05 08:00:00
+33,TOEIC: Banking & Corporate Finance,"Từ vựng về tài chính công ty, báo cáo kế toán và dòng tiền doanh nghiệp.",4,0,0,2026-10-05 11:00:00,2026-10-05 11:00:00
+34,TOEIC: Marketing & Public Relations,"Từ vựng về tiếp thị, chiến dịch quảng cáo và định vị thương hiệu.",4,0,0,2026-10-05 14:00:00,2026-10-05 14:00:00
+35,TOEIC: Human Resources & Recruitment,"Từ vựng về tuyển dụng nhân sự, phỏng vấn và phúc lợi nhân viên.",4,0,0,2026-10-05 17:00:00,2026-10-05 17:00:00
+36,TOEIC: Logistics & Cargo Shipping,"Từ vựng về vận chuyển hàng hải, kho bãi và giao nhận hàng hóa.",4,0,0,2026-10-05 20:00:00,2026-10-05 20:00:00
+37,TOEIC: Manufacturing & Quality Control,Từ vựng về quy trình sản xuất nhà máy và kiểm định chất lượng sản phẩm.,4,0,0,2026-10-05 23:00:00,2026-10-05 23:00:00
+38,TOEIC: Office Technology & Telecommunications,"Từ vựng về thiết bị văn phòng, mạng máy tính nội bộ và viễn thông.",4,0,0,2026-10-06 02:00:00,2026-10-06 02:00:00
+39,TOEIC: Customer Support & Service,"Từ vựng về chăm sóc khách hàng, phản hồi dịch vụ và giải quyết khiếu nại.",4,0,0,2026-10-06 05:00:00,2026-10-06 05:00:00
+40,TOEIC: Business Conferences & Networking,"Từ vựng về hội thảo quốc tế, diễn đàn thương mại và giao lưu đối tác.",4,0,0,2026-10-06 08:00:00,2026-10-06 08:00:00
+41,English Grammar: Advanced Tenses,"Phân biệt các thì tiếng Anh nâng cao (Hoàn thành tiếp diễn, Quá khứ hoàn thành).",4,0,0,2026-10-06 11:00:00,2026-10-06 11:00:00
+42,English Grammar: Conditionals,"Các dạng câu điều kiện (Loại 0, 1, 2, 3 và Câu điều kiện hỗn hợp Mixed Conditionals).",4,0,0,2026-10-06 14:00:00,2026-10-06 14:00:00
+43,English Grammar: Passive Voice & Causatives,Câu bị động nâng cao và cấu trúc nhờ vả (Have/Get something done).,4,0,0,2026-10-06 17:00:00,2026-10-06 17:00:00
+44,English Grammar: Relative & Participle Clauses,Mệnh đề quan hệ xác định/không xác định và mệnh đề phân từ rút gọn.,4,0,0,2026-10-06 20:00:00,2026-10-06 20:00:00
+45,English Grammar: Gerunds & Infinitives,Quy tắc sử dụng Danh động từ (V-ing) và Động từ nguyên mẫu (To-V).,4,0,0,2026-10-06 23:00:00,2026-10-06 23:00:00
+46,English Grammar: Modal Verbs of Deduction,"Động từ khuyết thiếu suy đoán ở hiện tại và quá khứ (Must, Can't, May, Might).",4,0,0,2026-10-07 02:00:00,2026-10-07 02:00:00
+47,English Grammar: Subjunctive & Inversion,Thể giả định và Cấu trúc đảo ngữ nhấn mạnh trong tiếng Anh học thuật.,4,0,0,2026-10-07 05:00:00,2026-10-07 05:00:00
+48,Collocations with 'Make' and 'Do',Quy tắc phân biệt và các cụm từ cố định đi với động từ Make và Do.,4,0,0,2026-10-07 08:00:00,2026-10-07 08:00:00
+49,Easily Confused Words in English,Phân biệt những cặp từ đồng âm hoặc gần nghĩa dễ gây hiểu lầm trong tiếng Anh.,4,0,0,2026-10-07 11:00:00,2026-10-07 11:00:00
+50,Academic Discourse Markers & Connectors,"Các liên từ và từ nối logic nâng cấp bài viết học thuật (Furthermore, However, Consequently).",4,0,0,2026-10-07 14:00:00,2026-10-07 14:00:00
+51,Cấu trúc dữ liệu: Mảng và Danh sách liên kết,So sánh chi tiết giữa Mảng tĩnh (Array) và Danh sách liên kết (Linked List).,4,0,0,2026-10-07 17:00:00,2026-10-07 17:00:00
+52,Cấu trúc dữ liệu: Ngăn xếp (Stack LIFO),"Nguyên lý Last In First Out (LIFO), các thao tác Push/Pop và ứng dụng 2-Stack Undo/Redo.",4,0,0,2026-10-07 20:00:00,2026-10-07 20:00:00
+53,Cấu trúc dữ liệu: Hàng đợi (Queue FIFO),"Nguyên lý First In First Out (FIFO), Enqueue/Dequeue và Hàng đợi học lặp lại 2 giai đoạn.",4,0,0,2026-10-07 23:00:00,2026-10-07 23:00:00
+54,Cấu trúc dữ liệu: Cây AVL & Cân bằng tự động,"Cây nhị phân tìm kiếm tự cân bằng AVL, hệ số Balance Factor và 4 phép xoay cây cơ bản.",4,0,0,2026-10-08 02:00:00,2026-10-08 02:00:00
+55,Cấu trúc dữ liệu: Cây B-Tree và B+ Tree,Cấu trúc cây nhiều nhánh tối ưu hóa cho hệ thống đĩa từ và cơ sở dữ liệu quan hệ.,4,0,0,2026-10-08 05:00:00,2026-10-08 05:00:00
+56,Cấu trúc dữ liệu: Heap và Hàng đợi ưu tiên,"Cấu trúc Binary Heap (Min-Heap, Max-Heap) và cài đặt Hàng đợi ưu tiên (Priority Queue).",4,0,0,2026-10-08 08:00:00,2026-10-08 08:00:00
+57,Cấu trúc dữ liệu: Bảng băm (Hash Table),"Hàm băm (Hash Function), xử lý xung đột (Chaining vs Open Addressing) và độ phức tạp trung bình.",4,0,0,2026-10-08 11:00:00,2026-10-08 11:00:00
+58,Thuật toán: Duyệt đồ thị BFS và DFS,Thuật toán tìm kiếm theo chiều rộng (BFS - Queue) và theo chiều sâu (DFS - Stack/Recursion).,4,0,0,2026-10-08 14:00:00,2026-10-08 14:00:00
+59,Thuật toán: Sắp xếp QuickSort và MergeSort,So sánh 2 thuật toán sắp xếp kinh điển chia để trị (Divide and Conquer).,4,0,0,2026-10-08 17:00:00,2026-10-08 17:00:00
+60,Thuật toán: Quy hoạch động (Dynamic Programming),"Nguyên lý tối ưu con, bài toán gối nhau (Overlapping Subproblems) và kỹ thuật Memoization/Tabulation.",4,0,0,2026-10-08 20:00:00,2026-10-08 20:00:00
+61,Python: Cú pháp lõi & Data Structures,"Kiểu dữ liệu Mutable vs Immutable, List Comprehension, Dict và Set trong Python.",4,0,0,2026-10-08 23:00:00,2026-10-08 23:00:00
+62,Python: Lập trình Hướng đối tượng (OOP),"4 trụ cột OOP trong Python: Đóng gói, Kế thừa, Đa hình và Trừu tượng hóa.",4,0,0,2026-10-09 02:00:00,2026-10-09 02:00:00
+63,Python: Decorators & Generators,"Cơ chế hàm bậc cao (First-class functions), Decorator bọc logic và Generator tiết kiệm bộ nhớ với yield.",4,0,0,2026-10-09 05:00:00,2026-10-09 05:00:00
+64,Python: Lập trình Bất đồng bộ Asyncio,"Event Loop, từ khóa async/await, coroutine và xử lý non-blocking I/O.",4,0,0,2026-10-09 08:00:00,2026-10-09 08:00:00
+65,Backend Web: Framework FastAPI & Pydantic,"Kiến trúc hiện đại của FastAPI, kiểm thực kiểu dữ liệu với Pydantic và sinh tài liệu OpenAPI tự động.",4,0,0,2026-10-09 11:00:00,2026-10-09 11:00:00
+66,Backend Web: Thiết kế chuẩn RESTful API,"Các phương thức HTTP (GET, POST, PUT, DELETE), mã trạng thái HTTP Status Codes và nguyên lý REST.",4,0,0,2026-10-09 14:00:00,2026-10-09 14:00:00
+67,Cơ sở dữ liệu: Tối ưu Truy vấn & Indexing,"Chỉ mục B-Tree, Explain Plan, chuẩn hóa dữ liệu (Normal Forms) và giao dịch ACID.",4,0,0,2026-10-09 17:00:00,2026-10-09 17:00:00
+68,DevOps: Containerization với Docker,"Khái niệm Image, Container, Dockerfile, Docker Compose và cô lập môi trường ứng dụng.",4,0,0,2026-10-09 20:00:00,2026-10-09 20:00:00
+69,Công cụ: Quản lý mã nguồn với Git,"Các lệnh Git nâng cao, quy trình phân nhánh (Branching), Rebase vs Merge và xử lý Conflict.",4,0,0,2026-10-09 23:00:00,2026-10-09 23:00:00
+70,Kiến trúc phần mềm: Clean Code & Design Patterns,"Nguyên lý SOLID, các mẫu thiết kế hướng đối tượng (Singleton, Factory, Observer, Strategy).",4,0,0,2026-10-10 02:00:00,2026-10-10 02:00:00
+71,Hệ điều hành: Tiến trình & Đa luồng (Thread),"Phân biệt Process và Thread, không gian địa chỉ ảo, Context Switch và đa nhiệm.",4,0,0,2026-10-10 05:00:00,2026-10-10 05:00:00
+72,Hệ điều hành: Đồng bộ hóa Mutex & Semaphore,"Miền găng (Critical Section), tranh chấp tài nguyên (Race Condition) và công cụ đồng bộ hóa.",4,0,0,2026-10-10 08:00:00,2026-10-10 08:00:00
+73,Hệ điều hành: Bộ nhớ ảo & Phân trang,"Không gian địa chỉ ảo (Virtual Address Space), bảng trang (Page Table), TLB và lỗi trang (Page Fault).",4,0,0,2026-10-10 11:00:00,2026-10-10 11:00:00
+74,Hệ điều hành: Hiện tượng Bế tắc (Deadlock),"4 điều kiện Coffman gây bế tắc, đồ thị cấp phát tài nguyên và thuật toán Banker.",4,0,0,2026-10-10 14:00:00,2026-10-10 14:00:00
+75,Kiến trúc máy tính: Mô hình Von Neumann,"Các thành phần CPU (ALU, CU, Registers), Bus dữ liệu và chu trình Fetch-Decode-Execute.",4,0,0,2026-10-10 17:00:00,2026-10-10 17:00:00
+76,Kiến trúc máy tính: Hệ thống Cache Memory,"Phân cấp bộ nhớ, nguyên lý cục bộ (Locality of Reference), Cache Hit/Miss và Cache L1/L2/L3.",4,0,0,2026-10-10 20:00:00,2026-10-10 20:00:00
+77,Hệ điều hành: Hệ thống Tệp tin (File Systems),"Cấu trúc Inode, bảng phân vùng FAT, NTFS, Ext4, quyền truy cập tệp tin (File Permissions).",4,0,0,2026-10-10 23:00:00,2026-10-10 23:00:00
+78,Hệ điều hành: Lời gọi hệ thống (System Calls),"Chuyển đổi User Mode sang Kernel Mode, các hàm fork, exec, read, write trong Unix.",4,0,0,2026-10-11 02:00:00,2026-10-11 02:00:00
+79,Hợp ngữ: Lập trình Assembly x86 cơ bản,"Các thanh ghi cơ bản (EAX, EBX, ESP, EBP), lệnh MOV, PUSH, POP, ADD, JMP.",4,0,0,2026-10-11 05:00:00,2026-10-11 05:00:00
+80,Kiến trúc máy tính: Cơ chế Ngắt (Interrupts) & I/O,"Ngắt phần cứng (Hardware Interrupts), bộ điều khiển PIC, DMA (Direct Memory Access).",4,0,0,2026-10-11 08:00:00,2026-10-11 08:00:00
+81,Mạng máy tính: Mô hình OSI & TCP/IP,"7 tầng mô hình OSI, so sánh giao thức TCP (tin cậy, bắt tay 3 bước) và UDP (tốc độ cao).",4,0,0,2026-10-11 11:00:00,2026-10-11 11:00:00
+82,"Mạng máy tính: Giao thức HTTP, HTTPS & WebSockets","Giao thức truyền siêu văn bản, mã hóa SSL/TLS, kết nối song công toàn phần (Full-duplex).",4,0,0,2026-10-11 14:00:00,2026-10-11 14:00:00
+83,Mạng máy tính: Phân giải Tên miền DNS & DHCP,"Hệ thống tên miền DNS, cấu trúc phân cấp (Root, TLD, Authoritative) và cấp phát IP động với DHCP.",4,0,0,2026-10-11 17:00:00,2026-10-11 17:00:00
+84,"Mạng máy tính: Địa chỉ IPv4, IPv6 & Chia Subnet","Cấu trúc địa chỉ IP 32-bit vs 128-bit, Subnet Mask, ký hiệu CIDR và kỹ thuật chia mạng con.",4,0,0,2026-10-11 20:00:00,2026-10-11 20:00:00
+85,An toàn thông tin: Mật mã học Cơ bản,"Mã hóa đối xứng (AES), bất đối xứng (RSA), hàm băm một chiều (SHA-256) và chữ ký số.",4,0,0,2026-10-11 23:00:00,2026-10-11 23:00:00
+86,An toàn thông tin: Top 10 Lỗ hổng OWASP,"Các cuộc tấn công Web nguy hiểm: SQL Injection, XSS, CSRF, Broken Authentication.",4,0,0,2026-10-12 02:00:00,2026-10-12 02:00:00
+87,An ninh mạng: Tường lửa & Reverse Proxy,"Tường lửa Packet Filtering, Web Application Firewall (WAF), Cân bằng tải (Load Balancing) với NGINX.",4,0,0,2026-10-12 05:00:00,2026-10-12 05:00:00
+88,An toàn thông tin: Bắt tay bảo mật SSL/TLS,"Chứng chỉ số X.509, Certificate Authority (CA), chuỗi xác thực và quy trình TLS Handshake.",4,0,0,2026-10-12 08:00:00,2026-10-12 08:00:00
+89,An ninh mạng: Mạng riêng ảo VPN & Đường hầm SSH,"Giao thức IPsec, OpenVPN, WireGuard, giao thức SSH bảo mật và đường hầm mã hóa.",4,0,0,2026-10-12 11:00:00,2026-10-12 11:00:00
+90,Xác thực & Cấp quyền: OAuth2 & JSON Web Token,"Cơ chế phân quyền OAuth 2.0, đăng nhập bên thứ ba, cấu trúc 3 phần của JWT Token.",4,0,0,2026-10-12 14:00:00,2026-10-12 14:00:00
+91,Toán học: Toán rời rạc & Đại số Boole,"Lý thuyết tập hợp, phép toán logic (AND, OR, XOR), bảng chân trị và quan hệ tương đương.",4,0,0,2026-10-12 17:00:00,2026-10-12 17:00:00
+92,Toán học: Đại số tuyến tính cho Machine Learning,"Vector, Ma trận, Phép nhân ma trận, Ma trận chuyển vị và Định thức (Determinant).",4,0,0,2026-10-12 20:00:00,2026-10-12 20:00:00
+93,Toán học: Xác suất Thống kê cho Data Science,"Biến ngẫu nhiên, Kỳ vọng (Mean), Phương sai (Variance), Định lý Bayes và Phân phối chuẩn.",4,0,0,2026-10-12 23:00:00,2026-10-12 23:00:00
+94,Trí tuệ nhân tạo: Học máy căn bản (Machine Learning),"Học có giám sát (Supervised), Học không giám sát (Unsupervised) và Overfitting/Underfitting.",4,0,0,2026-10-13 02:00:00,2026-10-13 02:00:00
+95,Trí tuệ nhân tạo: Mạng Nơ-ron & Deep Learning,"Perceptron, Hàm kích hoạt (ReLU, Sigmoid), Lan truyền ngược (Backpropagation) và Gradient Descent.",4,0,0,2026-10-13 05:00:00,2026-10-13 05:00:00
+96,Trí tuệ nhân tạo: Xử lý Ngôn ngữ Tự nhiên (NLP),"Tokenization, Word Embeddings (Word2Vec), Cơ chế Attention và Kiến trúc Transformer.",4,0,0,2026-10-13 08:00:00,2026-10-13 08:00:00
+97,Trí tuệ nhân tạo: Thị giác máy tính (Computer Vision),"Biểu diễn ảnh số, Mạng nơ-ron tích chập (CNN), Convolutional Kernel và Pooling Layer.",4,0,0,2026-10-13 11:00:00,2026-10-13 11:00:00
+98,Lịch sử Điện toán: Các Cột mốc & Danh nhân,"Alan Turing, Ada Lovelace, ENIAC, Transistor và sự ra đời của mạng Internet.",4,0,0,2026-10-13 14:00:00,2026-10-13 14:00:00
+99,Khoa học Tự nhiên: Vật lý Hiện đại,"Thuyết tương đối hẹp của Einstein, Lưỡng tính sóng-hạt và Cơ học lượng tử.",4,0,0,2026-10-13 17:00:00,2026-10-13 17:00:00
+100,Khoa học Vũ trụ: Hệ Mặt Trời & Các Thiên thể,"8 hành tinh trong Hệ Mặt Trời, Hố đen vũ trụ (Black Hole) và Dải Ngân Hà (Milky Way).",4,0,0,2026-10-13 20:00:00,2026-10-13 20:00:00

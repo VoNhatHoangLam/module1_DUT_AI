@@ -129,11 +129,10 @@ export const StudyView: React.FC<StudyViewProps> = ({
         </div>
         <div className="flex items-center gap-2">
           <span
-            className={`text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1 ${
-              session.is_initial_phase
-                ? 'bg-blue-100 text-blue-800'
-                : 'bg-amber-100 text-amber-800'
-            }`}
+            className={`text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1 ${session.is_initial_phase
+              ? 'bg-blue-100 text-blue-800'
+              : 'bg-amber-100 text-amber-800'
+              }`}
             title={
               session.is_initial_phase
                 ? 'Giai đoạn 1: Duyệt thẻ ban đầu'
@@ -141,7 +140,6 @@ export const StudyView: React.FC<StudyViewProps> = ({
             }
           >
             <Layers className="w-3.5 h-3.5" />
-            {session.is_initial_phase ? 'Giai đoạn 1 (Lướt thẻ)' : 'Giai đoạn 2 (Hàng đợi Queue)'}
           </span>
         </div>
       </div>
@@ -163,10 +161,9 @@ export const StudyView: React.FC<StudyViewProps> = ({
         <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1">
           <span className="text-emerald-600 font-semibold">Đã nhớ: {session.known_count} thẻ</span>
           <span className="text-amber-600 font-semibold">
-            Trong hàng đợi (Queue): {session.unknown_count} thẻ
           </span>
           <span className="text-slate-500 font-semibold">
-            Còn cần xem: {session.remaining_count} lượt
+            Chưa thuộc: {session.remaining_count} thẻ
           </span>
         </div>
       </div>
@@ -207,28 +204,26 @@ export const StudyView: React.FC<StudyViewProps> = ({
             onClick={() => setIsFlipped(!isFlipped)}
           >
             <div
-              className={`relative w-full min-h-[340px] rounded-3xl p-8 sm:p-12 transition-all duration-500 transform preserve-3d shadow-xl border flex flex-col justify-between items-center text-center ${
-                !isFlipped
-                  ? 'bg-gradient-to-b from-white to-blue-50/50 border-blue-200'
-                  : 'bg-gradient-to-b from-blue-900 to-indigo-950 text-white border-blue-700'
-              }`}
+              className={`relative w-full min-h-[340px] rounded-3xl p-8 sm:p-12 transition-all duration-500 transform preserve-3d shadow-xl border flex flex-col justify-between items-center text-center ${!isFlipped
+                ? 'bg-gradient-to-b from-white to-blue-50/50 border-blue-200'
+                : 'bg-gradient-to-b from-blue-900 to-indigo-950 text-white border-blue-700'
+                }`}
             >
               {/* Card Position Badge */}
               <div className="w-full flex items-center justify-between text-xs text-slate-400">
                 <span className="font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100">
                   Thẻ #{currentCard?.position || 1}
                 </span>
-                <span>{!isFlipped ? 'Mặt trước (Thuật ngữ)' : 'Mặt sau (Định nghĩa)'}</span>
+                <span>{!isFlipped ? 'Mặt trước' : 'Mặt sau'}</span>
               </div>
 
               {/* Content */}
               <div className="my-auto py-6">
                 <div
-                  className={`font-black tracking-tight leading-snug transition-all ${
-                    !isFlipped
-                      ? 'text-2xl sm:text-3xl text-slate-900'
-                      : 'text-xl sm:text-2xl text-blue-100 font-medium'
-                  }`}
+                  className={`font-black tracking-tight leading-snug transition-all ${!isFlipped
+                    ? 'text-2xl sm:text-3xl text-slate-900'
+                    : 'text-xl sm:text-2xl text-blue-100 font-medium'
+                    }`}
                 >
                   {!isFlipped ? currentCard?.term : currentCard?.definition}
                 </div>
@@ -249,7 +244,7 @@ export const StudyView: React.FC<StudyViewProps> = ({
               className="flex-1 max-w-[220px] py-3 rounded-2xl bg-rose-50 border border-rose-200 hover:bg-rose-100 text-rose-700 font-bold text-sm flex items-center justify-center gap-2 transition-colors shadow-xs cursor-pointer"
             >
               <XCircle className="w-5 h-5 text-rose-500" />
-              Chưa nhớ (Xếp vào Queue)
+              Chưa nhớ
             </button>
 
             <button

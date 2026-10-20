@@ -177,28 +177,45 @@ class DeckService:
         cards.sort(key=lambda c: c.position)
         return (deck, cards)
 
+    def search_decks_by_title_prefix(self, prefix: str) -> list[Deck]:
+        """Tìm kiếm các bộ thẻ có tiêu đề bắt đầu bằng prefix với độ phức tạp O(log N + K).
+
+        Định vị nhánh cây AVL trong O(log N) và thu thập K kết quả khớp tiền tố trong O(K)
+        thông qua chỉ mục phụ MultiAVLTree trên trường 'title' của CsvRepository.
+
+        Args:
+            prefix: Tiền tố tiêu đề cần tìm kiếm (không phân biệt hoa/thường).
+
+        Returns:
+            Danh sách các bộ thẻ có tiêu đề bắt đầu bằng tiền tố (chưa bị xóa).
+        """
+        clean_prefix = prefix.strip() if isinstance(prefix, str) else ""
+        if not clean_prefix:
+            return [d for d in self.deck_repository.get_all() if not d.is_deleted]
+        return self.deck_repository.find_by_prefix("title", clean_prefix, is_deleted=False)
+
     def get_decks(
         self,
         keyword: Optional[str] = None,
         page: int = 1,
         page_size: int = 10,
     ) -> dict[str, Any]:
-        """Lấy danh sách bộ thẻ hoặc tìm kiếm theo chuỗi tiêu đề có phân trang (tối đa 10 deck/trang).
+        """Lấy danh sách bộ thẻ hoặc tìm kiếm tiền tố theo tiêu đề qua Cây AVL có phân trang (tối đa 100 deck/trang).
 
-        Chỉ tìm kiếm theo chuỗi con (substring, case-insensitive) trong tiêu đề bộ thẻ,
-        không tìm kiếm theo ID. Không trả về danh sách thẻ (cards) của bộ thẻ.
+        Chỉ cho phép tìm kiếm theo tiền tố tiêu đề (title prefix, case-insensitive) bằng Cây AVL O(log N + K).
+        Không tìm kiếm theo ID hay các trường khác. Không trả về danh sách thẻ (cards) con của bộ thẻ.
 
         Args:
-            keyword: Từ khóa tìm kiếm chuỗi con trong tiêu đề bộ thẻ (tùy chọn).
+            keyword: Từ khóa tiền tố tiêu đề cần tìm kiếm (tùy chọn, không phân biệt hoa thường).
             page: Số trang cần lấy (bắt đầu từ 1, mặc định 1).
-            page_size: Số lượng bộ thẻ tối đa trên mỗi trang (mặc định 10, trần tối đa 10).
+            page_size: Số lượng bộ thẻ tối đa trên mỗi trang (mặc định 10, trần tối đa 100).
 
         Returns:
             dict[str, Any]:
-                - items: Danh sách tối đa 10 đối tượng Deck của trang hiện tại (không kèm thẻ con).
+                - items: Danh sách tối đa page_size đối tượng Deck của trang hiện tại (không kèm thẻ con).
                 - total_pages: Tổng số trang (ceil(total_count / page_size)).
                 - page: Trang hiện tại.
-                - page_size: Kích thước trang thực tế (tối đa 10).
+                - page_size: Kích thước trang thực tế (tối đa 100).
 
         Raises:
             TypeError: Khi page hoặc page_size không phải số nguyên, hoặc keyword không phải chuỗi.
@@ -211,18 +228,18 @@ class DeckService:
             raise TypeError("keyword phải là chuỗi hoặc None")
 
         actual_page = max(1, page)
-        actual_page_size = max(1, min(page_size, 10))
+        actual_page_size = max(1, min(page_size, 100))
 
         clean_kw = keyword.strip() if isinstance(keyword, str) and keyword.strip() else None
 
-        # 1. Đếm tổng số deck thỏa mãn bằng phương thức count() của CsvRepository
-        total_count = self.deck_repository.count(
-            keyword=clean_kw,
-            search_field="title",
-            is_deleted=False,
-        )
+        # 1. Tìm kiếm tiền tố tiêu đề qua Cây AVL O(log N + K) trên trường title
+        if clean_kw:
+            matched = self.search_decks_by_title_prefix(clean_kw)
+        else:
+            matched = [d for d in self.deck_repository.get_all() if not d.is_deleted]
 
         # 2. Tính toán tổng số trang
+        total_count = len(matched)
         total_pages = (
             (total_count + actual_page_size - 1) // actual_page_size
             if total_count > 0
@@ -233,11 +250,6 @@ class DeckService:
         if actual_page > total_pages or total_count == 0:
             paged_decks = []
         else:
-            matched = self.deck_repository.find_by_keyword(
-                keyword=clean_kw,
-                search_field="title",
-                is_deleted=False,
-            )
             start_idx = (actual_page - 1) * actual_page_size
             end_idx = start_idx + actual_page_size
             paged_decks = matched[start_idx:end_idx]

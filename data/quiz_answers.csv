@@ -1,2 +1,49 @@
 answer_id,attempt_id,selected_answer,correct_answer_snapshot,is_correct,points_earned,question_text_snapshot,selected_option_text_snapshot,correct_option_text_snapshot
-80,70,A,A,1,1.00,Apple nghĩa là gì?,Quả táo,Quả táo
+1,1,A,A,1,1.00,Từ nào diễn tả việc đi lại đều đặn mỗi ngày giữa nhà và nơi làm việc?,Commute,Commute
+2,1,B,B,1,1.00,Một chuyến đi nhanh ra ngoài để giải quyết việc cá nhân gọi là gì?,Errand,Errand
+3,1,A,A,1,1.00,Tính từ nào mang ý nghĩa luôn xuất hiện đúng giờ hẹn?,Punctual,Punctual
+4,1,C,C,1,1.00,"Từ nào chỉ những công việc lặp lại nhàm chán trong nhà (rửa bát, lau nhà)?",Chore,Chore
+5,2,B,B,1,1.00,Từ 'Sibling' trong tiếng Anh dùng để chỉ đối tượng nào?,Anh chị em ruột,Anh chị em ruột
+6,2,C,C,1,1.00,Một người bạn quen mặt nhưng chưa thân gọi là gì?,Acquaintance,Acquaintance
+7,2,A,A,1,1.00,"Từ nào mô tả sự giáo dưỡng, dạy dỗ của cha mẹ đối với con cái từ nhỏ?",Upbringing,Upbringing
+8,2,B,B,1,1.00,'Kinship' thể hiện điều gì?,Quan hệ huyết thống/gia tộc,Quan hệ huyết thống/gia tộc
+9,3,C,C,1,1.00,Món ăn khai vị phục vụ đầu bữa tiệc được gọi là gì?,Appetizer,Appetizer
+10,3,A,A,1,1.00,"Muối, tiêu, thảo mộc dùng để nêm nếm món ăn được xếp vào nhóm nào?",Seasoning,Seasoning
+11,3,A,A,1,1.00,"Từ nào chỉ chung các loại thức uống (trà, cà phê, nước trái cây)?",Beverage,Beverage
+12,3,D,B,0,0.00,Thực phẩm giàu vitamin và khoáng chất tốt cho sức khỏe có tính chất gì?,Stale,Nutritious
+13,4,B,B,1,1.00,Bản kế hoạch ghi rõ lộ trình và các điểm dừng chân trong chuyến đi gọi là gì?,Itinerary,Itinerary
+14,4,B,B,1,1.00,Hành khách cần xuất trình giấy tờ gì tại cửa khởi hành máy bay?,Boarding pass,Boarding pass
+15,4,C,C,1,1.00,Triệu chứng mệt mỏi sau chuyến bay dài vượt nhiều múi giờ gọi là gì?,Jet lag,Jet lag
+16,4,B,B,1,1.00,Khoảng thời gian chờ nối chuyến tại sân bay trung gian gọi là gì?,Layover,Layover
+17,5,B,B,1,1.00,"Khi mua được một món hàng chất lượng tốt với giá rất rẻ, ta gọi đó là gì?",Bargain,Bargain
+18,5,C,C,1,1.00,Giấy tờ chứng minh bạn đã hoàn tất thanh toán tại quầy thu ngân là gì?,Receipt,Receipt
+19,5,B,B,1,1.00,Hình thức trả tiền mua hàng chia nhỏ thành nhiều tháng gọi là gì?,Installment,Installment
+20,5,C,C,1,1.00,Sản phẩm có mức giá hợp lý và nằm trong khả năng tài chính gọi là gì?,Affordable,Affordable
+21,6,C,C,1,1.00,"Cơn mưa hạt nhỏ, bay lất phất trong không gian được gọi là gì?",Drizzle,Drizzle
+22,6,C,C,1,1.00,Khái niệm chỉ lượng hơi nước có trong không khí là gì?,Humidity,Humidity
+23,6,C,C,1,1.00,Thời tiết mùa hè với nắng gắt và nhiệt độ cực cao được miêu tả bằng từ nào?,Scorching,Scorching
+24,6,D,B,0,0.00,Thông tin dự đoán thời tiết trong 24-48 giờ tới gọi là gì?,Weather alarm,Weather forecast
+25,7,B,B,1,1.00,"Biểu hiện sốt, ho, đau đầu khi cơ thể nhiễm bệnh được gọi là gì?",Symptom,Symptom
+26,7,B,B,1,1.00,Tờ giấy ghi danh mục thuốc do bác sĩ chỉ định dùng gọi là gì?,Prescription,Prescription
+27,7,C,C,1,1.00,Khả năng cơ thể tự bảo vệ trước sự xâm nhập của virus và vi khuẩn gọi là gì?,Immunity,Immunity
+28,7,A,A,1,1.00,Quá trình bác sĩ xác định bệnh nhân mắc căn bệnh cụ thể nào gọi là gì?,Diagnosis,Diagnosis
+29,8,C,C,1,1.00,Phần tầng nhà nằm bên dưới mặt đất thường dùng để chứa đồ gọi là gì?,Basement,Basement
+30,8,C,C,1,1.00,"Các thiết bị điện như máy giặt, lò vi sóng trong nhà được gọi chung là gì?",Appliances,Appliances
+31,8,B,B,1,1.00,Một căn phòng có diện tích lớn và thoáng mát có thể miêu tả bằng từ nào?,Spacious,Spacious
+32,8,B,B,1,1.00,Khu vực ban công ngoài trời ở các tầng lầu gọi là gì?,Balcony,Balcony
+33,9,C,C,1,1.00,Người luôn nhìn thấy mặt tích cực trong mọi hoàn cảnh được gọi là gì?,Optimistic,Optimistic
+34,9,C,C,1,1.00,"Phẩm chất kiên cường, mau chóng đứng dậy sau thất bại gọi là gì?",Resilient,Resilient
+35,9,A,A,1,1.00,Người biết đặt mình vào vị trí của người khác để cảm nhận được gọi là gì?,Empathetic,Empathetic
+36,9,D,B,0,0.00,"Tính từ miêu tả người làm việc cần mẫn, chịu khó và kiên trì là gì?",Passive,Diligent
+37,10,A,A,1,1.00,Hoạt động làm vào thời gian rảnh rỗi để giải trí gọi là gì?,Pastime,Pastime
+38,10,B,B,1,1.00,Người có niềm đam mê đặc biệt sâu sắc với một lĩnh vực nào đó gọi là gì?,Enthusiast,Enthusiast
+39,10,C,C,1,1.00,Nghệ thuật chụp ảnh và ghi lại khoảnh khắc bằng máy ảnh gọi là gì?,Photography,Photography
+40,10,C,C,1,1.00,Từ 'Recreation' đồng nghĩa gần nhất với khái niệm nào sau đây?,Relaxation,Relaxation
+41,11,,A,0,0,Từ nào diễn tả việc đi lại đều đặn mỗi ngày giữa nhà và nơi làm việc?,,Commute
+42,11,,B,0,0,Một chuyến đi nhanh ra ngoài để giải quyết việc cá nhân gọi là gì?,,Errand
+43,11,,A,0,0,Tính từ nào mang ý nghĩa luôn xuất hiện đúng giờ hẹn?,,Punctual
+44,11,,C,0,0,"Từ nào chỉ những công việc lặp lại nhàm chán trong nhà (rửa bát, lau nhà)?",,Chore
+45,12,,A,0,0,Từ nào diễn tả việc đi lại đều đặn mỗi ngày giữa nhà và nơi làm việc?,,Commute
+46,12,,B,0,0,Một chuyến đi nhanh ra ngoài để giải quyết việc cá nhân gọi là gì?,,Errand
+47,12,,A,0,0,Tính từ nào mang ý nghĩa luôn xuất hiện đúng giờ hẹn?,,Punctual
+48,12,,C,0,0,"Từ nào chỉ những công việc lặp lại nhàm chán trong nhà (rửa bát, lau nhà)?",,Chore

@@ -1,2 +1,14 @@
 attempt_id,quiz_id,quiz_title_snapshot,attempt_status,started_at,submitted_at,total_questions,correct_count,score_percent
-70,20,Quiz từ vựng tiếng Anh,STARTED,2026-10-11 09:00:00,2026-10-11 09:05:00,2,1,50.00
+1,1,Quiz: Oxford 3000: Daily Routines,COMPLETED,2026-10-02 18:00:00,2026-10-02 18:08:00,4,4,100.00
+2,2,Quiz: Oxford 3000: Family & Relationships,COMPLETED,2026-10-03 18:00:00,2026-10-03 18:08:00,4,4,100.00
+3,3,Quiz: Oxford 3000: Food & Culinary Arts,COMPLETED,2026-10-04 18:00:00,2026-10-04 18:08:00,4,3,75.00
+4,4,Quiz: Oxford 3000: Travel & Aviation,COMPLETED,2026-10-05 18:00:00,2026-10-05 18:08:00,4,4,100.00
+5,5,Quiz: Oxford 3000: Shopping & Personal Finance,COMPLETED,2026-10-06 18:00:00,2026-10-06 18:08:00,4,4,100.00
+6,6,Quiz: Oxford 3000: Weather & Meteorology,COMPLETED,2026-10-07 18:00:00,2026-10-07 18:08:00,4,3,75.00
+7,7,Quiz: Oxford 3000: Health & Medicine,COMPLETED,2026-10-08 18:00:00,2026-10-08 18:08:00,4,4,100.00
+8,8,Quiz: Oxford 3000: House & Living Space,COMPLETED,2026-10-09 18:00:00,2026-10-09 18:08:00,4,4,100.00
+9,9,Quiz: Oxford 3000: Emotions & Personality,COMPLETED,2026-10-10 18:00:00,2026-10-10 18:08:00,4,3,75.00
+10,10,Quiz: Oxford 3000: Hobbies & Leisure,COMPLETED,2026-10-11 18:00:00,2026-10-11 18:08:00,4,4,100.00
+11,1,Quiz: Oxford 3000: Daily Routines,SUBMITTED,2026-10-20 16:43:50,2026-10-20 16:43:50,4,0,0.00
+12,1,Quiz: Oxford 3000: Daily Routines,SUBMITTED,2026-10-20 17:05:40,2026-10-20 17:05:40,4,0,0.00
+13,1,Quiz: Oxford 3000: Daily Routines,STARTED,2026-10-20 17:08:44,,4,,

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Plus, Trash2, Upload, PenTool, CheckCircle2, AlertCircle, Sparkles } from 'lucide-react';
+import { X, Plus, Trash2, Upload, PenTool, CheckCircle2, AlertCircle, Sparkles, Loader2 } from 'lucide-react';
 import { FlashcardSet } from '../../types';
+import { quizService } from '../../services/quizService';
 
 export interface QuizQuestionInput {
   question: string;
@@ -55,6 +56,7 @@ export const CreateQuizModal: React.FC<CreateQuizModalProps> = ({
   const [description, setDescription] = useState('');
   const [timeLimitMinutes, setTimeLimitMinutes] = useState(10);
   const [fileNotice, setFileNotice] = useState<{ type: 'success' | 'error'; msg: string } | null>(null);
+  const [isParsing, setIsParsing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [questions, setQuestions] = useState<QuizQuestionInput[]>([
@@ -192,7 +194,7 @@ export const CreateQuizModal: React.FC<CreateQuizModalProps> = ({
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = (event) => {
+    reader.onload = async (event) => {
       try {
         const content = event.target?.result as string;
         if (!content) return;
@@ -237,82 +239,32 @@ export const CreateQuizModal: React.FC<CreateQuizModalProps> = ({
           }
         }
 
-        // 2. Parse CSV / TXT
-        // Expected structure: question_text,option_a,option_b,option_c,option_d,correct_answer,points
-        const lines = content.split(/\r?\n/).filter((l) => l.trim().length > 0);
-        const parsedList: QuizQuestionInput[] = [];
-
-        for (const line of lines) {
-          let parts: string[] = [];
-          if (line.includes('\t')) parts = line.split('\t');
-          else if (line.includes(';')) parts = line.split(';');
-          else parts = line.split(',');
-
-          if (parts.length >= 3) {
-            const qText = parts[0]?.trim().replace(/^["']|["']$/g, '');
-            const optionA = parts[1]?.trim().replace(/^["']|["']$/g, '');
-            const optionB = parts[2]?.trim().replace(/^["']|["']$/g, '');
-            const optionC = (parts[3] || '').trim().replace(/^["']|["']$/g, '');
-            const optionD = (parts[4] || '').trim().replace(/^["']|["']$/g, '');
-            let rawAns = (parts[5] || 'A').trim().toUpperCase().replace(/^["']|["']$/g, '');
-            if (!['A', 'B', 'C', 'D'].includes(rawAns)) rawAns = 'A';
-
-            // col 6 can be points or explanation
-            const col6 = (parts[6] || '').trim().replace(/^["']|["']$/g, '');
-            const col7 = (parts[7] || '').trim().replace(/^["']|["']$/g, '');
-            let points = 1;
-            let explanation = '';
-
-            if (col6 && !isNaN(Number(col6))) {
-              points = Number(col6);
-              explanation = col7;
-            } else {
-              explanation = col6;
-              if (col7 && !isNaN(Number(col7))) {
-                points = Number(col7);
-              }
+        // 2. Parse CSV / TXT via Backend QuizService
+        setIsParsing(true);
+        try {
+          const parsedList = await quizService.importQuestionsFromCsv(content);
+          if (parsedList.length > 0) {
+            setQuestions(parsedList);
+            const successMsg = `Đã thẩm định và nạp thành công ${parsedList.length} câu hỏi qua Backend QuizService!`;
+            setFileNotice({ type: 'success', msg: successMsg });
+            onNotify?.(successMsg, 'success');
+            if (!title.trim()) {
+              setTitle(file.name.replace(/\.[^/.]+$/, ''));
             }
-
-            const lowerQ = qText.toLowerCase();
-            if (
-              qText &&
-              optionA &&
-              optionB &&
-              lowerQ !== 'question' &&
-              lowerQ !== 'question_text' &&
-              lowerQ !== 'question text' &&
-              lowerQ !== 'câu hỏi' &&
-              lowerQ !== 'cau_hoi'
-            ) {
-              parsedList.push({
-                question: qText,
-                optionA,
-                optionB,
-                optionC,
-                optionD,
-                correctAnswer: rawAns as 'A' | 'B' | 'C' | 'D',
-                explanation,
-                points,
-              });
-            }
+          } else {
+            const errMsg =
+              'Không tìm thấy dữ liệu câu hỏi hợp lệ trong tệp CSV (cần các cột: question_text, option_a, option_b, option_c, option_d, correct_answer).';
+            setFileNotice({ type: 'error', msg: errMsg });
+            onNotify?.(errMsg, 'error');
           }
-        }
-
-        if (parsedList.length > 0) {
-          setQuestions(parsedList);
-          const successMsg = `Đã tải thành công ${parsedList.length} câu hỏi quiz từ tệp!`;
-          setFileNotice({ type: 'success', msg: successMsg });
-          onNotify?.(successMsg, 'success');
-          if (!title.trim()) {
-            setTitle(file.name.replace(/\.[^/.]+$/, ''));
-          }
-        } else {
-          const errMsg =
-            'Không tìm thấy dữ liệu quiz hợp lệ trong tệp (cần các cột: question, option_a, option_b, option_c, option_d, correct_answer, explanation)';
+        } catch (apiErr: any) {
+          const errMsg = `Lỗi thẩm định CSV từ Backend: ${apiErr.message}`;
           setFileNotice({ type: 'error', msg: errMsg });
           onNotify?.(errMsg, 'error');
+        } finally {
+          setIsParsing(false);
         }
-      } catch (err) {
+      } catch (err: any) {
         const errMsg = 'Lỗi đọc tệp quiz! Vui lòng kiểm tra lại định dạng.';
         setFileNotice({ type: 'error', msg: errMsg });
         onNotify?.(errMsg, 'error');
@@ -703,10 +655,12 @@ export const CreateQuizModal: React.FC<CreateQuizModalProps> = ({
                 <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
                   <button
                     type="button"
+                    disabled={isParsing}
                     onClick={() => fileInputRef.current?.click()}
-                    className="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-700 transition-colors inline-block cursor-pointer shadow-xs"
+                    className="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-700 transition-colors inline-flex items-center gap-1.5 cursor-pointer shadow-xs disabled:opacity-50"
                   >
-                    Chọn tệp từ máy tính
+                    {isParsing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
+                    {isParsing ? 'Đang thẩm định...' : 'Chọn tệp từ máy tính'}
                   </button>
                   {targetDeck && targetDeck.cards && targetDeck.cards.length > 0 && (
                     <button

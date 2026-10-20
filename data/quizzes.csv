@@ -1,3 +1,101 @@
-quiz_id,source_deck_id,title,description,time_limit_minutes,is_deleted,created_at,updated_at
-20,10,Quiz từ vựng tiếng Anh,Trắc nghiệm 2 câu,15,0,2026-10-10 11:00:00,2026-10-10 11:00:00
-21,,Bài kiểm tra Địa lý & Toán học,Bài thi trắc nghiệm thử nghiệm thực tế,10,0,2026-10-15 20:49:49,2026-10-15 20:49:49
+﻿quiz_id,source_deck_id,title,description,time_limit_minutes,is_deleted,created_at,updated_at
+1,1,Quiz: Oxford 3000: Daily Routines,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Oxford 3000: Daily Routines'.,10,0,2026-10-01 11:00:00,2026-10-01 11:00:00
+2,2,Quiz: Oxford 3000: Family & Relationships,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Oxford 3000: Family & Relationships'.,15,0,2026-10-01 14:00:00,2026-10-01 14:00:00
+3,3,Quiz: Oxford 3000: Food & Culinary Arts,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Oxford 3000: Food & Culinary Arts'.,10,0,2026-10-01 17:00:00,2026-10-01 17:00:00
+4,4,Quiz: Oxford 3000: Travel & Aviation,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Oxford 3000: Travel & Aviation'.,15,0,2026-10-01 20:00:00,2026-10-01 20:00:00
+5,5,Quiz: Oxford 3000: Shopping & Personal Finance,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Oxford 3000: Shopping & Personal Finance'.,10,0,2026-10-01 23:00:00,2026-10-01 23:00:00
+6,6,Quiz: Oxford 3000: Weather & Meteorology,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Oxford 3000: Weather & Meteorology'.,15,0,2026-10-02 02:00:00,2026-10-02 02:00:00
+7,7,Quiz: Oxford 3000: Health & Medicine,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Oxford 3000: Health & Medicine'.,10,0,2026-10-02 05:00:00,2026-10-02 05:00:00
+8,8,Quiz: Oxford 3000: House & Living Space,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Oxford 3000: House & Living Space'.,15,0,2026-10-02 08:00:00,2026-10-02 08:00:00
+9,9,Quiz: Oxford 3000: Emotions & Personality,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Oxford 3000: Emotions & Personality'.,10,0,2026-10-02 11:00:00,2026-10-02 11:00:00
+10,10,Quiz: Oxford 3000: Hobbies & Leisure,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Oxford 3000: Hobbies & Leisure'.,15,0,2026-10-02 14:00:00,2026-10-02 14:00:00
+11,11,Quiz: Phrasal Verbs with 'Get',Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Phrasal Verbs with 'Get''.,10,0,2026-10-02 17:00:00,2026-10-02 17:00:00
+12,12,Quiz: Phrasal Verbs with 'Take',Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Phrasal Verbs with 'Take''.,15,0,2026-10-02 20:00:00,2026-10-02 20:00:00
+13,13,Quiz: Phrasal Verbs with 'Look',Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Phrasal Verbs with 'Look''.,10,0,2026-10-02 23:00:00,2026-10-02 23:00:00
+14,14,Quiz: Phrasal Verbs with 'Put',Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Phrasal Verbs with 'Put''.,15,0,2026-10-03 02:00:00,2026-10-03 02:00:00
+15,15,Quiz: Phrasal Verbs with 'Turn',Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Phrasal Verbs with 'Turn''.,10,0,2026-10-03 05:00:00,2026-10-03 05:00:00
+16,16,Quiz: Common Business Idioms,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Common Business Idioms'.,15,0,2026-10-03 08:00:00,2026-10-03 08:00:00
+17,17,Quiz: Food & Kitchen Idioms,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Food & Kitchen Idioms'.,10,0,2026-10-03 11:00:00,2026-10-03 11:00:00
+18,18,Quiz: Animal Idioms in English,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Animal Idioms in English'.,15,0,2026-10-03 14:00:00,2026-10-03 14:00:00
+19,19,Quiz: Time & Money Idioms,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Time & Money Idioms'.,10,0,2026-10-03 17:00:00,2026-10-03 17:00:00
+20,20,Quiz: Color Idioms & Expressions,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Color Idioms & Expressions'.,15,0,2026-10-03 20:00:00,2026-10-03 20:00:00
+21,21,Quiz: IELTS: Environment & Climate Change,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'IELTS: Environment & Climate Change'.,10,0,2026-10-03 23:00:00,2026-10-03 23:00:00
+22,22,Quiz: IELTS: Technology & Artificial Intelligence,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'IELTS: Technology & Artificial Intelligence'.,15,0,2026-10-04 02:00:00,2026-10-04 02:00:00
+23,23,Quiz: IELTS: Education & Academic Systems,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'IELTS: Education & Academic Systems'.,10,0,2026-10-04 05:00:00,2026-10-04 05:00:00
+24,24,Quiz: IELTS: Modern Medicine & Healthcare,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'IELTS: Modern Medicine & Healthcare'.,15,0,2026-10-04 08:00:00,2026-10-04 08:00:00
+25,25,Quiz: IELTS: Globalization & International Trade,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'IELTS: Globalization & International Trade'.,10,0,2026-10-04 11:00:00,2026-10-04 11:00:00
+26,26,Quiz: IELTS: Art & Cultural Heritage,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'IELTS: Art & Cultural Heritage'.,15,0,2026-10-04 14:00:00,2026-10-04 14:00:00
+27,27,Quiz: IELTS: Urbanization & City Infrastructure,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'IELTS: Urbanization & City Infrastructure'.,10,0,2026-10-04 17:00:00,2026-10-04 17:00:00
+28,28,Quiz: IELTS: Crime & Criminal Justice,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'IELTS: Crime & Criminal Justice'.,15,0,2026-10-04 20:00:00,2026-10-04 20:00:00
+29,29,Quiz: IELTS: Psychology & Human Behavior,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'IELTS: Psychology & Human Behavior'.,10,0,2026-10-04 23:00:00,2026-10-04 23:00:00
+30,30,Quiz: IELTS: Space Exploration & Astrophysics,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'IELTS: Space Exploration & Astrophysics'.,15,0,2026-10-05 02:00:00,2026-10-05 02:00:00
+31,31,Quiz: TOEIC: Corporate Management,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'TOEIC: Corporate Management'.,10,0,2026-10-05 05:00:00,2026-10-05 05:00:00
+32,32,Quiz: TOEIC: Contracts & Negotiations,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'TOEIC: Contracts & Negotiations'.,15,0,2026-10-05 08:00:00,2026-10-05 08:00:00
+33,33,Quiz: TOEIC: Banking & Corporate Finance,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'TOEIC: Banking & Corporate Finance'.,10,0,2026-10-05 11:00:00,2026-10-05 11:00:00
+34,34,Quiz: TOEIC: Marketing & Public Relations,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'TOEIC: Marketing & Public Relations'.,15,0,2026-10-05 14:00:00,2026-10-05 14:00:00
+35,35,Quiz: TOEIC: Human Resources & Recruitment,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'TOEIC: Human Resources & Recruitment'.,10,0,2026-10-05 17:00:00,2026-10-05 17:00:00
+36,36,Quiz: TOEIC: Logistics & Cargo Shipping,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'TOEIC: Logistics & Cargo Shipping'.,15,0,2026-10-05 20:00:00,2026-10-05 20:00:00
+37,37,Quiz: TOEIC: Manufacturing & Quality Control,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'TOEIC: Manufacturing & Quality Control'.,10,0,2026-10-05 23:00:00,2026-10-05 23:00:00
+38,38,Quiz: TOEIC: Office Technology & Telecommunications,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'TOEIC: Office Technology & Telecommunications'.,15,0,2026-10-06 02:00:00,2026-10-06 02:00:00
+39,39,Quiz: TOEIC: Customer Support & Service,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'TOEIC: Customer Support & Service'.,10,0,2026-10-06 05:00:00,2026-10-06 05:00:00
+40,40,Quiz: TOEIC: Business Conferences & Networking,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'TOEIC: Business Conferences & Networking'.,15,0,2026-10-06 08:00:00,2026-10-06 08:00:00
+41,41,Quiz: English Grammar: Advanced Tenses,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'English Grammar: Advanced Tenses'.,10,0,2026-10-06 11:00:00,2026-10-06 11:00:00
+42,42,Quiz: English Grammar: Conditionals,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'English Grammar: Conditionals'.,15,0,2026-10-06 14:00:00,2026-10-06 14:00:00
+43,43,Quiz: English Grammar: Passive Voice & Causatives,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'English Grammar: Passive Voice & Causatives'.,10,0,2026-10-06 17:00:00,2026-10-06 17:00:00
+44,44,Quiz: English Grammar: Relative & Participle Clauses,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'English Grammar: Relative & Participle Clauses'.,15,0,2026-10-06 20:00:00,2026-10-06 20:00:00
+45,45,Quiz: English Grammar: Gerunds & Infinitives,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'English Grammar: Gerunds & Infinitives'.,10,0,2026-10-06 23:00:00,2026-10-06 23:00:00
+46,46,Quiz: English Grammar: Modal Verbs of Deduction,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'English Grammar: Modal Verbs of Deduction'.,15,0,2026-10-07 02:00:00,2026-10-07 02:00:00
+47,47,Quiz: English Grammar: Subjunctive & Inversion,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'English Grammar: Subjunctive & Inversion'.,10,0,2026-10-07 05:00:00,2026-10-07 05:00:00
+48,48,Quiz: Collocations with 'Make' and 'Do',Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Collocations with 'Make' and 'Do''.,15,0,2026-10-07 08:00:00,2026-10-07 08:00:00
+49,49,Quiz: Easily Confused Words in English,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Easily Confused Words in English'.,10,0,2026-10-07 11:00:00,2026-10-07 11:00:00
+50,50,Quiz: Academic Discourse Markers & Connectors,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Academic Discourse Markers & Connectors'.,15,0,2026-10-07 14:00:00,2026-10-07 14:00:00
+51,51,Quiz: Cấu trúc dữ liệu: Mảng và Danh sách liên kết,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Cấu trúc dữ liệu: Mảng và Danh sách liên kết'.,10,0,2026-10-07 17:00:00,2026-10-07 17:00:00
+52,52,Quiz: Cấu trúc dữ liệu: Ngăn xếp (Stack LIFO),Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Cấu trúc dữ liệu: Ngăn xếp (Stack LIFO)'.,15,0,2026-10-07 20:00:00,2026-10-07 20:00:00
+53,53,Quiz: Cấu trúc dữ liệu: Hàng đợi (Queue FIFO),Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Cấu trúc dữ liệu: Hàng đợi (Queue FIFO)'.,10,0,2026-10-07 23:00:00,2026-10-07 23:00:00
+54,54,Quiz: Cấu trúc dữ liệu: Cây AVL & Cân bằng tự động,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Cấu trúc dữ liệu: Cây AVL & Cân bằng tự động'.,15,0,2026-10-08 02:00:00,2026-10-08 02:00:00
+55,55,Quiz: Cấu trúc dữ liệu: Cây B-Tree và B+ Tree,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Cấu trúc dữ liệu: Cây B-Tree và B+ Tree'.,10,0,2026-10-08 05:00:00,2026-10-08 05:00:00
+56,56,Quiz: Cấu trúc dữ liệu: Heap và Hàng đợi ưu tiên,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Cấu trúc dữ liệu: Heap và Hàng đợi ưu tiên'.,15,0,2026-10-08 08:00:00,2026-10-08 08:00:00
+57,57,Quiz: Cấu trúc dữ liệu: Bảng băm (Hash Table),Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Cấu trúc dữ liệu: Bảng băm (Hash Table)'.,10,0,2026-10-08 11:00:00,2026-10-08 11:00:00
+58,58,Quiz: Thuật toán: Duyệt đồ thị BFS và DFS,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Thuật toán: Duyệt đồ thị BFS và DFS'.,15,0,2026-10-08 14:00:00,2026-10-08 14:00:00
+59,59,Quiz: Thuật toán: Sắp xếp QuickSort và MergeSort,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Thuật toán: Sắp xếp QuickSort và MergeSort'.,10,0,2026-10-08 17:00:00,2026-10-08 17:00:00
+60,60,Quiz: Thuật toán: Quy hoạch động (Dynamic Programming),Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Thuật toán: Quy hoạch động (Dynamic Programming)'.,15,0,2026-10-08 20:00:00,2026-10-08 20:00:00
+61,61,Quiz: Python: Cú pháp lõi & Data Structures,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Python: Cú pháp lõi & Data Structures'.,10,0,2026-10-08 23:00:00,2026-10-08 23:00:00
+62,62,Quiz: Python: Lập trình Hướng đối tượng (OOP),Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Python: Lập trình Hướng đối tượng (OOP)'.,15,0,2026-10-09 02:00:00,2026-10-09 02:00:00
+63,63,Quiz: Python: Decorators & Generators,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Python: Decorators & Generators'.,10,0,2026-10-09 05:00:00,2026-10-09 05:00:00
+64,64,Quiz: Python: Lập trình Bất đồng bộ Asyncio,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Python: Lập trình Bất đồng bộ Asyncio'.,15,0,2026-10-09 08:00:00,2026-10-09 08:00:00
+65,65,Quiz: Backend Web: Framework FastAPI & Pydantic,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Backend Web: Framework FastAPI & Pydantic'.,10,0,2026-10-09 11:00:00,2026-10-09 11:00:00
+66,66,Quiz: Backend Web: Thiết kế chuẩn RESTful API,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Backend Web: Thiết kế chuẩn RESTful API'.,15,0,2026-10-09 14:00:00,2026-10-09 14:00:00
+67,67,Quiz: Cơ sở dữ liệu: Tối ưu Truy vấn & Indexing,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Cơ sở dữ liệu: Tối ưu Truy vấn & Indexing'.,10,0,2026-10-09 17:00:00,2026-10-09 17:00:00
+68,68,Quiz: DevOps: Containerization với Docker,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'DevOps: Containerization với Docker'.,15,0,2026-10-09 20:00:00,2026-10-09 20:00:00
+69,69,Quiz: Công cụ: Quản lý mã nguồn với Git,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Công cụ: Quản lý mã nguồn với Git'.,10,0,2026-10-09 23:00:00,2026-10-09 23:00:00
+70,70,Quiz: Kiến trúc phần mềm: Clean Code & Design Patterns,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Kiến trúc phần mềm: Clean Code & Design Patterns'.,15,0,2026-10-10 02:00:00,2026-10-10 02:00:00
+71,71,Quiz: Hệ điều hành: Tiến trình & Đa luồng (Thread),Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Hệ điều hành: Tiến trình & Đa luồng (Thread)'.,10,0,2026-10-10 05:00:00,2026-10-10 05:00:00
+72,72,Quiz: Hệ điều hành: Đồng bộ hóa Mutex & Semaphore,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Hệ điều hành: Đồng bộ hóa Mutex & Semaphore'.,15,0,2026-10-10 08:00:00,2026-10-10 08:00:00
+73,73,Quiz: Hệ điều hành: Bộ nhớ ảo & Phân trang,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Hệ điều hành: Bộ nhớ ảo & Phân trang'.,10,0,2026-10-10 11:00:00,2026-10-10 11:00:00
+74,74,Quiz: Hệ điều hành: Hiện tượng Bế tắc (Deadlock),Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Hệ điều hành: Hiện tượng Bế tắc (Deadlock)'.,15,0,2026-10-10 14:00:00,2026-10-10 14:00:00
+75,75,Quiz: Kiến trúc máy tính: Mô hình Von Neumann,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Kiến trúc máy tính: Mô hình Von Neumann'.,10,0,2026-10-10 17:00:00,2026-10-10 17:00:00
+76,76,Quiz: Kiến trúc máy tính: Hệ thống Cache Memory,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Kiến trúc máy tính: Hệ thống Cache Memory'.,15,0,2026-10-10 20:00:00,2026-10-10 20:00:00
+77,77,Quiz: Hệ điều hành: Hệ thống Tệp tin (File Systems),Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Hệ điều hành: Hệ thống Tệp tin (File Systems)'.,10,0,2026-10-10 23:00:00,2026-10-10 23:00:00
+78,78,Quiz: Hệ điều hành: Lời gọi hệ thống (System Calls),Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Hệ điều hành: Lời gọi hệ thống (System Calls)'.,15,0,2026-10-11 02:00:00,2026-10-11 02:00:00
+79,79,Quiz: Hợp ngữ: Lập trình Assembly x86 cơ bản,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Hợp ngữ: Lập trình Assembly x86 cơ bản'.,10,0,2026-10-11 05:00:00,2026-10-11 05:00:00
+80,80,Quiz: Kiến trúc máy tính: Cơ chế Ngắt (Interrupts) & I/O,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Kiến trúc máy tính: Cơ chế Ngắt (Interrupts) & I/O'.,15,0,2026-10-11 08:00:00,2026-10-11 08:00:00
+81,81,Quiz: Mạng máy tính: Mô hình OSI & TCP/IP,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Mạng máy tính: Mô hình OSI & TCP/IP'.,10,0,2026-10-11 11:00:00,2026-10-11 11:00:00
+82,82,"Quiz: Mạng máy tính: Giao thức HTTP, HTTPS & WebSockets","Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Mạng máy tính: Giao thức HTTP, HTTPS & WebSockets'.",15,0,2026-10-11 14:00:00,2026-10-11 14:00:00
+83,83,Quiz: Mạng máy tính: Phân giải Tên miền DNS & DHCP,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Mạng máy tính: Phân giải Tên miền DNS & DHCP'.,10,0,2026-10-11 17:00:00,2026-10-11 17:00:00
+84,84,"Quiz: Mạng máy tính: Địa chỉ IPv4, IPv6 & Chia Subnet","Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Mạng máy tính: Địa chỉ IPv4, IPv6 & Chia Subnet'.",15,0,2026-10-11 20:00:00,2026-10-11 20:00:00
+85,85,Quiz: An toàn thông tin: Mật mã học Cơ bản,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'An toàn thông tin: Mật mã học Cơ bản'.,10,0,2026-10-11 23:00:00,2026-10-11 23:00:00
+86,86,Quiz: An toàn thông tin: Top 10 Lỗ hổng OWASP,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'An toàn thông tin: Top 10 Lỗ hổng OWASP'.,15,0,2026-10-12 02:00:00,2026-10-12 02:00:00
+87,87,Quiz: An ninh mạng: Tường lửa & Reverse Proxy,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'An ninh mạng: Tường lửa & Reverse Proxy'.,10,0,2026-10-12 05:00:00,2026-10-12 05:00:00
+88,88,Quiz: An toàn thông tin: Bắt tay bảo mật SSL/TLS,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'An toàn thông tin: Bắt tay bảo mật SSL/TLS'.,15,0,2026-10-12 08:00:00,2026-10-12 08:00:00
+89,89,Quiz: An ninh mạng: Mạng riêng ảo VPN & Đường hầm SSH,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'An ninh mạng: Mạng riêng ảo VPN & Đường hầm SSH'.,10,0,2026-10-12 11:00:00,2026-10-12 11:00:00
+90,90,Quiz: Xác thực & Cấp quyền: OAuth2 & JSON Web Token,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Xác thực & Cấp quyền: OAuth2 & JSON Web Token'.,15,0,2026-10-12 14:00:00,2026-10-12 14:00:00
+91,91,Quiz: Toán học: Toán rời rạc & Đại số Boole,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Toán học: Toán rời rạc & Đại số Boole'.,10,0,2026-10-12 17:00:00,2026-10-12 17:00:00
+92,92,Quiz: Toán học: Đại số tuyến tính cho Machine Learning,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Toán học: Đại số tuyến tính cho Machine Learning'.,15,0,2026-10-12 20:00:00,2026-10-12 20:00:00
+93,93,Quiz: Toán học: Xác suất Thống kê cho Data Science,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Toán học: Xác suất Thống kê cho Data Science'.,10,0,2026-10-12 23:00:00,2026-10-12 23:00:00
+94,94,Quiz: Trí tuệ nhân tạo: Học máy căn bản (Machine Learning),Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Trí tuệ nhân tạo: Học máy căn bản (Machine Learning)'.,15,0,2026-10-13 02:00:00,2026-10-13 02:00:00
+95,95,Quiz: Trí tuệ nhân tạo: Mạng Nơ-ron & Deep Learning,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Trí tuệ nhân tạo: Mạng Nơ-ron & Deep Learning'.,10,0,2026-10-13 05:00:00,2026-10-13 05:00:00
+96,96,Quiz: Trí tuệ nhân tạo: Xử lý Ngôn ngữ Tự nhiên (NLP),Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Trí tuệ nhân tạo: Xử lý Ngôn ngữ Tự nhiên (NLP)'.,15,0,2026-10-13 08:00:00,2026-10-13 08:00:00
+97,97,Quiz: Trí tuệ nhân tạo: Thị giác máy tính (Computer Vision),Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Trí tuệ nhân tạo: Thị giác máy tính (Computer Vision)'.,10,0,2026-10-13 11:00:00,2026-10-13 11:00:00
+98,98,Quiz: Lịch sử Điện toán: Các Cột mốc & Danh nhân,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Lịch sử Điện toán: Các Cột mốc & Danh nhân'.,15,0,2026-10-13 14:00:00,2026-10-13 14:00:00
+99,99,Quiz: Khoa học Tự nhiên: Vật lý Hiện đại,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Khoa học Tự nhiên: Vật lý Hiện đại'.,10,0,2026-10-13 17:00:00,2026-10-13 17:00:00
+100,100,Quiz: Khoa học Vũ trụ: Hệ Mặt Trời & Các Thiên thể,Bài kiểm tra trắc nghiệm đánh giá kiến thức chủ đề 'Khoa học Vũ trụ: Hệ Mặt Trời & Các Thiên thể'.,15,0,2026-10-13 20:00:00,2026-10-13 20:00:00

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { X, Upload, Sparkles } from 'lucide-react';
+import { X, Upload, Sparkles, Loader2 } from 'lucide-react';
 import { FlashcardSet } from '../../types';
+import { quizService } from '../../services/quizService';
 
 interface QuizQuestionImport {
   question: string;
@@ -36,6 +37,7 @@ export const ImportQuizModal: React.FC<ImportQuizModalProps> = ({
 }) => {
   const [previewData, setPreviewData] = useState<QuizQuestionImport[]>([]);
   const [privacy, setPrivacy] = useState<'public' | 'private'>('public');
+  const [isParsing, setIsParsing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   if (!isOpen) return null;
@@ -45,12 +47,12 @@ export const ImportQuizModal: React.FC<ImportQuizModalProps> = ({
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = (event) => {
+    reader.onload = async (event) => {
       try {
         const content = event.target?.result as string;
         if (!content) return;
 
-        // Try JSON
+        // 1. Nếu là file JSON
         if (file.name.endsWith('.json')) {
           const parsed = JSON.parse(content);
           if (Array.isArray(parsed)) {
@@ -75,88 +77,46 @@ export const ImportQuizModal: React.FC<ImportQuizModalProps> = ({
           }
         }
 
-        // Parse CSV
-        const lines = content.split(/\r?\n/).filter((l) => l.trim().length > 0);
-        const parsedList: QuizQuestionImport[] = [];
-
-        for (const line of lines) {
-          let parts: string[] = [];
-          if (line.includes('\t')) parts = line.split('\t');
-          else if (line.includes(';')) parts = line.split(';');
-          else parts = line.split(',');
-
-          if (parts.length >= 3) {
-            const question = parts[0]?.trim().replace(/^["']|["']$/g, '');
-            const optionA = parts[1]?.trim().replace(/^["']|["']$/g, '');
-            const optionB = parts[2]?.trim().replace(/^["']|["']$/g, '');
-            const optionC = (parts[3] || '').trim().replace(/^["']|["']$/g, '');
-            const optionD = (parts[4] || '').trim().replace(/^["']|["']$/g, '');
-            let rawAns = (parts[5] || 'A').trim().toUpperCase().replace(/^["']|["']$/g, '');
-            if (!['A', 'B', 'C', 'D'].includes(rawAns)) rawAns = 'A';
-            const explanation = (parts[6] || '').trim().replace(/^["']|["']$/g, '');
-
-            if (question && optionA && optionB && question.toLowerCase() !== 'question') {
-              parsedList.push({
-                question,
-                optionA,
-                optionB,
-                optionC,
-                optionD,
-                correctAnswer: rawAns as 'A' | 'B' | 'C' | 'D',
-                explanation,
-              });
-            }
+        // 2. Nếu là file CSV/TXT: Gửi lên Backend để QuizService thẩm định và chuẩn hóa
+        setIsParsing(true);
+        try {
+          const parsedList = await quizService.importQuestionsFromCsv(content);
+          if (parsedList.length > 0) {
+            setPreviewData(parsedList as QuizQuestionImport[]);
+            onNotify(`Đã thẩm định và nạp thành công ${parsedList.length} câu hỏi qua Backend QuizService!`, 'success');
+          } else {
+            onNotify('Không tìm thấy dữ liệu câu hỏi hợp lệ trong tệp CSV.', 'error');
           }
+        } catch (apiErr: any) {
+          onNotify(`Lỗi thẩm định CSV từ Backend: ${apiErr.message}`, 'error');
+        } finally {
+          setIsParsing(false);
         }
-
-        if (parsedList.length > 0) {
-          setPreviewData(parsedList);
-          onNotify(`Đã tải thành công ${parsedList.length} câu hỏi quiz từ tệp!`, 'success');
-        } else {
-          onNotify(
-            'Không tìm thấy dữ liệu quiz hợp lệ (cần các cột: question, optionA, optionB, optionC, optionD, correctAnswer, explanation)',
-            'error'
-          );
-        }
-      } catch (err) {
-        onNotify('Lỗi đọc tệp quiz! Vui lòng kiểm tra định dạng.', 'error');
+      } catch (err: any) {
+        onNotify(`Lỗi đọc tệp quiz: ${err.message}`, 'error');
       }
     };
     reader.readAsText(file);
+    e.target.value = '';
   };
 
-  const handleLoadSampleQuizCSV = () => {
-    const sampleQuiz: QuizQuestionImport[] = [
-      {
-        question: 'Độ phức tạp thời gian trung bình của tìm kiếm nhị phân (Binary Search) là?',
-        optionA: 'O(1)',
-        optionB: 'O(n)',
-        optionC: 'O(log n)',
-        optionD: 'O(n^2)',
-        correctAnswer: 'C',
-        explanation: 'Binary Search chia đôi không gian tìm kiếm sau mỗi bước.',
-      },
-      {
-        question: 'Giao thức nào hoạt động tại tầng Transport cung cấp kết nối tin cậy?',
-        optionA: 'UDP',
-        optionB: 'TCP',
-        optionC: 'IP',
-        optionD: 'HTTP',
-        correctAnswer: 'B',
-        explanation: 'TCP cung cấp kết nối đảm bảo tin cậy và truyền đúng thứ tự gói tin.',
-      },
-      {
-        question: 'Trong cơ sở dữ liệu quan hệ, khóa chính (Primary Key) có đặc điểm gì?',
-        optionA: 'Có thể chứa giá trị NULL',
-        optionB: 'Không duy nhất',
-        optionC: 'Duy nhất và không được NULL',
-        optionD: 'Chỉ áp dụng cho trường số nguyên',
-        correctAnswer: 'C',
-        explanation: 'Primary key định danh duy nhất cho từng bản ghi và không được phép null.',
-      },
-    ];
-    setPreviewData(sampleQuiz);
-    onNotify('Đã nạp bản xem trước dữ liệu mẫu Quiz CSV!', 'info');
+  const handleLoadSampleQuizCSV = async () => {
+    const sampleCsv = `question_text,option_a,option_b,option_c,option_d,correct_answer,points
+Độ phức tạp thời gian trung bình của tìm kiếm nhị phân (Binary Search) là?,O(1),O(n),O(log n),O(n^2),C,1.0
+Giao thức nào hoạt động tại tầng Transport cung cấp kết nối tin cậy?,UDP,TCP,IP,HTTP,B,1.0
+Cấu trúc dữ liệu nào hoạt động theo nguyên tắc LIFO (Last In First Out)?,Queue,Stack,Array,Linked List,B,1.0
+Cây AVL là cấu trúc dữ liệu nào?,Cây tìm kiếm nhị phân tự cân bằng,Cây B-Tree bậc 3,Đồ thị có hướng không chu trình,Bảng băm,A,1.0`;
+
+    setIsParsing(true);
+    try {
+      const parsedList = await quizService.importQuestionsFromCsv(sampleCsv);
+      setPreviewData(parsedList as QuizQuestionImport[]);
+      onNotify(`Đã nạp và thẩm định thành công ${parsedList.length} câu hỏi mẫu qua Backend QuizService!`, 'success');
+    } catch (err: any) {
+      onNotify(`Lỗi nạp dữ liệu mẫu: ${err.message}`, 'error');
+    } finally {
+      setIsParsing(false);
+    }
   };
 
   const handleLoadFromDeckCards = () => {

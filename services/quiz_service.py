@@ -518,7 +518,7 @@ class QuizService:
         page: int = 1,
         page_size: int = 10,
     ) -> dict[str, Any]:
-        """Lấy danh sách bài kiểm tra hoặc tìm kiếm theo tên có phân trang (tối đa 10 quiz).
+        """Lấy danh sách bài kiểm tra hoặc tìm kiếm theo tên có phân trang (tối đa 100 quiz).
 
         Chỉ cần tiêu đề bài kiểm tra có chứa chuỗi tìm kiếm (substring / partial match),
         không phân biệt chữ hoa hay chữ thường. Mặc định tự động lọc bỏ các bài quiz
@@ -527,15 +527,15 @@ class QuizService:
         Args:
             keyword: Từ khóa tìm kiếm chuỗi con trong tiêu đề bài quiz.
             page: Số trang cần lấy (bắt đầu từ 1, mặc định 1).
-            page_size: Số lượng quiz tối đa trên mỗi trang (mặc định 10, trần tối đa 10).
+            page_size: Số lượng quiz tối đa trên mỗi trang (mặc định 10, trần tối đa 100).
 
         Returns:
             dict[str, Any]:
-                - items: Danh sách tối đa 10 quiz (chỉ gồm quiz_id, title, description,
+                - items: Danh sách tối đa page_size quiz (chỉ gồm quiz_id, title, description,
                          time_limit_minutes, total_questions, source_deck_id).
                 - total_pages: Tổng số trang (ceil(total_count / page_size)).
                 - page: Trang hiện tại.
-                - page_size: Kích thước trang thực tế (tối đa 10).
+                - page_size: Kích thước trang thực tế (tối đa 100).
 
         Raises:
             TypeError: Khi page hoặc page_size không phải số nguyên.
@@ -546,7 +546,7 @@ class QuizService:
             raise TypeError("page_size phải là số nguyên")
 
         actual_page = max(1, page)
-        actual_page_size = max(1, min(page_size, 10))
+        actual_page_size = max(1, min(page_size, 100))
 
         # 1. Lọc danh sách quiz hợp lệ từ cây AVL in-memory
         quizzes = self.quiz_repository.find_by(is_deleted=False)

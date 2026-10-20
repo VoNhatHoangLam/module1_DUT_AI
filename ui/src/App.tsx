@@ -106,8 +106,8 @@ export default function App() {
     setIsLoadingData(true);
     try {
       const [decksRes, quizzesRes, historyRes] = await Promise.allSettled([
-        deckService.getDecks(),
-        quizService.getQuizzes(),
+        deckService.getDecks(undefined, 1, 100),
+        quizService.getQuizzes(undefined, 1, 100),
         historyService.listAttempts(),
       ]);
 

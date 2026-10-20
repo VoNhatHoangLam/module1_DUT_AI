@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   ChevronLeft,
   ChevronRight,
@@ -9,8 +9,11 @@ import {
   Layers,
   MoreVertical,
   Sparkles,
+  Loader2,
+  X,
 } from 'lucide-react';
 import { FlashcardSet, UserProfile, TabType } from '../../types';
+import { deckService } from '../../services/deckService';
 
 interface MySetsViewProps {
   currentUser: UserProfile;
@@ -38,25 +41,49 @@ export const MySetsView: React.FC<MySetsViewProps> = ({
   const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
-  const PAGE_SIZE = 4;
+  const [searchResults, setSearchResults] = useState<FlashcardSet[] | null>(null);
+  const [isSearching, setIsSearching] = useState(false);
+  const PAGE_SIZE = 10;
 
-  const filteredSets = useMemo(() => {
-    return myPersonalSets.filter((s) => {
-      const matchSearch =
-        (s.title || '').toLowerCase().includes(search.toLowerCase()) ||
-        (s.description || '').toLowerCase().includes(search.toLowerCase()) ||
-        (s.category || '').toLowerCase().includes(search.toLowerCase());
-      return matchSearch;
-    });
-  }, [myPersonalSets, search]);
+  // Lắng nghe từ khóa tìm kiếm và gọi API tìm tiền tố tiêu đề bằng Cây AVL O(log N + K)
+  useEffect(() => {
+    const cleanPrefix = search.trim();
+    if (!cleanPrefix) {
+      setSearchResults(null);
+      setIsSearching(false);
+      return;
+    }
 
-  const totalPages = Math.max(1, Math.ceil(filteredSets.length / PAGE_SIZE));
+    setIsSearching(true);
+    const timer = setTimeout(async () => {
+      try {
+        const res = await deckService.getDecks(cleanPrefix, 1, 100);
+        setSearchResults(res.items || []);
+      } catch (err) {
+        console.error('Lỗi tìm kiếm bộ thẻ qua Cây AVL:', err);
+      } finally {
+        setIsSearching(false);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [search]);
+
+  // Chỉ cho phép tìm kiếm theo Tiêu đề (Title) thông qua Cây AVL
+  const displayedSets = useMemo(() => {
+    if (searchResults !== null) {
+      return searchResults;
+    }
+    return myPersonalSets;
+  }, [searchResults, myPersonalSets]);
+
+  const totalPages = Math.max(1, Math.ceil(displayedSets.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
 
   const pagedSets = useMemo(() => {
     const start = (currentPage - 1) * PAGE_SIZE;
-    return filteredSets.slice(start, start + PAGE_SIZE);
-  }, [filteredSets, currentPage]);
+    return displayedSets.slice(start, start + PAGE_SIZE);
+  }, [displayedSets, currentPage]);
 
   return (
     <div className="space-y-6">
@@ -80,21 +107,49 @@ export const MySetsView: React.FC<MySetsViewProps> = ({
         </div>
       </div>
 
-      {/* Search Bar */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+      {/* Search Bar - Chỉ tìm kiếm theo Title bằng Cây AVL */}
+      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-2">
         <div className="relative w-full">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          {isSearching ? (
+            <Loader2 className="w-4 h-4 text-blue-600 animate-spin absolute left-3.5 top-1/2 -translate-y-1/2" />
+          ) : (
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          )}
           <input
             type="text"
-            placeholder="Tìm kiếm trong các bộ thẻ của bạn..."
+            placeholder="Tìm kiếm tiền tố tiêu đề qua Cây AVL (VD: Oxford, IELTS, English, Python)..."
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
               setPage(1);
             }}
-            className="w-full pl-10 pr-4 py-2 text-sm bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white"
+            className="w-full pl-10 pr-10 py-2.5 text-sm bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors"
           />
+          {search && (
+            <button
+              type="button"
+              onClick={() => {
+                setSearch('');
+                setPage(1);
+              }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-200 transition-colors cursor-pointer"
+              title="Xóa tìm kiếm"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
         </div>
+
+        {search.trim() && (
+          <div className="flex items-center justify-between text-xs text-slate-500 px-1 pt-0.5">
+            <div className="flex items-center gap-1.5 text-blue-600 font-medium">
+              <Sparkles className="w-3.5 h-3.5" />
+            </div>
+            <span>
+              {isSearching ? 'Đang truy vấn Cây AVL...' : `Tìm thấy ${displayedSets.length} bộ thẻ`}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Personal Sets Grid - Paginated */}
@@ -160,7 +215,6 @@ export const MySetsView: React.FC<MySetsViewProps> = ({
 
                 <div className="mt-6 pt-4 border-t border-slate-100">
                   <div className="flex items-center justify-between text-xs text-slate-500 mb-4">
-                    <span className="text-slate-400">Cập nhật: {set.updatedAt}</span>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -184,8 +238,8 @@ export const MySetsView: React.FC<MySetsViewProps> = ({
             ))}
           </div>
 
-          {/* Centered Pagination Bar (đã xóa dòng số lượng và căn giữa theo yêu cầu) */}
-          {filteredSets.length > 0 && (
+          {/* Centered Pagination Bar */}
+          {displayedSets.length > 0 && (
             <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-center">
               <div className="flex items-center justify-center gap-1.5">
                 <button
@@ -200,11 +254,10 @@ export const MySetsView: React.FC<MySetsViewProps> = ({
                   <button
                     key={pageNum}
                     onClick={() => setPage(pageNum)}
-                    className={`w-8 h-8 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                      pageNum === currentPage
-                        ? 'bg-blue-600 text-white shadow-xs'
-                        : 'text-slate-600 hover:bg-slate-100 border border-slate-200'
-                    }`}
+                    className={`w-8 h-8 rounded-lg text-xs font-bold transition-all cursor-pointer ${pageNum === currentPage
+                      ? 'bg-blue-600 text-white shadow-xs'
+                      : 'text-slate-600 hover:bg-slate-100 border border-slate-200'
+                      }`}
                   >
                     {pageNum}
                   </button>
@@ -226,9 +279,15 @@ export const MySetsView: React.FC<MySetsViewProps> = ({
           <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center mx-auto">
             <BookmarkCheck className="w-6 h-6" />
           </div>
-          <p className="text-base font-bold text-slate-800">Không tìm thấy bộ flashcard nào phù hợp.</p>
+          <p className="text-base font-bold text-slate-800">
+            {search.trim()
+              ? `Không tìm thấy bộ flashcard nào có tiêu đề bắt đầu bằng "${search.trim()}".`
+              : 'Không tìm thấy bộ flashcard nào phù hợp.'}
+          </p>
           <p className="text-xs max-w-md mx-auto">
-            Hãy thử xóa từ khóa tìm kiếm hoặc tạo bộ thẻ mới.
+            {search.trim()
+              ? 'Hệ thống chỉ tìm kiếm theo tiền tố Tiêu đề (Title) bằng Cây AVL. Hãy thử nhập tiền tố khác.'
+              : 'Hãy thử tạo bộ thẻ mới.'}
           </p>
           <button
             onClick={() => {

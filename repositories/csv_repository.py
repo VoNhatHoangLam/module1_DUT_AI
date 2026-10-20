@@ -109,6 +109,13 @@ class CsvRepository(Generic[T]):
         self._last_mtime: Optional[float] = None
         self._is_loaded: bool = False
 
+    @staticmethod
+    def _normalize_key(val: Any) -> Any:
+        """Chuẩn hóa khóa chỉ mục: chuyển chuỗi thành chữ thường để hỗ trợ tìm kiếm không phân biệt hoa/thường."""
+        if isinstance(val, str):
+            return val.lower()
+        return val
+
     def get_all(self) -> list[T]:
         """Đọc toàn bộ bản ghi và chuyển từng dòng thành model.
 
@@ -152,8 +159,9 @@ class CsvRepository(Generic[T]):
             )
 
             if indexed_match is not None:
-                # Tìm kiếm O(log N) bằng cây MultiAVLTree
-                candidates = self._secondary_indices[indexed_match].search(criteria[indexed_match])
+                # Tìm kiếm O(log N) bằng cây MultiAVLTree (chuẩn hóa khóa tìm kiếm)
+                search_key = self._normalize_key(criteria[indexed_match])
+                candidates = self._secondary_indices[indexed_match].search(search_key)
                 remaining_criteria = {
                     k: v for k, v in criteria.items() if k != indexed_match
                 }
@@ -172,26 +180,44 @@ class CsvRepository(Generic[T]):
                 if all(getattr(record, name) == value for name, value in criteria.items())
             ]
 
-    def find_by_prefix(self, field: str, prefix: str) -> list[T]:
+    def find_by_prefix(self, field: str, prefix: str, **criteria: Any) -> list[T]:
         """Tìm các bản ghi có giá trị của trường bắt đầu bằng prefix với độ phức tạp O(log N + K).
 
         Nếu trường có trong chỉ mục phụ MultiAVLTree, tìm kiếm đạt O(log N + K).
         Nếu không có chỉ mục phụ, duyệt qua toàn bộ các bản ghi trong bộ nhớ RAM.
+        Hỗ trợ lọc thêm các tiêu chí phụ (như is_deleted=False).
         """
         if field not in self._field_names:
             raise ValueError(f"Model {self.model_class.__name__} không có trường: {field}")
 
-        prefix_str = str(prefix)
+        unknown_fields = set(criteria) - set(self._field_names)
+        if unknown_fields:
+            names = ", ".join(sorted(unknown_fields))
+            raise ValueError(f"Model không có trường: {names}")
+
+        prefix_str = str(prefix).strip().lower()
         with self._lock:
             self._ensure_cache_loaded()
+            if not prefix_str:
+                if criteria:
+                    return self.find_by(**criteria)
+                return [copy.copy(record) for record in self._primary_index.inorder()]
+
             if field in self._secondary_indices:
                 candidates = self._secondary_indices[field].prefix_search(prefix_str)
+                if criteria:
+                    return [
+                        copy.copy(record)
+                        for record in candidates
+                        if all(getattr(record, k) == v for k, v in criteria.items())
+                    ]
                 return [copy.copy(record) for record in candidates]
 
             return [
                 copy.copy(record)
                 for record in self._primary_index.inorder()
-                if str(getattr(record, field, "")).startswith(prefix_str)
+                if str(getattr(record, field, "")).lower().startswith(prefix_str)
+                and (not criteria or all(getattr(record, k) == v for k, v in criteria.items()))
             ]
 
     def exists(self, record_id: int) -> bool:
@@ -256,7 +282,8 @@ class CsvRepository(Generic[T]):
             )
 
             if indexed_match is not None:
-                candidates = self._secondary_indices[indexed_match].search(criteria[indexed_match])
+                search_key = self._normalize_key(criteria[indexed_match])
+                candidates = self._secondary_indices[indexed_match].search(search_key)
                 remaining_criteria = {
                     k: v for k, v in criteria.items() if k != indexed_match
                 }
@@ -396,7 +423,7 @@ class CsvRepository(Generic[T]):
             for field_name in self._indexed_fields:
                 val = getattr(stored_record, field_name)
                 if val is not None:
-                    self._secondary_indices[field_name].insert(val, stored_record)
+                    self._secondary_indices[field_name].insert(self._normalize_key(val), stored_record)
 
             # Ghi đĩa đồng bộ (Write-Through)
             self._write_all(self._primary_index.inorder())
@@ -428,19 +455,19 @@ class CsvRepository(Generic[T]):
                 new_val = getattr(stored_record, field_name)
                 if old_val is not None and new_val is not None:
                     self._secondary_indices[field_name].update_record(
-                        old_key=old_val,
-                        new_key=new_val,
+                        old_key=self._normalize_key(old_val),
+                        new_key=self._normalize_key(new_val),
                         value=stored_record,
                         identifier_func=lambda r: getattr(r, self.id_field),
                     )
                 elif old_val is not None and new_val is None:
                     self._secondary_indices[field_name].remove(
-                        old_val,
+                        self._normalize_key(old_val),
                         stored_record,
                         identifier_func=lambda r: getattr(r, self.id_field),
                     )
                 elif old_val is None and new_val is not None:
-                    self._secondary_indices[field_name].insert(new_val, stored_record)
+                    self._secondary_indices[field_name].insert(self._normalize_key(new_val), stored_record)
 
             # Cập nhật chỉ mục chính (O(log N))
             self._primary_index.update(record_id, stored_record)
@@ -470,7 +497,7 @@ class CsvRepository(Generic[T]):
                 val = getattr(existing, field_name)
                 if val is not None:
                     self._secondary_indices[field_name].remove(
-                        val,
+                        self._normalize_key(val),
                         existing,
                         identifier_func=lambda r: getattr(r, self.id_field),
                     )
@@ -513,7 +540,7 @@ class CsvRepository(Generic[T]):
                     val = getattr(record, field_name)
                     if val is not None:
                         self._secondary_indices[field_name].remove(
-                            val,
+                            self._normalize_key(val),
                             record,
                             identifier_func=lambda r: getattr(r, self.id_field),
                         )
@@ -553,7 +580,7 @@ class CsvRepository(Generic[T]):
             for field_name in self._indexed_fields:
                 sec_val = getattr(record, field_name)
                 if sec_val is not None:
-                    self._secondary_indices[field_name].insert(sec_val, record)
+                    self._secondary_indices[field_name].insert(self._normalize_key(sec_val), record)
 
         self._last_mtime = self.file_path.stat().st_mtime
         self._is_loaded = True

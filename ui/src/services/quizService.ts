@@ -63,13 +63,25 @@ export const quizService = {
   },
 
   /**
-   * Phân tích câu hỏi trắc nghiệm từ CSV trước khi thêm vào form.
+   * Phân tích câu hỏi trắc nghiệm từ CSV bằng Backend CsvParser trước khi thêm vào form.
    */
   async importQuestionsFromCsv(csvContent: string): Promise<QuizQuestionInput[]> {
-    return request<QuizQuestionInput[]>('/quizzes/import', {
+    const rawList = await request<any[]>('/quizzes/import', {
       method: 'POST',
       body: JSON.stringify({ csv_content: csvContent }),
     });
+
+    return rawList.map((item, idx) => ({
+      question: item.question_text || item.question || '',
+      optionA: item.option_a || item.optionA || '',
+      optionB: item.option_b || item.optionB || '',
+      optionC: item.option_c || item.optionC || '',
+      optionD: item.option_d || item.optionD || '',
+      correctAnswer: (item.correct_answer || item.correctAnswer || 'A').toUpperCase() as 'A' | 'B' | 'C' | 'D',
+      explanation: item.explanation || '',
+      points: Number(item.points) || 1,
+      position: item.position || idx + 1,
+    }));
   },
 
   /**

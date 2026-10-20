@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   ChevronLeft,
   ChevronRight,
@@ -8,8 +8,12 @@ import {
   Trash2,
   FileText,
   Clock,
+  Loader2,
+  X,
+  Sparkles,
 } from 'lucide-react';
 import { QuizSet, UserProfile, TabType } from '../../types';
+import { quizService } from '../../services/quizService';
 
 interface MyQuizzesViewProps {
   currentUser: UserProfile;
@@ -32,25 +36,48 @@ export const MyQuizzesView: React.FC<MyQuizzesViewProps> = ({
 }) => {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
-  const PAGE_SIZE = 4;
+  const [searchResults, setSearchResults] = useState<QuizSet[] | null>(null);
+  const [isSearching, setIsSearching] = useState(false);
+  const PAGE_SIZE = 10;
 
-  const filteredQuizzes = useMemo(() => {
-    return myPersonalQuizzes.filter((q) => {
-      const matchSearch =
-        (q.title || '').toLowerCase().includes(search.toLowerCase()) ||
-        (q.description || '').toLowerCase().includes(search.toLowerCase()) ||
-        (q.category || '').toLowerCase().includes(search.toLowerCase());
-      return matchSearch;
-    });
-  }, [myPersonalQuizzes, search]);
+  // Lắng nghe từ khóa tìm kiếm và gửi API về Backend
+  useEffect(() => {
+    const cleanKeyword = search.trim();
+    if (!cleanKeyword) {
+      setSearchResults(null);
+      setIsSearching(false);
+      return;
+    }
 
-  const totalPages = Math.max(1, Math.ceil(filteredQuizzes.length / PAGE_SIZE));
+    setIsSearching(true);
+    const timer = setTimeout(async () => {
+      try {
+        const res = await quizService.getQuizzes(cleanKeyword, 1, 100);
+        setSearchResults(res.items || []);
+      } catch (err) {
+        console.error('Lỗi tìm kiếm đề quiz qua Backend:', err);
+      } finally {
+        setIsSearching(false);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [search]);
+
+  const displayedQuizzes = useMemo(() => {
+    if (searchResults !== null) {
+      return searchResults;
+    }
+    return myPersonalQuizzes;
+  }, [searchResults, myPersonalQuizzes]);
+
+  const totalPages = Math.max(1, Math.ceil(displayedQuizzes.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
 
   const pagedQuizzes = useMemo(() => {
     const start = (currentPage - 1) * PAGE_SIZE;
-    return filteredQuizzes.slice(start, start + PAGE_SIZE);
-  }, [filteredQuizzes, currentPage]);
+    return displayedQuizzes.slice(start, start + PAGE_SIZE);
+  }, [displayedQuizzes, currentPage]);
 
   return (
     <div className="space-y-6">
@@ -74,21 +101,49 @@ export const MyQuizzesView: React.FC<MyQuizzesViewProps> = ({
         </div>
       </div>
 
-      {/* Search Bar */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+      {/* Search Bar - Kết nối Backend API */}
+      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-2">
         <div className="relative w-full">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          {isSearching ? (
+            <Loader2 className="w-4 h-4 text-indigo-600 animate-spin absolute left-3.5 top-1/2 -translate-y-1/2" />
+          ) : (
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          )}
           <input
             type="text"
-            placeholder="Tìm kiếm trong các đề quiz của bạn..."
+            placeholder="Tìm kiếm theo tiêu đề bài quiz (VD: Oxford, Daily, Python, Docker)..."
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
               setPage(1);
             }}
-            className="w-full pl-10 pr-4 py-2 text-sm bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white"
+            className="w-full pl-10 pr-10 py-2.5 text-sm bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-colors"
           />
+          {search && (
+            <button
+              type="button"
+              onClick={() => {
+                setSearch('');
+                setPage(1);
+              }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-200 transition-colors cursor-pointer"
+              title="Xóa tìm kiếm"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
         </div>
+
+        {search.trim() && (
+          <div className="flex items-center justify-between text-xs text-slate-500 px-1 pt-0.5">
+            <div className="flex items-center gap-1.5 text-indigo-600 font-medium">
+              <Sparkles className="w-3.5 h-3.5" />
+            </div>
+            <span>
+              {isSearching ? 'Đang truy vấn Backend...' : `Tìm thấy ${displayedQuizzes.length} bài quiz`}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Personal Quizzes Grid - Paginated */}
@@ -138,8 +193,8 @@ export const MyQuizzesView: React.FC<MyQuizzesViewProps> = ({
             ))}
           </div>
 
-          {/* Centered Pagination Bar (đã xóa dòng số lượng và căn giữa theo yêu cầu) */}
-          {filteredQuizzes.length > 0 && (
+          {/* Centered Pagination Bar */}
+          {displayedQuizzes.length > 0 && (
             <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-center">
               <div className="flex items-center justify-center gap-1.5">
                 <button
@@ -154,11 +209,10 @@ export const MyQuizzesView: React.FC<MyQuizzesViewProps> = ({
                   <button
                     key={pageNum}
                     onClick={() => setPage(pageNum)}
-                    className={`w-8 h-8 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                      pageNum === currentPage
-                        ? 'bg-indigo-600 text-white shadow-xs'
-                        : 'text-slate-600 hover:bg-slate-100 border border-slate-200'
-                    }`}
+                    className={`w-8 h-8 rounded-lg text-xs font-bold transition-all cursor-pointer ${pageNum === currentPage
+                      ? 'bg-indigo-600 text-white shadow-xs'
+                      : 'text-slate-600 hover:bg-slate-100 border border-slate-200'
+                      }`}
                   >
                     {pageNum}
                   </button>
@@ -180,9 +234,15 @@ export const MyQuizzesView: React.FC<MyQuizzesViewProps> = ({
           <div className="w-12 h-12 rounded-full bg-indigo-50 text-indigo-500 flex items-center justify-center mx-auto">
             <Award className="w-6 h-6" />
           </div>
-          <p className="text-base font-bold text-slate-800">Không tìm thấy bộ đề Quiz nào phù hợp.</p>
+          <p className="text-base font-bold text-slate-800">
+            {search.trim()
+              ? `Không tìm thấy bộ đề Quiz nào khớp với "${search.trim()}".`
+              : 'Không tìm thấy bộ đề Quiz nào phù hợp.'}
+          </p>
           <p className="text-xs max-w-md mx-auto">
-            Hãy thử xóa từ khóa tìm kiếm hoặc tạo đề thi mới.
+            {search.trim()
+              ? 'Hệ thống đã tìm kiếm qua Backend API. Hãy thử nhập từ khóa khác.'
+              : 'Hãy thử tạo đề thi mới.'}
           </p>
           <button
             onClick={() => {

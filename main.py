@@ -234,11 +234,11 @@ def serialize_attempt_result(res: QuizAttemptResult) -> dict[str, Any]:
 
 @app.get("/api/decks")
 def get_decks(
-    keyword: Optional[str] = Query(None, description="Từ khóa tìm kiếm"),
+    keyword: Optional[str] = Query(None, description="Từ khóa tiền tố tiêu đề bộ thẻ cần tìm kiếm bằng Cây AVL O(log N + K)"),
     page: int = Query(1, ge=1, description="Số trang"),
-    page_size: int = Query(10, ge=1, le=50, description="Kích thước trang"),
+    page_size: int = Query(10, ge=1, le=100, description="Kích thước trang"),
 ) -> dict[str, Any]:
-    """Lấy danh sách bộ thẻ kèm các thẻ con từ cây chỉ mục AVL."""
+    """Lấy danh sách bộ thẻ hoặc tìm kiếm tiền tố tiêu đề từ cây chỉ mục AVL O(log N + K)."""
     result = deck_service.get_decks(keyword=keyword, page=page, page_size=page_size)
     items: list[dict[str, Any]] = []
     for d in result["items"]:
@@ -399,7 +399,7 @@ def get_study_state(session_id: str) -> dict[str, Any]:
 def get_quizzes(
     keyword: Optional[str] = Query(None, description="Từ khóa tìm kiếm"),
     page: int = Query(1, ge=1, description="Số trang"),
-    page_size: int = Query(10, ge=1, le=50, description="Kích thước trang"),
+    page_size: int = Query(10, ge=1, le=100, description="Kích thước trang"),
 ) -> dict[str, Any]:
     """Lấy danh sách các bài thi trắc nghiệm kèm câu hỏi."""
     result = quiz_service.get_quizzes(keyword=keyword, page=page, page_size=page_size)

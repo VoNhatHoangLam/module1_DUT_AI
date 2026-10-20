@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X, Plus, Trash2, Upload, PenTool, CheckCircle2, AlertCircle } from 'lucide-react';
+import { deckService } from '../../services/deckService';
 
 interface CreateSetModalProps {
   isOpen: boolean;
@@ -81,7 +82,7 @@ export const CreateSetModal: React.FC<CreateSetModalProps> = ({
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = (event) => {
+    reader.onload = async (event) => {
       try {
         const content = event.target?.result as string;
         if (!content) return;
@@ -114,45 +115,29 @@ export const CreateSetModal: React.FC<CreateSetModalProps> = ({
           }
         }
 
-        // 2. Parse CSV / TXT
-        const lines = content.split(/\r?\n/).filter((l) => l.trim().length > 0);
-        const parsedCards: { term: string; definition: string }[] = [];
-
-        for (const line of lines) {
-          let parts: string[] = [];
-          if (line.includes('\t')) {
-            parts = line.split('\t');
-          } else if (line.includes(';')) {
-            parts = line.split(';');
-          } else if (line.includes(',')) {
-            parts = line.split(',');
-          }
-
-          if (parts.length >= 2) {
-            const term = parts[0].trim().replace(/^["']|["']$/g, '');
-            const def = parts.slice(1).join(',').trim().replace(/^["']|["']$/g, '');
-            const lowerTerm = term.toLowerCase();
-            if (term && def && lowerTerm !== 'term' && lowerTerm !== 'front_text' && lowerTerm !== 'front') {
-              parsedCards.push({ term, definition: def });
+        // 2. Parse CSV / TXT qua Backend CsvImporter
+        try {
+          const parsedCards = await deckService.importCardsFromCsv(content);
+          if (parsedCards.length > 0) {
+            setCardsList(parsedCards);
+            const successMsg = `Đã thẩm định và nạp thành công ${parsedCards.length} thẻ qua Backend CsvImporter!`;
+            setFileNotice({ type: 'success', msg: successMsg });
+            onNotify?.(successMsg, 'success');
+            if (!title.trim()) {
+              setTitle(file.name.replace(/\.[^/.]+$/, ''));
             }
+          } else {
+            const errMsg = 'Không tìm thấy dữ liệu flashcard hợp lệ trong tệp CSV.';
+            setFileNotice({ type: 'error', msg: errMsg });
+            onNotify?.(errMsg, 'error');
           }
-        }
-
-        if (parsedCards.length > 0) {
-          setCardsList(parsedCards);
-          const successMsg = `Đã tải thành công ${parsedCards.length} thẻ từ tệp!`;
-          setFileNotice({ type: 'success', msg: successMsg });
-          onNotify?.(successMsg, 'success');
-          if (!title.trim()) {
-            setTitle(file.name.replace(/\.[^/.]+$/, ''));
-          }
-        } else {
-          const errMsg = 'Không tìm thấy dữ liệu flashcard hợp lệ trong tệp (cần định dạng: front_text,back_text)';
+        } catch (apiErr: any) {
+          const errMsg = `Lỗi thẩm định CSV từ Backend: ${apiErr.message}`;
           setFileNotice({ type: 'error', msg: errMsg });
           onNotify?.(errMsg, 'error');
         }
-      } catch (err) {
-        const errMsg = 'Lỗi đọc tệp! Vui lòng kiểm tra lại định dạng.';
+      } catch (err: any) {
+        const errMsg = `Lỗi đọc tệp: ${err.message}`;
         setFileNotice({ type: 'error', msg: errMsg });
         onNotify?.(errMsg, 'error');
       }

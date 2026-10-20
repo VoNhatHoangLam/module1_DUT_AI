@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { X, Upload } from 'lucide-react';
+import { X, Upload, Loader2, Sparkles } from 'lucide-react';
+import { deckService } from '../../services/deckService';
 
 interface ImportSetModalProps {
   isOpen: boolean;
@@ -17,6 +18,7 @@ export const ImportSetModal: React.FC<ImportSetModalProps> = ({
   onNotify,
 }) => {
   const [previewData, setPreviewData] = useState<{ term: string; definition: string }[]>([]);
+  const [isParsing, setIsParsing] = useState(false);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   if (!isOpen) return null;
@@ -26,12 +28,12 @@ export const ImportSetModal: React.FC<ImportSetModalProps> = ({
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = (event) => {
+    reader.onload = async (event) => {
       try {
         const content = event.target?.result as string;
         if (!content) return;
 
-        // Try JSON format first
+        // 1. Nếu là file JSON
         if (file.name.endsWith('.json')) {
           const parsed = JSON.parse(content);
           if (Array.isArray(parsed)) {
@@ -49,53 +51,46 @@ export const ImportSetModal: React.FC<ImportSetModalProps> = ({
           }
         }
 
-        // Parse CSV/TXT
-        const lines = content.split(/\r?\n/).filter((l) => l.trim().length > 0);
-        const parsedCards: { term: string; definition: string }[] = [];
-
-        for (const line of lines) {
-          // Check delimiter: comma, tab, or semicolon
-          let parts: string[] = [];
-          if (line.includes('\t')) {
-            parts = line.split('\t');
-          } else if (line.includes(';')) {
-            parts = line.split(';');
-          } else if (line.includes(',')) {
-            parts = line.split(',');
+        // 2. Nếu là file CSV/TXT: Gửi lên Backend để CsvImporter thẩm định và chuẩn hóa
+        setIsParsing(true);
+        try {
+          const cards = await deckService.importCardsFromCsv(content);
+          if (cards.length > 0) {
+            setPreviewData(cards);
+            onNotify(`Đã phân tích và thẩm định thành công ${cards.length} thẻ qua Backend CsvImporter!`, 'success');
+          } else {
+            onNotify('Không tìm thấy dữ liệu flashcard hợp lệ trong tệp CSV.', 'error');
           }
-
-          if (parts.length >= 2) {
-            const term = parts[0].trim().replace(/^["']|["']$/g, '');
-            const def = parts.slice(1).join(',').trim().replace(/^["']|["']$/g, '');
-            if (term && def && term.toLowerCase() !== 'term') {
-              parsedCards.push({ term, definition: def });
-            }
-          }
+        } catch (apiErr: any) {
+          onNotify(`Lỗi thẩm định CSV từ Backend: ${apiErr.message}`, 'error');
+        } finally {
+          setIsParsing(false);
         }
-
-        if (parsedCards.length > 0) {
-          setPreviewData(parsedCards);
-          onNotify(`Đã tải thành công ${parsedCards.length} thẻ từ tệp!`, 'success');
-        } else {
-          onNotify('Không tìm thấy dữ liệu flashcard hợp lệ trong tệp (cần định dạng: term,definition)', 'error');
-        }
-      } catch (err) {
-        onNotify('Lỗi đọc tệp! Vui lòng kiểm tra lại định dạng.', 'error');
+      } catch (err: any) {
+        onNotify(`Lỗi đọc tệp: ${err.message}`, 'error');
       }
     };
     reader.readAsText(file);
   };
 
-  const handleLoadSampleCSV = () => {
-    const sample = [
-      { term: 'Algorithm', definition: 'Tập hợp các bước hữu hạn giải quyết một vấn đề cụ thể.' },
-      { term: 'Machine Learning', definition: 'Nhánh AI xây dựng hệ thống học hỏi trực tiếp từ dữ liệu.' },
-      { term: 'API', definition: 'Giao diện lập trình ứng dụng cho phép các phần mềm trao đổi dữ liệu.' },
-      { term: 'Database Index', definition: 'Cấu trúc dữ liệu tăng tốc độ truy xuất các bản ghi trong CSDL.' },
-      { term: 'Asynchronous', definition: 'Mô hình lập trình không đồng bộ chạy nền không chặn luồng chính.' },
-    ];
-    setPreviewData(sample);
-    onNotify('Đã nạp bản xem trước dữ liệu mẫu CSV!', 'info');
+  const handleLoadSampleCSV = async () => {
+    const sampleCsv = `front_text,back_text
+Algorithm,Tập hợp các bước hữu hạn giải quyết một vấn đề cụ thể.
+Machine Learning,Nhánh AI xây dựng hệ thống học hỏi trực tiếp từ dữ liệu.
+API,Giao diện lập trình ứng dụng cho phép các phần mềm trao đổi dữ liệu.
+Database Index,Cấu trúc dữ liệu tăng tốc độ truy xuất các bản ghi trong CSDL.
+Asynchronous,Mô hình lập trình không đồng bộ chạy nền không chặn luồng chính.`;
+
+    setIsParsing(true);
+    try {
+      const cards = await deckService.importCardsFromCsv(sampleCsv);
+      setPreviewData(cards);
+      onNotify(`Đã nạp và thẩm định thành công ${cards.length} thẻ mẫu qua Backend CsvImporter!`, 'success');
+    } catch (err: any) {
+      onNotify(`Lỗi nạp dữ liệu mẫu: ${err.message}`, 'error');
+    } finally {
+      setIsParsing(false);
+    }
   };
 
   const handleConfirm = () => {
@@ -142,16 +137,20 @@ export const ImportSetModal: React.FC<ImportSetModalProps> = ({
             <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
               <button
                 type="button"
+                disabled={isParsing}
                 onClick={() => fileInputRef.current?.click()}
-                className="px-3.5 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition-colors inline-block cursor-pointer shadow-xs"
+                className="px-3.5 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition-colors inline-flex items-center gap-1.5 cursor-pointer shadow-xs disabled:opacity-50"
               >
-                Chọn tệp từ máy tính
+                {isParsing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : null}
+                {isParsing ? 'Đang thẩm định CSV...' : 'Chọn tệp từ máy tính'}
               </button>
               <button
                 type="button"
+                disabled={isParsing}
                 onClick={handleLoadSampleCSV}
-                className="px-3.5 py-1.5 rounded-lg bg-blue-100 text-blue-700 text-xs font-bold hover:bg-blue-200 transition-colors inline-block cursor-pointer"
+                className="px-3.5 py-1.5 rounded-lg bg-blue-100 text-blue-700 text-xs font-bold hover:bg-blue-200 transition-colors inline-flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
+                {isParsing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : null}
                 Nạp dữ liệu mẫu CSV
               </button>
             </div>
